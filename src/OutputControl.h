@@ -10,11 +10,15 @@ enum OUTPUT_MODE {
   FLASH,
   PERMANENT
 };
-}
+enum ACTIVE_MODE {
+  low,
+  high
+};
+}  // namespace OUTPUT_CONTROL
 
 typedef struct {
   OUTPUT_CONTROL::OUTPUT_MODE outputMode;
-  boolean activeMode;  // an bei LOW or HIGH
+  OUTPUT_CONTROL::ACTIVE_MODE activeMode;  // an bei LOW or HIGH
   uint16_t duration;   //
   unsigned long lastChanged;
   boolean state;
@@ -24,7 +28,9 @@ typedef struct {
 
 class OutputControl {
  public:
-  OutputControl(ACTOR *actor);
+  OutputControl(ACTOR *_actor);
+
+  void init(OUTPUT_CONTROL::OUTPUT_MODE outputMode, OUTPUT_CONTROL::ACTIVE_MODE activeMode, uint16_t duration, byte pin);
 
   void on();
 

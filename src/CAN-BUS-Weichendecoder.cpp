@@ -6,32 +6,29 @@
 uint8_t LED_1 = 5;
 uint8_t LED_2 = 6;
 
-ACTOR led_1 = {OUTPUT_CONTROL::OUTPUT_MODE::FLASH, LOW, 4000, 0, HIGH, LED_1};
-ACTOR led_2 = {OUTPUT_CONTROL::OUTPUT_MODE::IMPULSE, LOW, 1000, 0, HIGH, LED_2};
-ACTOR led_3 = {OUTPUT_CONTROL::OUTPUT_MODE::FLASH, HIGH, 4000, 0, LOW, 13};
+ACTOR actor_1;
+ACTOR actor_2;
+ACTOR actor_3;
 
-OutputControl c_1 = OutputControl(&led_1);
-OutputControl c_2 = OutputControl(&led_2);
-OutputControl c_3 = OutputControl(&led_3);
+OutputControl c_1= OutputControl(&actor_1);
+OutputControl c_2=OutputControl(&actor_2);
+OutputControl c_3=OutputControl(&actor_3);
+
+
 
 void init_led() {
   Serial.println("Beginn");
-  pinMode(13, OUTPUT);
-  digitalWrite(13, HIGH);
 
-  pinMode(LED_1, INPUT);
-  pinMode(LED_2, INPUT_PULLUP);
-
-  pinMode(LED_1, OUTPUT);
-  pinMode(LED_2, OUTPUT);
-
+  c_1.init(OUTPUT_CONTROL::OUTPUT_MODE::FLASH, OUTPUT_CONTROL::ACTIVE_MODE::low, 4000, LED_1);
+  c_2.init(OUTPUT_CONTROL::OUTPUT_MODE::IMPULSE, OUTPUT_CONTROL::ACTIVE_MODE::low, 1000, LED_2);
+  c_3.init(OUTPUT_CONTROL::OUTPUT_MODE::FLASH, OUTPUT_CONTROL::ACTIVE_MODE::high, 4000, 13);
+  
   Serial.println("Ausgänge sind nun konfigiert. Warte 4s");
+  
   delay(4000);
 
-  Serial.println("Die 13 geht aus uns es geht nun in die Schleife");
-  digitalWrite(13, LOW);
-  digitalWrite(LED_1, HIGH);
-  digitalWrite(LED_2, HIGH);
+  Serial.println("Es geht nun in die Schleife");
+
 }
 
 void setup() {
