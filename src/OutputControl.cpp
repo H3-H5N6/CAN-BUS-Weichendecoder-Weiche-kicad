@@ -28,6 +28,7 @@ void OutputControl::on(){
     
     
     this->actor->state = this->actor->activeMode;
+    this->actor->lastChanged = millis();
     this->writeState();
 }
 
@@ -45,6 +46,7 @@ void OutputControl::off(){
     }
     
     this->actor->state = (! this->actor->activeMode);
+    this->actor->lastChanged = millis();
     this->writeState();
 }
 
@@ -56,7 +58,30 @@ void OutputControl::toggle(){
     }
 }
 
-void OutputControl::pulse(){
+void OutputControl::impulse(){
+    if (this->actor->outputMode == OUTPUT_CONTROL::OUTPUT_MODE::IMPULSE) {
+        this->on();
+    }
+}
+
+boolean OutputControl::isOn(){
+    boolean result = (this->actor->state == this->actor->activeMode);
+    return result;
+}
+
+void OutputControl::process(){
+    if (this->actor->outputMode == OUTPUT_CONTROL::OUTPUT_MODE::FLASH ) {
+        this->flash();
+    }
+    if (this->actor->outputMode == OUTPUT_CONTROL::OUTPUT_MODE::IMPULSE ) {
+       if (isOn()) {
+           this->flash();
+       }
+       
+    }
+}
+
+void OutputControl::flash(){
     // Serial.print(this->actor->lastChanged);
     // Serial.print(" + ");
     // Serial.print(this->actor->duration);
@@ -70,6 +95,6 @@ void OutputControl::pulse(){
     }
 
     // Serial.println("Umschalten");
-    this->actor->lastChanged = millis();
+    
     this->toggle();
 }

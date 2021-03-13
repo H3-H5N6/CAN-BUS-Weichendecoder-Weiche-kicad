@@ -32,12 +32,16 @@ class OutputControl {
 
   void toggle();
 
-  void pulse();
+  void impulse();
 
-  
+  boolean isOn();
+
+  void process();
 
  private:
     ACTOR *actor;
+
+    void flash();
 
     void writeState();
 };
