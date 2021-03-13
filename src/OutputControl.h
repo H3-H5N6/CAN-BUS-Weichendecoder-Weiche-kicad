@@ -19,7 +19,7 @@ enum ACTIVE_MODE {
 typedef struct {
   OUTPUT_CONTROL::OUTPUT_MODE outputMode;
   OUTPUT_CONTROL::ACTIVE_MODE activeMode;  // an bei LOW or HIGH
-  uint16_t duration;   //
+  uint16_t duration;                       //
   unsigned long lastChanged;
   boolean state;
   byte pin;
