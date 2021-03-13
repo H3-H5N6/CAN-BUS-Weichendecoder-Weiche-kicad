@@ -39,11 +39,11 @@ class OutputControl {
   void process();
 
  private:
-    ACTOR *actor;
+  ACTOR *actor;
 
-    void flash();
+  void flash();
 
-    void writeState();
+  void writeState();
 };
 
 #endif
