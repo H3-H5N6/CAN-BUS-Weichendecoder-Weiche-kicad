@@ -54,10 +54,11 @@ void OutputControl::on() {
     // return;
   }
 
-  // Serial.print("active Mode: [");
-  // Serial.print(this->actor->activeMode);
-  // Serial.println("]");
+  Serial.print("active Mode: [");
+  Serial.print(this->actor->activeMode);
+  Serial.println("]");
   if (this->actor->state == this->actor->activeMode) {
+    Serial.println("Keine Änderung");
     return;
   }
 
