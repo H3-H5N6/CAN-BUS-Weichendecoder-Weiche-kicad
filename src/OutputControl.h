@@ -28,6 +28,8 @@ typedef struct {
 
 class OutputControl {
  public:
+  OutputControl();
+  
   OutputControl(ACTOR *_actor);
 
   void init(OUTPUT_CONTROL::OUTPUT_MODE outputMode, OUTPUT_CONTROL::ACTIVE_MODE activeMode, uint16_t duration, byte pin);

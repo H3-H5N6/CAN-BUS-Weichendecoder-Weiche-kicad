@@ -1,5 +1,8 @@
 #include "OutputControl.h"
 
+OutputControl::OutputControl() {
+  
+}
 OutputControl::OutputControl(ACTOR *_actor) {
   this->actor = _actor;
 }
