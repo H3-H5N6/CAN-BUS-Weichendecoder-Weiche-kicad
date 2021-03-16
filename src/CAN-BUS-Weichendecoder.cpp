@@ -16,7 +16,8 @@ uint8_t LED_9 = A2;
 uint8_t LED_10 = A3;
 
 ACTOR actor[10];
-OutputControl* control = new OutputControl[10];
+
+OutputControl* control = (OutputControl*)malloc(sizeof(OutputControl) * 10); 
 
 void init_led() {
   Serial.println("Beginn");
