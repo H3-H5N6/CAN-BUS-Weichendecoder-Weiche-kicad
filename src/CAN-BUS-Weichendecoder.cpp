@@ -35,7 +35,7 @@ void init_led() {
   control[6].init(OUTPUT_CONTROL::OUTPUT_MODE::IMPULSE, OUTPUT_CONTROL::ACTIVE_MODE::low, 1000, LED_7);
   control[7].init(OUTPUT_CONTROL::OUTPUT_MODE::IMPULSE, OUTPUT_CONTROL::ACTIVE_MODE::low, 1000, LED_8);
   control[8].init(OUTPUT_CONTROL::OUTPUT_MODE::IMPULSE, OUTPUT_CONTROL::ACTIVE_MODE::low, 1000, LED_9);
-  control[9].init(OUTPUT_CONTROL::OUTPUT_MODE::IMPULSE, OUTPUT_CONTROL::ACTIVE_MODE::low, 1000, LED_10);
+  control[9].init(OUTPUT_CONTROL::OUTPUT_MODE::FLASH_OFF, OUTPUT_CONTROL::ACTIVE_MODE::low, 4000, LED_10);
 
   Serial.println("Ausgänge sind nun konfigiert. Warte 4s");
 
@@ -120,16 +120,12 @@ void loop() {
         control[3].impulse();
         control[5].impulse();
         control[7].impulse();
-        control[9].impulse();
+        control[9].onFlash();
 
         break;
       case 51:
-        Serial.println("Impule 3");
-        control[0].on();
-        Serial.println("on:");
-        delay(1000);
-        Serial.println("off:");
-        control[0].off();
+        Serial.println("Flash 10 off");
+        control[9].offFlash(); 
         break;
       default:
         Serial.println("Skip");

@@ -7,7 +7,8 @@
 namespace OUTPUT_CONTROL {
 enum OUTPUT_MODE {
   IMPULSE,
-  FLASH,
+  FLASH_ON,
+  FLASH_OFF,
   PERMANENT
 };
 enum ACTIVE_MODE {
@@ -20,8 +21,8 @@ typedef struct {
   OUTPUT_CONTROL::OUTPUT_MODE outputMode;
   OUTPUT_CONTROL::ACTIVE_MODE activeMode;  // an bei LOW or HIGH
   uint16_t duration;                       //
-  unsigned long lastChanged;
-  boolean state;
+  unsigned long lastChanged;               // Zeitpunkt der letzen Änderung in ms
+  boolean state;                           // aktueller Zustand des Ausgang 
   byte pin;
 
 } ACTOR;
@@ -45,6 +46,10 @@ class OutputControl {
   boolean isOn();
 
   void process();
+
+  void onFlash();
+
+  void offFlash();
 
  private:
   ACTOR *actor;
