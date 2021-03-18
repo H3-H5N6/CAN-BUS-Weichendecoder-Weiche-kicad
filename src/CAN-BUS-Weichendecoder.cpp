@@ -26,7 +26,7 @@ void init_led() {
     control[j] = OutputControl(&actor[j]);
   }
 
-  control[0].init(OUTPUT_CONTROL::OUTPUT_MODE::IMPULSE, OUTPUT_CONTROL::ACTIVE_MODE::low, 1000, LED_1);
+  control[0].init(OUTPUT_CONTROL::OUTPUT_MODE::IMPULSE, OUTPUT_CONTROL::ACTIVE_MODE::low, 4000, LED_1);
   control[1].init(OUTPUT_CONTROL::OUTPUT_MODE::IMPULSE, OUTPUT_CONTROL::ACTIVE_MODE::low, 1000, LED_2);
   control[2].init(OUTPUT_CONTROL::OUTPUT_MODE::IMPULSE, OUTPUT_CONTROL::ACTIVE_MODE::low, 1000, LED_3);
   control[3].init(OUTPUT_CONTROL::OUTPUT_MODE::IMPULSE, OUTPUT_CONTROL::ACTIVE_MODE::low, 1000, LED_4);
@@ -59,10 +59,14 @@ void myDelayAndProcess(unsigned long duration) {
   unsigned long count = duration / 100;
 
   for (unsigned long i = 0; i < count; i++) {
-    delay(100);
+    delay(500);
     for (byte k = 0; k < 10; k++) {
       control[k].process();
     }
+    boolean isImpulePosible = control[0].isImpulePosible();
+    Serial.print("Ready: [");
+    Serial.print(isImpulePosible);
+    Serial.println("]");
   }
 }
 
@@ -108,7 +112,11 @@ void loop() {
     switch (frame.data[0]) {
       case 49:
         Serial.println("Impule 1,3,5,7,9");
-        control[0].impulse();
+        if (control[0].isImpulePosible()) {
+          control[0].impulse();
+        } else {
+          Serial.println("######### Ignore Impulse 0");
+        }
         control[2].impulse();
         control[4].impulse();
         control[6].impulse();

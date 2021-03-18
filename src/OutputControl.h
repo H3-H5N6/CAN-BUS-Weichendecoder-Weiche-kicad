@@ -21,6 +21,7 @@ typedef struct {
   OUTPUT_CONTROL::OUTPUT_MODE outputMode;
   OUTPUT_CONTROL::ACTIVE_MODE activeMode;  // an bei LOW or HIGH
   uint16_t duration;                       //
+  uint16_t duration_2;                     // Zeit, ab der die nächste Aktion wieder möglich ist
   unsigned long lastChanged;               // Zeitpunkt der letzen Änderung in ms
   boolean state;                           // aktueller Zustand des Ausgang 
   byte pin;
@@ -44,6 +45,8 @@ class OutputControl {
   void impulse();
 
   boolean isOn();
+
+  boolean isImpulePosible();
 
   void process();
 
