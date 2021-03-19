@@ -85,6 +85,32 @@ void myDelayAndProcess(unsigned long duration) {
   }
 }
 
+void sendVersion(){
+    CANMessage frame;
+    frame.id = 200;
+  
+    frame.ext = false;
+    frame.rtr = false;
+    frame.len = 8;
+
+    frame.data[0] = 1;
+    frame.data[1] = 2;
+    frame.data[2] = 3;
+    frame.data[3] = 0;
+    frame.data[4] = 0;
+    frame.data[5] = 0;
+    frame.data[6] = 0;
+    frame.data[7] = 0;    
+
+    boolean result = can.tryToSend(frame);
+    if (result){
+      Serial.println("Send OK");
+    } else {
+      Serial.println("Send Failed");
+    }
+
+}
+
 void loop() {
   CANMessage frame;
   /*frame.id = id;
@@ -117,6 +143,9 @@ void loop() {
 
   myDelayAndProcess(500);
   */
+
+  boolean changeIsPosible = true;
+
   if (can.available()) {
     can.receive(frame);
     Serial.print("Received: ");
@@ -127,8 +156,6 @@ void loop() {
     switch (frame.data[0]) {
       case 49:
         Serial.println("Weichen gerade");
-
-        boolean changeIsPosible = true;
 
         for (byte k = 0; k < 4 ; k++) {
           if (weiche[0].changeIsPosible()) {
@@ -157,12 +184,20 @@ void loop() {
 
         break;
       case 51:
-        Serial.println("Flash 10 off");
-        control[9].offFlash();
+        // Serial.println("Flash 10 off");
+        // control[9].offFlash();
+          Serial.println("Versio senden");
+          sendVersion();
         break;
       default:
         Serial.println("Skip");
     }
+
+  if (!changeIsPosible){
+    
+
+  }
+
   }
   myDelayAndProcess(100);
 }
