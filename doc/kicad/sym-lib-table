@@ -1,0 +1,4 @@
+(sym_lib_table
+  (lib (name CAN_BUS_MODULE_TJA1050_COPY)(type Legacy)(uri "/home/harald/Downloads/CAN BUS MODULE TJA1050 COPY.lib")(options "")(descr ""))
+  (lib (name CAN-BUS-rescue)(type Legacy)(uri ${KIPRJMOD}/CAN-BUS-rescue.lib)(options "")(descr ""))
+)
