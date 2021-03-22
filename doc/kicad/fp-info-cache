@@ -1,4 +1,4 @@
-1013673484496648
+1015290169197512
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -54844,3 +54844,10 @@ SolderWirePad_single_SMD_5x10mm
 0
 0
 0
+kicad-lib
+MCP2515_CAN_MODULE_BY0-10
+
+
+0
+9
+9
