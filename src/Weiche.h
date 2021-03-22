@@ -26,6 +26,8 @@ class Weiche {
 
   WEICHE::POSITION status();
 
+  boolean changeIsPosible();
+
  private:
   OutputControl g;
   OutputControl a;

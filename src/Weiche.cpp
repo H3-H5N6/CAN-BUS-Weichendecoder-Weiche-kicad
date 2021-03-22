@@ -13,6 +13,10 @@ WEICHE::POSITION Weiche::gerade() {
   g.impulse();
 }
 
+boolean Weiche::changeIsPosible(){
+    return (a.isImpulePosible() && g.isImpulePosible());
+}
+
 WEICHE::POSITION Weiche::abzweig() {
   if (a.isOn()) {
     return WEICHE::POSITION::RUNNING_ABZWEIG;
