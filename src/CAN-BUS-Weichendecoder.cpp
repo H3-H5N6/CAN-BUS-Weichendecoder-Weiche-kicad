@@ -191,7 +191,7 @@ void loop() {
       case 51:
         // Serial.println("Flash 10 off");
         // control[9].offFlash();
-          Serial.println("Versio senden");
+          Serial.println("Version senden");
           sendVersion();
         break;
       default:
