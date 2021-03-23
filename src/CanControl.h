@@ -1,6 +1,27 @@
 #ifndef CAN_CONTROL_H
 #define CAN_CONTROL_H
 
+
+#define ID_STATUS 400
+#define ID_SET 200
+
+#define MSB_IS_MODUL 0xFF
+
+#define COMMAND_CONFIG 0x03
+
+#define AKTOR_WEICHE 0x01
+#define AKTOR_HP 0x02
+#define AKTOR_VERSION 0x80
+
+#define INDEX_COMMAND 0x00
+#define INDEX_MSB 0x01
+#define INDEX_LSB 0x02
+#define INDEX_AKTOR 0x03
+#define INDEX_DATA0 0x04
+#define INDEX_DATA1 0x05
+#define INDEX_DATA2 0x06
+#define INDEX_DATA3 0x07
+
 #include <ACAN2515.h>
 #include <SPI.h>
 

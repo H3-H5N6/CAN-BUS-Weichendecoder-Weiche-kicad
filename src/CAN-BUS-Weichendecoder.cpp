@@ -6,6 +6,11 @@
 
 #define IMPULSE_LENGTH 4000
 
+#define VERSION_MAJOR 1
+#define VERSION_MINOR 2
+
+
+byte modul_nr = 0x0C;
 
 uint8_t LED_1 = 4;
 uint8_t LED_2 = 5;
@@ -87,20 +92,20 @@ void myDelayAndProcess(unsigned long duration) {
 
 void sendVersion(){
     CANMessage frame;
-    frame.id = 200;
+    frame.id = ID_STATUS;
   
     frame.ext = false;
     frame.rtr = false;
     frame.len = 8;
 
-    frame.data[0] = 1;
-    frame.data[1] = 2;
-    frame.data[2] = 3;
-    frame.data[3] = 0;
-    frame.data[4] = 0;
-    frame.data[5] = 0;
-    frame.data[6] = 0;
-    frame.data[7] = 0;    
+    frame.data[INDEX_COMMAND] = COMMAND_CONFIG;
+    frame.data[INDEX_MSB] = MSB_IS_MODUL;
+    frame.data[INDEX_LSB] = modul_nr;
+    frame.data[INDEX_AKTOR] = AKTOR_VERSION;
+    frame.data[INDEX_DATA0] = VERSION_MAJOR;
+    frame.data[INDEX_DATA1] = VERSION_MINOR;
+    frame.data[INDEX_DATA2] = 0;
+    frame.data[INDEX_DATA3] = 0;    
 
     boolean result = can.tryToSend(frame);
     if (result){
