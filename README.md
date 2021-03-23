@@ -10,25 +10,25 @@ Der Weichendecoder liefert regelmäßig seinen aktuellen Zustand
 * 0x400 Kommuication Decoder -> Zentrale (z.B. für die Übertragung des ajtuellen Zustandes)
 
 
-### Byte 1 Kommando
+### Byte 0 Kommando
 
 * 0x01: Sendet Befehl zu Stellen eines Aktor
 * 0x02: Liefert den aktellen Status eines Aktor
 * 0x03: Liefert die aktuelle Koniguration
 
-### Byte 2 Adresse 0 (MSB)
+### Byte 1 Adresse 0 (MSB)
 
 Adresse der Bus-Teilnehmers (MSB)
 
-* 0x00  Es ist die Modul-Adresse
-* \>0x00 Adresse des Aktor (MSB)
-### Byte 3 Adresse 1 (LSB)
+* 0xFF  Es ist die Modul-Adresse
+* \< 0xFF Adresse des Aktor (MSB)
+### Byte 2 Adresse 1 (LSB)
 
 Adresse der Bus-Teilnehmers (LSB) 
 
-* MSB  0x00: Nummer des Moduls (kein Aktor)
-* MSB >0x00: Adresse des Aktors (LSB)
-### Byte 4 Art des Aktor oder anderes
+* MSB 0xFF: Nummer des Moduls (kein Aktor)
+* MSB <0x00: Adresse des Aktors (LSB)
+### Byte 3 Art des Aktor oder anderes
 
 * 0x01 W
 * 0x02 HP
@@ -36,7 +36,7 @@ Adresse der Bus-Teilnehmers (LSB)
 * 0x80 Version (nur get)
 
 
-### Byte 5 Zustand des Aktor 
+### Byte 4 Zustand des Aktor 
 #### Weichen W (0x01)
 
 * 0x00 Ungekannt
@@ -57,13 +57,13 @@ Weitere Positionen für EKW/DKW, Dreiweiche noch nicht definiert
 #### Version (0x80)
 
 * xx Major-Version
-### Byte 6 Data 1 
+### Byte 5 Data 1 
 
 * xx Minor-Version
-### Byte 7 Data 2
+### Byte 6 Data 2
 
 noch nicht benutzt
-### Byte 8 Data 3 
+### Byte 7 Data 3 
 
 noch nicht benutzt
 
