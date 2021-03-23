@@ -1,7 +1,7 @@
 (export (version D)
   (design
     (source /home/harald/project/arduino/vscode/CAN-BUS-Weichendecoder/doc/kicad/CAN-BUS.sch)
-    (date "Mo 22 Mär 2021 01:01:48 CET")
+    (date "Di 23 Mär 2021 20:53:00 CET")
     (tool "Eeschema 5.1.9")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
