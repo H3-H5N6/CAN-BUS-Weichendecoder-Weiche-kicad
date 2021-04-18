@@ -1,0 +1,229 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L power:+5P #PWR0101
+U 1 1 607A0358
+P 4250 2150
+F 0 "#PWR0101" H 4250 2000 50  0001 C CNN
+F 1 "+5P" H 4265 2323 50  0000 C CNN
+F 2 "" H 4250 2150 50  0001 C CNN
+F 3 "" H 4250 2150 50  0001 C CNN
+	1    4250 2150
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:LED D1
+U 1 1 607A062E
+P 4400 2300
+F 0 "D1" V 4439 2182 50  0000 R CNN
+F 1 "Rot" V 4348 2182 50  0000 R CNN
+F 2 "LEDs:LED_D3.0mm" H 4400 2300 50  0001 C CNN
+F 3 "~" H 4400 2300 50  0001 C CNN
+	1    4400 2300
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Device:R R1
+U 1 1 607A174E
+P 4400 2600
+F 0 "R1" H 4470 2646 50  0000 L CNN
+F 1 "R" H 4470 2555 50  0000 L CNN
+F 2 "Resistors_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P7.62mm_Horizontal" V 4330 2600 50  0001 C CNN
+F 3 "~" H 4400 2600 50  0001 C CNN
+	1    4400 2600
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:LED D2
+U 1 1 607A3A55
+P 4750 2300
+F 0 "D2" V 4789 2182 50  0000 R CNN
+F 1 "Grün" V 4698 2182 50  0000 R CNN
+F 2 "LEDs:LED_D3.0mm" H 4750 2300 50  0001 C CNN
+F 3 "~" H 4750 2300 50  0001 C CNN
+	1    4750 2300
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Device:R R2
+U 1 1 607A3A5B
+P 4750 2600
+F 0 "R2" H 4820 2646 50  0000 L CNN
+F 1 "R" H 4820 2555 50  0000 L CNN
+F 2 "Resistors_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P7.62mm_Horizontal" V 4680 2600 50  0001 C CNN
+F 3 "~" H 4750 2600 50  0001 C CNN
+	1    4750 2600
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:LED D3
+U 1 1 607A462B
+P 5100 2300
+F 0 "D3" V 5139 2182 50  0000 R CNN
+F 1 "Gelb" V 5048 2182 50  0000 R CNN
+F 2 "LEDs:LED_D3.0mm" H 5100 2300 50  0001 C CNN
+F 3 "~" H 5100 2300 50  0001 C CNN
+	1    5100 2300
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Device:LED D4
+U 1 1 607A4EA5
+P 5450 2300
+F 0 "D4" V 5489 2182 50  0000 R CNN
+F 1 "Weiß" V 5398 2182 50  0000 R CNN
+F 2 "LEDs:LED_D3.0mm" H 5450 2300 50  0001 C CNN
+F 3 "~" H 5450 2300 50  0001 C CNN
+	1    5450 2300
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Device:R R4
+U 1 1 607A4EAB
+P 5450 2600
+F 0 "R4" H 5520 2646 50  0000 L CNN
+F 1 "R" H 5520 2555 50  0000 L CNN
+F 2 "Resistors_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P7.62mm_Horizontal" V 5380 2600 50  0001 C CNN
+F 3 "~" H 5450 2600 50  0001 C CNN
+	1    5450 2600
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:LED D5
+U 1 1 607A5C61
+P 5800 2300
+F 0 "D5" V 5839 2182 50  0000 R CNN
+F 1 "Weiß" V 5748 2182 50  0000 R CNN
+F 2 "LEDs:LED_D3.0mm" H 5800 2300 50  0001 C CNN
+F 3 "~" H 5800 2300 50  0001 C CNN
+	1    5800 2300
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	4250 2150 4400 2150
+Wire Wire Line
+	5800 2150 5450 2150
+Connection ~ 5450 2150
+Wire Wire Line
+	5450 2450 5800 2450
+Connection ~ 5450 2450
+$Comp
+L Connector_Generic:Conn_02x03_Odd_Even J1
+U 1 1 607A8BE2
+P 4950 3550
+F 0 "J1" H 5000 3750 50  0000 C CNN
+F 1 "Conn_02x03_Odd_Even" H 5000 3776 50  0001 C CNN
+F 2 "Connectors_IDC:IDC-Header_2x03_P2.54mm_Horizontal" H 4950 3550 50  0001 C CNN
+F 3 "~" H 4950 3550 50  0001 C CNN
+	1    4950 3550
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R3
+U 1 1 607A4631
+P 5100 2600
+F 0 "R3" H 5170 2646 50  0000 L CNN
+F 1 "R" H 5170 2555 50  0000 L CNN
+F 2 "Resistors_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P7.62mm_Horizontal" V 5030 2600 50  0001 C CNN
+F 3 "~" H 5100 2600 50  0001 C CNN
+	1    5100 2600
+	1    0    0    -1  
+$EndComp
+Connection ~ 4400 2150
+Wire Wire Line
+	4400 2150 4750 2150
+Connection ~ 4750 2150
+Wire Wire Line
+	4750 2150 5100 2150
+Connection ~ 5100 2150
+Wire Wire Line
+	5100 2150 5450 2150
+Wire Wire Line
+	4750 3100 4750 2750
+Wire Wire Line
+	4400 3550 4400 2750
+$Comp
+L Device:LED D6
+U 1 1 607B3361
+P 4100 2300
+F 0 "D6" V 4139 2182 50  0000 R CNN
+F 1 "Rot" V 4048 2182 50  0000 R CNN
+F 2 "LEDs:LED_D3.0mm" H 4100 2300 50  0001 C CNN
+F 3 "~" H 4100 2300 50  0001 C CNN
+	1    4100 2300
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Device:R R5
+U 1 1 607B3367
+P 4100 2600
+F 0 "R5" H 4170 2646 50  0000 L CNN
+F 1 "R" H 4170 2555 50  0000 L CNN
+F 2 "Resistors_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P7.62mm_Horizontal" V 4030 2600 50  0001 C CNN
+F 3 "~" H 4100 2600 50  0001 C CNN
+	1    4100 2600
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4100 2150 4250 2150
+Connection ~ 4250 2150
+Wire Wire Line
+	4150 2250 4100 2250
+Wire Wire Line
+	4100 2250 4100 2450
+Connection ~ 4100 2450
+Wire Wire Line
+	4400 3550 4750 3550
+Wire Wire Line
+	5100 2750 5100 3000
+Wire Wire Line
+	5100 3000 5700 3000
+Wire Wire Line
+	5700 3000 5700 3650
+Wire Wire Line
+	5700 3650 5250 3650
+Wire Wire Line
+	4650 2850 4650 3650
+Wire Wire Line
+	4650 3650 4750 3650
+$Comp
+L power:+5P #PWR0102
+U 1 1 607B909C
+P 5350 3900
+F 0 "#PWR0102" H 5350 3750 50  0001 C CNN
+F 1 "+5P" H 5365 4073 50  0000 C CNN
+F 2 "" H 5350 3900 50  0001 C CNN
+F 3 "" H 5350 3900 50  0001 C CNN
+	1    5350 3900
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	4750 3100 5250 3100
+Wire Wire Line
+	5250 3100 5250 3450
+Wire Wire Line
+	5250 3550 5350 3550
+Wire Wire Line
+	5350 3550 5350 3900
+Wire Wire Line
+	4650 2850 5450 2850
+Wire Wire Line
+	5450 2850 5450 2750
+Wire Wire Line
+	4100 2750 4100 3450
+Wire Wire Line
+	4100 3450 4750 3450
+$EndSCHEMATC
