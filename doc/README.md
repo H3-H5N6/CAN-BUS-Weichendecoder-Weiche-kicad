@@ -5,7 +5,7 @@
 ## Adapter, Ansicht von oben.
 ![](kicad/Signalsimulator/Adapter-2x3zu1x6.svg)
 
-![](kicad/Signalsimulator/Adapter-2x3zu1x6-Beispiel.jpg = 250x250)
+![](kicad/Signalsimulator/Adapter-2x3zu1x6-Beispiel-small.jpg)
 
 
 ## Belegung der 1x6-Stiftleiste
