@@ -7,7 +7,7 @@
 #define IMPULSE_LENGTH 4000
 
 #define VERSION_MAJOR 1
-#define VERSION_MINOR 2
+#define VERSION_MINOR 3
 
 
 byte modul_nr = 0x0C;
@@ -89,6 +89,8 @@ void myDelayAndProcess(unsigned long duration) {
     Serial.println();
   }
 }
+
+
 
 void sendVersion(){
     CANMessage frame;
@@ -188,7 +190,7 @@ void loop() {
         weiche[3].abzweig();
 
         break;
-      case 51:
+      case 52:
         // Serial.println("Flash 10 off");
         // control[9].offFlash();
           Serial.println("Version senden");
