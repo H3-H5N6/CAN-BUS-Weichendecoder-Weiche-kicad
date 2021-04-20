@@ -64,4 +64,27 @@ void init_can() {
   }
 }
 
+void debugFrame(CANMessage *frame){
+
+  Serial.print(F("Id ["));
+  Serial.print(frame->id);
+  Serial.print(F("] Command ["));
+  Serial.print(frame->data[INDEX_COMMAND]);
+  Serial.print(F("] MSB ["));
+  Serial.print(frame->data[INDEX_MSB]);
+  Serial.print(F("] LSB ["));
+  Serial.print(frame->data[INDEX_LSB]);
+  Serial.print(F("] Aktor ["));
+  Serial.print(frame->data[INDEX_AKTOR]);
+  Serial.print(F("] DATA0 ["));
+  Serial.print(frame->data[INDEX_DATA0]);
+  Serial.print(F("] DATA1 ["));
+  Serial.print(frame->data[INDEX_DATA1]);
+  Serial.print(F("] DATA2 ["));
+  Serial.print(frame->data[INDEX_DATA2]);
+  Serial.print(F("] DATA3 ["));
+  Serial.print(frame->data[INDEX_DATA3]);
+  Serial.println(F("]"));
+}
+
 #endif
