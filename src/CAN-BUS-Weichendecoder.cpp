@@ -1,22 +1,34 @@
 #include <Arduino.h>
 
 #include "CanControl.h"
+#include "I2C_Tools.h"
 #include "OutputControl.h"
+#include "PCF8574.h"
 #include "Weiche.h"
 
-#include "I2C_Tools.h"
-#include "PCF8574.h"
+byte address[] = {0x38, 0x3c};
+PCF8574 i2c[] = {PCF8574(address[0]), PCF8574(address[1])};
 
+byte amountI2c = 2;
 
-byte address [] = {  0x38, 0x3c};
-	
-PCF8574 i2c[] = { PCF8574(address[0]), PCF8574(address[1])};
+void signal_on(byte _pin) {
+  byte index = _pin / 8;
+  byte pin = _pin % 8;
+
+  i2c[index].digitalWrite(pin, LOW);
+}
+
+void signal_off(byte _pin) {
+  byte index = _pin / 8;
+  byte pin = _pin % 8;
+
+  i2c[index].digitalWrite(pin, HIGH);
+}
 
 #define IMPULSE_LENGTH 4000
 
 #define VERSION_MAJOR 1
 #define VERSION_MINOR 3
-
 
 byte modul_nr = 0x0C;
 
@@ -43,8 +55,6 @@ void init_led() {
   for (byte j = 0; j < 10; j++) {
     control[j] = OutputControl(&actor[j]);
   }
-
-
 
   control[0].init(OUTPUT_CONTROL::OUTPUT_MODE::IMPULSE, OUTPUT_CONTROL::ACTIVE_MODE::low, IMPULSE_LENGTH, LED_1);
   control[1].init(OUTPUT_CONTROL::OUTPUT_MODE::IMPULSE, OUTPUT_CONTROL::ACTIVE_MODE::low, IMPULSE_LENGTH, LED_2);
@@ -79,24 +89,29 @@ void setup() {
   Wire.begin();
   scan_i2c();
 
-  for(int i=0;i<8;i++) {
-      i2c[0].pinMode(i, OUTPUT, HIGH);
-  }
-  i2c[0].begin();
-
-  for(int i=0;i<8;i++) {
-      i2c[0].digitalWrite(i, LOW);
-      delay(1000);
+  for (byte j = 0; j < amountI2c; j++) {
+    for (byte i = 0; i < 8; i++) {
+      i2c[j].pinMode(i, OUTPUT, HIGH);
+    }
   }
 
+  for (byte j = 0; j < amountI2c; j++) {
+    i2c[j].begin();
+  }
 
+  for (int i = 0; i < 16; i++) {
+    signal_on(i);
+    delay(1000);
+  }
 
+  for (int i = 15; i >= 0; i--) {
+    signal_off(i);
+    delay(1000);
+  }
 
-  init_can();
+init_can();
 
-  init_led();
-
-  
+init_led();
 }
 
 void myDelayAndProcess(unsigned long duration) {
@@ -117,32 +132,29 @@ void myDelayAndProcess(unsigned long duration) {
   }
 }
 
+void sendVersion() {
+  CANMessage frame;
+  frame.id = ID_STATUS;
 
+  frame.ext = false;
+  frame.rtr = false;
+  frame.len = 8;
 
-void sendVersion(){
-    CANMessage frame;
-    frame.id = ID_STATUS;
-  
-    frame.ext = false;
-    frame.rtr = false;
-    frame.len = 8;
+  frame.data[INDEX_COMMAND] = COMMAND_CONFIG;
+  frame.data[INDEX_MSB] = MSB_IS_MODUL;
+  frame.data[INDEX_LSB] = modul_nr;
+  frame.data[INDEX_AKTOR] = AKTOR_VERSION;
+  frame.data[INDEX_DATA0] = VERSION_MAJOR;
+  frame.data[INDEX_DATA1] = VERSION_MINOR;
+  frame.data[INDEX_DATA2] = 0;
+  frame.data[INDEX_DATA3] = 0;
 
-    frame.data[INDEX_COMMAND] = COMMAND_CONFIG;
-    frame.data[INDEX_MSB] = MSB_IS_MODUL;
-    frame.data[INDEX_LSB] = modul_nr;
-    frame.data[INDEX_AKTOR] = AKTOR_VERSION;
-    frame.data[INDEX_DATA0] = VERSION_MAJOR;
-    frame.data[INDEX_DATA1] = VERSION_MINOR;
-    frame.data[INDEX_DATA2] = 0;
-    frame.data[INDEX_DATA3] = 0;    
-
-    boolean result = can.tryToSend(frame);
-    if (result){
-      Serial.println("Send OK");
-    } else {
-      Serial.println("Send Failed");
-    }
-
+  boolean result = can.tryToSend(frame);
+  if (result) {
+    Serial.println("Send OK");
+  } else {
+    Serial.println("Send Failed");
+  }
 }
 
 void loop() {
@@ -191,14 +203,14 @@ void loop() {
       case 49:
         Serial.println("Weichen gerade");
 
-        for (byte k = 0; k < 4 ; k++) {
+        for (byte k = 0; k < 4; k++) {
           if (weiche[0].changeIsPosible()) {
             continue;
           }
           changeIsPosible = false;
         }
 
-        if (changeIsPosible){
+        if (changeIsPosible) {
           weiche[0].gerade();
           weiche[1].gerade();
           weiche[2].gerade();
@@ -220,18 +232,15 @@ void loop() {
       case 52:
         // Serial.println("Flash 10 off");
         // control[9].offFlash();
-          Serial.println("Version senden");
-          sendVersion();
+        Serial.println("Version senden");
+        sendVersion();
         break;
       default:
         Serial.println("Skip");
     }
 
-  if (!changeIsPosible){
-    
-
-  }
-
+    if (!changeIsPosible) {
+    }
   }
   myDelayAndProcess(100);
 }
