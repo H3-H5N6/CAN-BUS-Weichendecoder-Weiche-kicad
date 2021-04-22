@@ -1,0 +1,4 @@
+(fp_lib_table
+  (lib (name kicad-lib)(type KiCad)(uri /home/harald/project/arduino/vscode/CAN-BUS-Weichendecoder/doc/kicad-lib)(options "")(descr ""))
+  (lib (name Connectors_PinHeader_2.54mm)(type KiCad)(uri /home/harald/project/kicad-lib/Connectors_PinHeader_2.54mm.pretty)(options "")(descr ""))
+)
