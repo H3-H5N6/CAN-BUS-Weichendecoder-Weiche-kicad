@@ -4,6 +4,14 @@
 #include "OutputControl.h"
 #include "Weiche.h"
 
+#include "I2C_Tools.h"
+#include "PCF8574.h"
+
+
+byte address [] = {  0x38, 0x3c};
+	
+PCF8574 i2c[] = { PCF8574(address[0]), PCF8574(address[1])};
+
 #define IMPULSE_LENGTH 4000
 
 #define VERSION_MAJOR 1
@@ -66,10 +74,29 @@ void setup() {
   // while (!Serial)
   //   ;
   // Serial.begin(115200);
+  Serial.println("Start");
+
+  Wire.begin();
+  scan_i2c();
+
+  for(int i=0;i<8;i++) {
+      i2c[0].pinMode(i, OUTPUT, HIGH);
+  }
+  i2c[0].begin();
+
+  for(int i=0;i<8;i++) {
+      i2c[0].digitalWrite(i, LOW);
+      delay(1000);
+  }
+
+
+
 
   init_can();
 
   init_led();
+
+  
 }
 
 void myDelayAndProcess(unsigned long duration) {
