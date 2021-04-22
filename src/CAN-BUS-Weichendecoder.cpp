@@ -6,24 +6,10 @@
 #include "PCF8574.h"
 #include "Weiche.h"
 
-byte address[] = {0x38, 0x3c};
-PCF8574 i2c[] = {PCF8574(address[0]), PCF8574(address[1])};
+#include "I2C_Expander.h"
 
-byte amountI2c = 2;
+I2C_Expander i2c_expander;
 
-void signal_on(byte _pin) {
-  byte index = _pin / 8;
-  byte pin = _pin % 8;
-
-  i2c[index].digitalWrite(pin, LOW);
-}
-
-void signal_off(byte _pin) {
-  byte index = _pin / 8;
-  byte pin = _pin % 8;
-
-  i2c[index].digitalWrite(pin, HIGH);
-}
 
 #define IMPULSE_LENGTH 4000
 
@@ -89,25 +75,10 @@ void setup() {
   Wire.begin();
   scan_i2c();
 
-  for (byte j = 0; j < amountI2c; j++) {
-    for (byte i = 0; i < 8; i++) {
-      i2c[j].pinMode(i, OUTPUT, HIGH);
-    }
-  }
-
-  for (byte j = 0; j < amountI2c; j++) {
-    i2c[j].begin();
-  }
-
-  for (int i = 0; i < 16; i++) {
-    signal_on(i);
-    delay(1000);
-  }
-
-  for (int i = 15; i >= 0; i--) {
-    signal_off(i);
-    delay(1000);
-  }
+  i2c_expander.init();
+  
+  i2c_expander.checkAll();
+  
 
 init_can();
 

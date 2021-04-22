@@ -31,3 +31,15 @@ void I2C_Expander::init() {
     i2c2[j].begin();
   }
 }
+
+void I2C_Expander::checkAll() {
+  for (byte i = 0; i < amountI2c * 8; i++) {
+    signal_on(i);
+    delay(100);
+  }
+
+  for (byte i = amountI2c * 8; i > 0; i--) {
+    signal_off(i - 1);
+    delay(100);
+  }
+}
