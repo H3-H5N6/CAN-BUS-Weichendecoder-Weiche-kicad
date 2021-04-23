@@ -11,6 +11,12 @@ void I2C_Expander::signal_on(byte _pin) {
   byte pin = _pin % 8;
 
   i2c2[index].digitalWrite(pin, LOW);
+  state[index] = state[index] | 1 << pin;
+
+  Serial.print(index);
+  Serial.print(":");
+  Serial.println(state[index]);
+
 }
 
 void I2C_Expander::signal_off(byte _pin) {
@@ -18,6 +24,11 @@ void I2C_Expander::signal_off(byte _pin) {
   byte pin = _pin % 8;
 
   i2c2[index].digitalWrite(pin, HIGH);
+  state[index] = state[index] & ~(1 << pin);
+
+  Serial.print(index);
+  Serial.print(":");
+  Serial.println(state[index]);
 }
 
 void I2C_Expander::init() {
@@ -42,4 +53,29 @@ void I2C_Expander::checkAll() {
     signal_off(i - 1);
     delay(100);
   }
+}
+
+
+void I2C_Expander::setSignal(Signal_i2c signal) {    
+    byte value = signal.get();
+
+    for (byte i = 0, pin = 0 ; i< 5; i++, pin++){
+        Serial.print("Value: [");
+        Serial.print(value);
+        Serial.println("]");
+
+        Serial.print("Pin: [");
+        Serial.print(pin);
+        Serial.print("] ");
+        if (value & 0x01){
+            Serial.print("on ->");
+            signal_on(pin);
+        } else {
+            signal_off(pin);
+            Serial.print("off ->");
+        }
+        value = value >> 1;
+    }
+
+
 }

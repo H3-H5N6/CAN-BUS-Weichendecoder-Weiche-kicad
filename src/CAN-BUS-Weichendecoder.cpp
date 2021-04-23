@@ -1,15 +1,16 @@
 #include <Arduino.h>
 
 #include "CanControl.h"
+#include "I2C_Expander.h"
 #include "I2C_Tools.h"
 #include "OutputControl.h"
 #include "PCF8574.h"
+#include "Signal_i2c.h"
 #include "Weiche.h"
-
-#include "I2C_Expander.h"
 
 I2C_Expander i2c_expander;
 
+Signal_i2c signal[] = {Signal_i2c(1,0), Signal_i2c(2,5), Signal_i2c(3,10)};
 
 #define IMPULSE_LENGTH 4000
 
@@ -76,13 +77,35 @@ void setup() {
   scan_i2c();
 
   i2c_expander.init();
-  
-  i2c_expander.checkAll();
-  
 
-init_can();
+  //i2c_expander.checkAll();
 
-init_led();
+  Serial.print("Before");
+  Serial.println(signal[0].get());
+
+  signal[0].set(SIGNAL::HP0);
+
+  Serial.print("After");
+  Serial.println(signal[0].get());  
+  i2c_expander.setSignal(signal[0]);
+  delay(2000);
+
+  signal[0].set(SIGNAL::HP0_SH1);
+  i2c_expander.setSignal(signal[0]);
+  delay(2000);
+
+  signal[0].set(SIGNAL::HP1);
+  i2c_expander.setSignal(signal[0]);
+  delay(2000);
+
+  signal[0].set(SIGNAL::HP2);
+  i2c_expander.setSignal(signal[0]);
+  delay(2000);
+
+
+  init_can();
+
+  init_led();
 }
 
 void myDelayAndProcess(unsigned long duration) {
