@@ -102,6 +102,10 @@ void setup() {
   i2c_expander.setSignal(signal[0]);
   delay(2000);
 
+  signal[0].set(SIGNAL::HP0);
+  i2c_expander.setSignal(signal[0]);
+  delay(2000);
+
 
   init_can();
 

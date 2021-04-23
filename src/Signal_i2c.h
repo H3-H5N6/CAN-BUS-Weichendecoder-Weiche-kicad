@@ -11,11 +11,11 @@ namespace SIGNAL {
 // we
 // ge
 
-enum State {  // xx|xx|xx|we|ge|gr|r1|r2
+enum State {  // xx|xx|xx|we|ge|gr|r2|r1
   HP0 = B00000011,
   HP1 = B00000100,
   HP2 = B00001100,
-  HP0_SH1 = B00010010,
+  HP0_SH1 = B00010001,
   OFF = B00000000
 };
 
