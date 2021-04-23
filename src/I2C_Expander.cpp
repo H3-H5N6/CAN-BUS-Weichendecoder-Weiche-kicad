@@ -59,7 +59,7 @@ void I2C_Expander::checkAll() {
 void I2C_Expander::setSignal(Signal_i2c signal) {    
     byte value = signal.get();
 
-    for (byte i = 0, pin = 0 ; i< 5; i++, pin++){
+    for (byte i = 0, pin = signal.getOffset() ; i< 5; i++, pin++){
         Serial.print("Value: [");
         Serial.print(value);
         Serial.println("]");

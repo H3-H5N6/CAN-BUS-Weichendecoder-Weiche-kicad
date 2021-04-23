@@ -10,7 +10,7 @@
 
 I2C_Expander i2c_expander;
 
-Signal_i2c signal[] = {Signal_i2c(1,0), Signal_i2c(2,5), Signal_i2c(3,10)};
+Signal_i2c signal[] = {Signal_i2c(1,0), Signal_i2c(2,5), Signal_i2c(3,9)};
 
 #define IMPULSE_LENGTH 4000
 
@@ -84,26 +84,36 @@ void setup() {
   Serial.println(signal[0].get());
 
   signal[0].set(SIGNAL::HP0);
+  signal[1].set(SIGNAL::HP0);
 
   Serial.print("After");
   Serial.println(signal[0].get());  
   i2c_expander.setSignal(signal[0]);
+  i2c_expander.setSignal(signal[1]);
   delay(2000);
 
   signal[0].set(SIGNAL::HP0_SH1);
+  signal[1].set(SIGNAL::HP0_SH1);
   i2c_expander.setSignal(signal[0]);
+  i2c_expander.setSignal(signal[1]);
   delay(2000);
 
   signal[0].set(SIGNAL::HP1);
+  signal[1].set(SIGNAL::HP1);
   i2c_expander.setSignal(signal[0]);
+  i2c_expander.setSignal(signal[1]);
   delay(2000);
 
   signal[0].set(SIGNAL::HP2);
+  signal[1].set(SIGNAL::HP2);
   i2c_expander.setSignal(signal[0]);
+  i2c_expander.setSignal(signal[1]);
   delay(2000);
 
   signal[0].set(SIGNAL::HP0);
+  signal[1].set(SIGNAL::HP0);
   i2c_expander.setSignal(signal[0]);
+  i2c_expander.setSignal(signal[1]);
   delay(2000);
 
 

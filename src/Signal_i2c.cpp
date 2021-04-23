@@ -1,10 +1,14 @@
 #include "Signal_i2c.h"
 
-Signal_i2c::Signal_i2c(byte _id, byte _firstPin) : id(_id), firstPin(_firstPin) {
+Signal_i2c::Signal_i2c(byte _id, byte _offsetPin) : id(_id), offsetPin(_offsetPin) {
 }
 
 byte Signal_i2c::getId() {
   return id;
+}
+
+byte Signal_i2c::getOffset() {
+  return offsetPin;
 }
 
 void Signal_i2c::set(SIGNAL::State _state) {
@@ -13,6 +17,7 @@ void Signal_i2c::set(SIGNAL::State _state) {
     case SIGNAL::HP1:
     case SIGNAL::HP2:
     case SIGNAL::HP0_SH1:
+    case SIGNAL::OFF:
       state = _state;
       break;
   }
@@ -37,7 +42,3 @@ boolean Signal_i2c::isHP2() {
 boolean Signal_i2c::isHP0_SH1() {
   return ((state & SIGNAL::HP0_SH1) != 0);
 }
-
-/*int Signal_i2c::getPin() {
-
-}*/

@@ -25,11 +25,13 @@ class Signal_i2c {
  public:
   Signal_i2c(byte id, byte firstPin);
 
-  byte getId();
-
   void set(SIGNAL::State state);
 
   SIGNAL::State get();
+
+  byte getId();
+
+  byte getOffset();
 
   boolean isHP0();
 
@@ -42,7 +44,7 @@ class Signal_i2c {
  private:
   SIGNAL::State state;
   byte id;
-  byte firstPin;
+  byte offsetPin;
 };
 
 #endif
