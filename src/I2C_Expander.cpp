@@ -60,6 +60,7 @@ void I2C_Expander::setSignal(Signal_i2c signal) {
     byte value = signal.get();
 
     for (byte i = 0, pin = signal.getOffset() ; i< 5; i++, pin++){
+#ifdef DEBUG_EXPANDER
         Serial.print("Value: [");
         Serial.print(value);
         Serial.println("]");
@@ -68,14 +69,16 @@ void I2C_Expander::setSignal(Signal_i2c signal) {
         Serial.print(pin);
         Serial.print("] ");
         if (value & 0x01){
-            Serial.print("on ->");
-            signal_on(pin);
+          Serial.print("on ->");
+        else {
+          Serial.print("off ->");
+        }
+#endif
+        if (value & 0x01){
+          signal_on(pin);
         } else {
-            signal_off(pin);
-            Serial.print("off ->");
+          signal_off(pin);
         }
         value = value >> 1;
     }
-
-
 }

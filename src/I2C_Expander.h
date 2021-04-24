@@ -4,6 +4,8 @@
 #include "PCF8574.h"
 #include "Signal_i2c.h"
 
+// #define DEBUG_EXPANDER
+
 class I2C_Expander {
  public:
   void signal_on(byte _pin);
