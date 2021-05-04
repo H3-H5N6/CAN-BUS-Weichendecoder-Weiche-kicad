@@ -160,17 +160,9 @@ F 3 "" H 5450 3150 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	5450 3250 5450 3150
-Wire Wire Line
-	4100 4050 4200 4050
-Wire Wire Line
-	4100 4150 4300 4150
-Wire Wire Line
-	4200 4050 4200 3850
 Connection ~ 4200 3850
 Wire Wire Line
 	4200 3850 4800 3850
-Wire Wire Line
-	4300 4150 4300 3950
 Connection ~ 4300 3950
 Wire Wire Line
 	4300 3950 4800 3950
@@ -191,15 +183,34 @@ F 3 "~" H 6350 2100 50  0001 C CNN
 	1    6350 2100
 	1    0    0    -1  
 $EndComp
+Wire Wire Line
+	4300 4400 4300 3950
+Wire Wire Line
+	4100 4400 4300 4400
+Wire Wire Line
+	4200 4300 4200 3850
+Wire Wire Line
+	4100 4300 4200 4300
 $Comp
-L Connector:Conn_01x04_Male J?
-U 1 1 607D70AB
-P 3900 3950
-F 0 "J?" H 4008 4231 50  0000 C CNN
-F 1 "Conn_01x04_Male" H 4008 4140 50  0000 C CNN
-F 2 "Connectors_PinHeader_2.54mm:PinHeader_2x02_P2.54mm_Horizontal" H 3900 3950 50  0001 C CNN
-F 3 "~" H 3900 3950 50  0001 C CNN
-	1    3900 3950
+L Connector:Conn_01x02_Male J3
+U 1 1 612729E3
+P 3900 4300
+F 0 "J3" H 4008 4389 50  0000 C CNN
+F 1 "Conn_01x02_Male" H 4008 4390 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Angled_1x02_Pitch2.54mm" H 3900 4300 50  0001 C CNN
+F 3 "~" H 3900 4300 50  0001 C CNN
+	1    3900 4300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x02_Male J2
+U 1 1 61263F3E
+P 3900 3850
+F 0 "J2" H 4008 4031 50  0000 C CNN
+F 1 "Power" H 4000 3650 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Angled_1x02_Pitch2.54mm" H 3900 3850 50  0001 C CNN
+F 3 "~" H 3900 3850 50  0001 C CNN
+	1    3900 3850
 	1    0    0    -1  
 $EndComp
 $EndSCHEMATC

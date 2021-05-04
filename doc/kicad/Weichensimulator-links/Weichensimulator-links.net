@@ -1,8 +1,8 @@
 (export (version D)
   (design
     (source /home/harald/project/arduino/vscode/CAN-BUS-Weichendecoder/doc/kicad/Weichensimulator-links/Weichensimulator-links.sch)
-    (date "So 18 Apr 2021 23:01:15 CEST")
-    (tool "Eeschema 5.1.9")
+    (date "Mo 03 Mai 2021 19:40:40 CEST")
+    (tool "Eeschema 5.1.10")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
         (title)

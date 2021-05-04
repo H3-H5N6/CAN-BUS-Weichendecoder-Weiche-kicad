@@ -221,4 +221,15 @@ F 3 "~" H 3800 2600 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	4250 2150 4700 2150
+$Comp
+L Mechanical:MountingHole H1
+U 1 1 608F4395
+P 7100 2450
+F 0 "H1" H 7200 2496 50  0001 L CNN
+F 1 "MountingHole" H 7200 2450 50  0000 L CNN
+F 2 "Mounting_Holes:MountingHole_3.2mm_M3" H 7200 2359 50  0000 L CNN
+F 3 "~" H 7100 2450 50  0001 C CNN
+	1    7100 2450
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC

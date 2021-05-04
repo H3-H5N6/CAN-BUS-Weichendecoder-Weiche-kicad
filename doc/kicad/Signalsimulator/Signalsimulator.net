@@ -1,8 +1,8 @@
 (export (version D)
   (design
-    (source /home/harald/project/arduino/vscode/CAN-BUS-Weichendecoder/doc/kicad/Weichensimultor/Signalsimulator/Signalsimulator.sch)
-    (date "So 18 Apr 2021 00:10:13 CEST")
-    (tool "Eeschema 5.1.9")
+    (source /home/harald/project/arduino/vscode/CAN-BUS-Weichendecoder/doc/kicad/Signalsimulator/Signalsimulator.sch)
+    (date "Mo 03 Mai 2021 01:54:58 CEST")
+    (tool "Eeschema 5.1.10")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
         (title)
@@ -98,7 +98,14 @@
       (datasheet ~)
       (libsource (lib Device) (part R) (description Resistor))
       (sheetpath (names /) (tstamps /))
-      (tstamp 607B3367)))
+      (tstamp 607B3367))
+    (comp (ref H1)
+      (value MountingHole)
+      (footprint Mounting_Holes:MountingHole_3.2mm_M3)
+      (datasheet ~)
+      (libsource (lib Mechanical) (part MountingHole) (description "Mounting Hole without connection"))
+      (sheetpath (names /) (tstamps /))
+      (tstamp 608F4395)))
   (libparts
     (libpart (lib Connector_Generic) (part Conn_02x03_Odd_Even)
       (description "Generic connector, double row, 02x03, odd/even pin numbering scheme (row 1 odd numbers, row 2 even numbers), script generated (kicad-library-utils/schlib/autogen/connector/)")
@@ -138,12 +145,22 @@
         (field (name Value) R))
       (pins
         (pin (num 1) (name ~) (type passive))
-        (pin (num 2) (name ~) (type passive)))))
+        (pin (num 2) (name ~) (type passive))))
+    (libpart (lib Mechanical) (part MountingHole)
+      (description "Mounting Hole without connection")
+      (docs ~)
+      (footprints
+        (fp MountingHole*))
+      (fields
+        (field (name Reference) H)
+        (field (name Value) MountingHole))))
   (libraries
     (library (logical Connector_Generic)
       (uri /usr/share/kicad/library/Connector_Generic.lib))
     (library (logical Device)
-      (uri /usr/share/kicad/library/Device.lib)))
+      (uri /usr/share/kicad/library/Device.lib))
+    (library (logical Mechanical)
+      (uri /usr/share/kicad/library/Mechanical.lib)))
   (nets
     (net (code 1) (name "Net-(J1-Pad5)")
       (node (ref R4) (pin 2))
