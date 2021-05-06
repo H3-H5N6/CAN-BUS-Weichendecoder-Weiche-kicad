@@ -418,20 +418,20 @@ Wire Wire Line
 $Comp
 L HFD2_005-S-L2-D:HFD2_005-S-L2-D K1
 U 1 1 6081F7E1
-P 1500 6750
-F 0 "K1" H 2150 7015 50  0000 C CNN
-F 1 "HFD2_005-S-L2-D" H 2150 6924 50  0000 C CNN
-F 2 "HFD2_005-S-L2-D:HFD2005SL2D" H 2650 6850 50  0001 L CNN
-F 3 "http://www.hongfa.com/pro/pdf/HFD2_en.pdf" H 2650 6750 50  0001 L CNN
-F 4 "Hongfa Europe GMBH DPDT Non-Latching Relay PCB Mount, 5V dc Coil, 3 A, 3 A Subminiature DIP Relay" H 2650 6650 50  0001 L CNN "Description"
-F 5 "10.6" H 2650 6550 50  0001 L CNN "Height"
-F 6 "Hongfa" H 2650 6450 50  0001 L CNN "Manufacturer_Name"
-F 7 "HFD2/005-S-L2-D" H 2650 6350 50  0001 L CNN "Manufacturer_Part_Number"
-F 8 "" H 2650 6250 50  0001 L CNN "Mouser Part Number"
-F 9 "" H 2650 6150 50  0001 L CNN "Mouser Price/Stock"
-F 10 "HFD2/005-S-L2-D" H 2650 6050 50  0001 L CNN "Arrow Part Number"
-F 11 "https://www.arrow.com/en/products/hfd2005-s-l2-d/hongfa-europe-gmbh" H 2650 5950 50  0001 L CNN "Arrow Price/Stock"
-	1    1500 6750
+P 1650 6950
+F 0 "K1" H 2300 7215 50  0000 C CNN
+F 1 "HFD2_005-S-L2-D" H 2300 7124 50  0000 C CNN
+F 2 "HFD2_005-S-L2-D:HFD2005SL2D" H 2800 7050 50  0001 L CNN
+F 3 "http://www.hongfa.com/pro/pdf/HFD2_en.pdf" H 2800 6950 50  0001 L CNN
+F 4 "Hongfa Europe GMBH DPDT Non-Latching Relay PCB Mount, 5V dc Coil, 3 A, 3 A Subminiature DIP Relay" H 2800 6850 50  0001 L CNN "Description"
+F 5 "10.6" H 2800 6750 50  0001 L CNN "Height"
+F 6 "Hongfa" H 2800 6650 50  0001 L CNN "Manufacturer_Name"
+F 7 "HFD2/005-S-L2-D" H 2800 6550 50  0001 L CNN "Manufacturer_Part_Number"
+F 8 "" H 2800 6450 50  0001 L CNN "Mouser Part Number"
+F 9 "" H 2800 6350 50  0001 L CNN "Mouser Price/Stock"
+F 10 "HFD2/005-S-L2-D" H 2800 6250 50  0001 L CNN "Arrow Part Number"
+F 11 "https://www.arrow.com/en/products/hfd2005-s-l2-d/hongfa-europe-gmbh" H 2800 6150 50  0001 L CNN "Arrow Price/Stock"
+	1    1650 6950
 	1    0    0    -1  
 $EndComp
 NoConn ~ 7100 2150
@@ -516,12 +516,12 @@ $EndComp
 $Comp
 L CAN-BUS-MODULE-TJA1050:CAN-BUS_MODULE_TJA1050 Shield1
 U 1 1 60585225
-P 1900 2850
-F 0 "Shield1" H 1850 2175 50  0000 C CNN
-F 1 "CAN-BUS_MODULE_TJA1050" H 1850 2084 50  0000 C CNN
-F 2 "kicad-lib:MCP2515_CAN_MODULE_BY0-10" H 1900 2850 50  0001 C CIN
-F 3 "" H 1900 2850 50  0001 C CNN
-	1    1900 2850
+P 1700 2850
+F 0 "Shield1" H 1650 2175 50  0000 C CNN
+F 1 "CAN-BUS_MODULE_TJA1050" H 1650 2084 50  0000 C CNN
+F 2 "kicad-lib:MCP2515_CAN_MODULE_BY0-10" H 1700 2850 50  0001 C CIN
+F 3 "" H 1700 2850 50  0001 C CNN
+	1    1700 2850
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
@@ -1258,14 +1258,14 @@ Wire Wire Line
 Wire Wire Line
 	2400 5650 1850 5650
 Wire Wire Line
-	1100 3050 850  3050
+	1100 3050 900  3050
 Wire Wire Line
 	850  3050 850  3850
 Wire Wire Line
 	850  3850 2050 3850
 Connection ~ 2050 5100
 Wire Wire Line
-	1100 2950 800  2950
+	1100 2950 900  2950
 Wire Wire Line
 	800  2950 800  3900
 Wire Wire Line
@@ -1373,4 +1373,25 @@ Wire Wire Line
 	3950 3900 3950 4900
 Wire Wire Line
 	3950 4900 4400 4900
+Connection ~ 850  3050
+Connection ~ 850  2950
+Wire Wire Line
+	850  2950 800  2950
+$Comp
+L Connector:Conn_01x07_Male J?
+U 1 1 609319D5
+P 2400 2950
+F 0 "J?" H 2508 3431 50  0000 C CNN
+F 1 "Conn_01x07_Male" H 2508 3340 50  0000 C CNN
+F 2 "" H 2400 2950 50  0001 C CNN
+F 3 "~" H 2400 2950 50  0001 C CNN
+	1    2400 2950
+	1    0    0    -1  
+$EndComp
+Connection ~ 900  3050
+Wire Wire Line
+	900  3050 850  3050
+Connection ~ 900  2950
+Wire Wire Line
+	900  2950 850  2950
 $EndSCHEMATC
