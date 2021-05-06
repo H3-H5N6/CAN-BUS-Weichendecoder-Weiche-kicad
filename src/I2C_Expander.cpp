@@ -3,10 +3,10 @@
 
 #include "PCF8574.h"
 
-byte address2[] = {0x38, 0x3c};
-PCF8574 i2c2[] = {PCF8574(address2[0]), PCF8574(address2[1])};
+byte address2[] = {0x38, 0x3c, 0x3e};
+PCF8574 i2c2[] = {PCF8574(address2[0]), PCF8574(address2[1]), PCF8574(address2[2])};
 
-void I2C_Expander::signal_on(byte _pin) {
+void I2C_Expander::on(byte _pin) {
   byte index = _pin / 8;
   byte pin = _pin % 8;
 
@@ -20,7 +20,7 @@ void I2C_Expander::signal_on(byte _pin) {
 #endif
 }
 
-void I2C_Expander::signal_off(byte _pin) {
+void I2C_Expander::off(byte _pin) {
   byte index = _pin / 8;
   byte pin = _pin % 8;
 
@@ -48,25 +48,24 @@ void I2C_Expander::init() {
 
 void I2C_Expander::checkAll() {
   for (byte i = 0; i < amountI2c * 8; i++) {
-    signal_on(i);
+    on(i);
     delay(100);
   }
 
   for (byte i = amountI2c * 8; i > 0; i--) {
-    signal_off(i - 1);
+    off(i - 1);
     delay(100);
   }
 }
-
 
 void I2C_Expander::setSignal(Signal_i2c signal) {    
     byte value = signal.get();
 
     for (byte i = 0, pin = signal.getOffset() ; i< 5; i++, pin++){
         if (value & 0x01){
-          signal_on(pin);
+          on(pin);
         } else {
-          signal_off(pin);
+          off(pin);
         }
 #ifdef DEBUG_EXPANDER
         Serial.print("Value: [");

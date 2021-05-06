@@ -10,7 +10,7 @@
 
 I2C_Expander i2c_expander;
 
-Signal_i2c signal[] = {Signal_i2c(1,0), Signal_i2c(2,5), Signal_i2c(3,9)};
+Signal_i2c signal[] = {Signal_i2c(1,0), Signal_i2c(2,8), Signal_i2c(3,16)};
 
 #define IMPULSE_LENGTH 4000
 
@@ -78,7 +78,7 @@ void setup() {
 
   i2c_expander.init();
 
-  //i2c_expander.checkAll();
+  i2c_expander.checkAll();
 
   Serial.print("Before");
   Serial.println(signal[0].get());
