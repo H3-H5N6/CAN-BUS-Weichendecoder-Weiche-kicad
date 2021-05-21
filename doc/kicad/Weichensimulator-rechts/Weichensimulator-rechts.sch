@@ -213,4 +213,33 @@ $EndComp
 Connection ~ 5450 3150
 Connection ~ 4200 3850
 Connection ~ 4300 3950
+$Comp
+L Connector:Conn_01x03_Male Rü
+U 1 1 60A840A4
+P 7150 3550
+F 0 "Rü" H 7122 3528 50  0000 R CNN
+F 1 "Conn_01x03_Male" H 7122 3573 50  0001 R CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x03_Pitch2.54mm" H 7150 3550 50  0001 C CNN
+F 3 "~" H 7150 3550 50  0001 C CNN
+	1    7150 3550
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	6750 3550 6800 3550
+Wire Wire Line
+	6800 3550 6800 3650
+Wire Wire Line
+	6800 3650 6950 3650
+Wire Wire Line
+	6750 3450 6850 3450
+Wire Wire Line
+	6850 3450 6850 3550
+Wire Wire Line
+	6850 3550 6950 3550
+Wire Wire Line
+	6750 3350 6900 3350
+Wire Wire Line
+	6900 3350 6900 3450
+Wire Wire Line
+	6900 3450 6950 3450
 $EndSCHEMATC
