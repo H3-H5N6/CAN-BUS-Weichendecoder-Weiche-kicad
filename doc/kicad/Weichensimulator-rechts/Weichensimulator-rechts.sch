@@ -160,13 +160,10 @@ F 3 "" H 5450 3150 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	5450 3250 5450 3150
-Connection ~ 4200 3850
 Wire Wire Line
 	4200 3850 4800 3850
-Connection ~ 4300 3950
 Wire Wire Line
 	4300 3950 4800 3950
-Connection ~ 5450 3150
 Wire Wire Line
 	4350 2300 4500 2300
 Connection ~ 4500 2300
@@ -175,12 +172,12 @@ Wire Wire Line
 $Comp
 L Mechanical:MountingHole H1
 U 1 1 6074DA08
-P 6350 2100
-F 0 "H1" H 6450 2200 50  0000 L CNN
-F 1 "MountingHole" H 6450 2055 50  0001 L CNN
-F 2 "Mounting_Holes:MountingHole_3.2mm_M3" H 6350 2100 50  0001 C CNN
-F 3 "~" H 6350 2100 50  0001 C CNN
-	1    6350 2100
+P 6450 1950
+F 0 "H1" H 6550 2050 50  0000 L CNN
+F 1 "MountingHole" H 6550 1905 50  0001 L CNN
+F 2 "Mounting_Holes:MountingHole_3.2mm_M3" H 6450 1950 50  0001 C CNN
+F 3 "~" H 6450 1950 50  0001 C CNN
+	1    6450 1950
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
@@ -213,4 +210,7 @@ F 3 "~" H 3900 3850 50  0001 C CNN
 	1    3900 3850
 	1    0    0    -1  
 $EndComp
+Connection ~ 5450 3150
+Connection ~ 4200 3850
+Connection ~ 4300 3950
 $EndSCHEMATC
