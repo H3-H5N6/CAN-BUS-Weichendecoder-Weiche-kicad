@@ -227,7 +227,7 @@ U 1 1 608F4395
 P 7100 2450
 F 0 "H1" H 7200 2496 50  0001 L CNN
 F 1 "MountingHole" H 7200 2450 50  0000 L CNN
-F 2 "Mounting_Holes:MountingHole_3.2mm_M3" H 7200 2359 50  0001 L CNN
+F 2 "Mounting_Holes:MountingHole_3.2mm_M3" H 7200 2359 50  0000 L CNN
 F 3 "~" H 7100 2450 50  0001 C CNN
 	1    7100 2450
 	1    0    0    -1  
