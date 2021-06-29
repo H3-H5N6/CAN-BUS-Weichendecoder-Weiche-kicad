@@ -1,4 +1,4 @@
-update=Di 13 Apr 2021 00:42:19 CEST
+update=Do 20 Mai 2021 22:27:33 CEST
 version=1
 last_client=kicad
 [general]
@@ -25,7 +25,7 @@ ERC_TestSimilarLabels=1
 [pcbnew]
 version=1
 PageLayoutDescrFile=
-LastNetListRead=Weichensimultor.net
+LastNetListRead=Weichensimulator-45rechts.net
 CopperLayerCount=2
 BoardThickness=1.6
 AllowMicroVias=0
@@ -67,7 +67,7 @@ OthersTextUpright=1
 SolderMaskClearance=0
 SolderMaskMinWidth=0
 SolderPasteClearance=0
-SolderPasteRatio=-0
+SolderPasteRatio=0
 [pcbnew/Layer.F.Cu]
 Name=F.Cu
 Type=0
