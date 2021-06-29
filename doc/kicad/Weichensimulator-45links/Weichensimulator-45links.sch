@@ -71,21 +71,21 @@ $EndComp
 $Comp
 L HFD2_005-S-L2-D:HFD2_005-S-L2-D K1
 U 1 1 6125B40D
-P 6750 3150
-F 0 "K1" H 7400 3415 50  0000 C CNN
-F 1 "HFD2_005-S-L2-D" H 7400 3324 50  0000 C CNN
-F 2 "HFD2005SL2D" H 7900 3250 50  0001 L CNN
-F 3 "http://www.hongfa.com/pro/pdf/HFD2_en.pdf" H 7900 3150 50  0001 L CNN
-F 4 "Hongfa Europe GMBH DPDT Non-Latching Relay PCB Mount, 5V dc Coil, 3 A, 3 A Subminiature DIP Relay" H 7900 3050 50  0001 L CNN "Description"
-F 5 "10.6" H 7900 2950 50  0001 L CNN "Height"
-F 6 "Hongfa" H 7900 2850 50  0001 L CNN "Manufacturer_Name"
-F 7 "HFD2/005-S-L2-D" H 7900 2750 50  0001 L CNN "Manufacturer_Part_Number"
-F 8 "" H 7900 2650 50  0001 L CNN "Mouser Part Number"
-F 9 "" H 7900 2550 50  0001 L CNN "Mouser Price/Stock"
-F 10 "HFD2/005-S-L2-D" H 7900 2450 50  0001 L CNN "Arrow Part Number"
-F 11 "https://www.arrow.com/en/products/hfd2005-s-l2-d/hongfa-europe-gmbh" H 7900 2350 50  0001 L CNN "Arrow Price/Stock"
-	1    6750 3150
-	-1   0    0    -1  
+P 5450 3150
+F 0 "K1" H 6100 3415 50  0000 C CNN
+F 1 "HFD2_005-S-L2-D" H 6100 3324 50  0000 C CNN
+F 2 "HFD2005SL2D" H 6600 3250 50  0001 L CNN
+F 3 "http://www.hongfa.com/pro/pdf/HFD2_en.pdf" H 6600 3150 50  0001 L CNN
+F 4 "Hongfa Europe GMBH DPDT Non-Latching Relay PCB Mount, 5V dc Coil, 3 A, 3 A Subminiature DIP Relay" H 6600 3050 50  0001 L CNN "Description"
+F 5 "10.6" H 6600 2950 50  0001 L CNN "Height"
+F 6 "Hongfa" H 6600 2850 50  0001 L CNN "Manufacturer_Name"
+F 7 "HFD2/005-S-L2-D" H 6600 2750 50  0001 L CNN "Manufacturer_Part_Number"
+F 8 "" H 6600 2650 50  0001 L CNN "Mouser Part Number"
+F 9 "" H 6600 2550 50  0001 L CNN "Mouser Price/Stock"
+F 10 "HFD2/005-S-L2-D" H 6600 2450 50  0001 L CNN "Arrow Part Number"
+F 11 "https://www.arrow.com/en/products/hfd2005-s-l2-d/hongfa-europe-gmbh" H 6600 2350 50  0001 L CNN "Arrow Price/Stock"
+	1    5450 3150
+	1    0    0    -1  
 $EndComp
 $Comp
 L power:GND #PWR0102
@@ -166,7 +166,6 @@ Wire Wire Line
 Connection ~ 4300 3950
 Wire Wire Line
 	4300 3950 4800 3950
-Connection ~ 5450 3150
 Wire Wire Line
 	4350 2300 4500 2300
 Connection ~ 4500 2300
@@ -213,4 +212,5 @@ F 3 "~" H 3900 3850 50  0001 C CNN
 	1    3900 3850
 	1    0    0    -1  
 $EndComp
+Connection ~ 5450 3150
 $EndSCHEMATC
