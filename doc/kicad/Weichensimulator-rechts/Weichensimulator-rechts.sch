@@ -214,10 +214,10 @@ Connection ~ 5450 3150
 Connection ~ 4200 3850
 Connection ~ 4300 3950
 $Comp
-L Connector:Conn_01x03_Male Rü
+L Connector:Conn_01x03_Male Rü1
 U 1 1 60A840A4
 P 7150 3550
-F 0 "Rü" H 7122 3528 50  0000 R CNN
+F 0 "Rü1" H 7122 3528 50  0000 R CNN
 F 1 "Conn_01x03_Male" H 7122 3573 50  0001 R CNN
 F 2 "Pin_Headers:Pin_Header_Straight_1x03_Pitch2.54mm" H 7150 3550 50  0001 C CNN
 F 3 "~" H 7150 3550 50  0001 C CNN
