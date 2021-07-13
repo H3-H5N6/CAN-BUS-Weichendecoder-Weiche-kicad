@@ -83,13 +83,13 @@ class OutputControl {
   void impulse();
 
   /**
-   * Liefert true, wenn Ausgang auf EIN steht.
+   * Liefert true, wenn Ausgang auf EIN steht. 
    */
   boolean isOn();
 
   /**
-   * Liefert true, wenn der Ausgang AUS ist und das mindestens für die Dauer 
-   * von mindestens duration_2 ms.
+   * Liefert true, wenn der Ausgang AUS ist und dies mindestens für die Dauer 
+   * von duration_2 ms.
    */  
   boolean isImpulePosible();
 
