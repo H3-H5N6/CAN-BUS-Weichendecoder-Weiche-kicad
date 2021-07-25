@@ -22,8 +22,14 @@ class Weiche {
 
   WEICHE::POSITION gerade();
 
+  /**
+   * Stellt die Weiche auf Abzweig.
+   */
   WEICHE::POSITION abzweig();
 
+  /**
+   * Liefert die aktuelle Position aus Sicht der Software
+   */
   WEICHE::POSITION status();
 
   boolean changeIsPosible();
