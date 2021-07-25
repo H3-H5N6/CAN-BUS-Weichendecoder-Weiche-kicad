@@ -11,6 +11,7 @@ WEICHE::POSITION Weiche::gerade() {
   }
   postion = WEICHE::POSITION::RUNNING_GERADE;
   g.impulse();
+  return WEICHE::POSITION::RUNNING_GERADE;
 }
 
 boolean Weiche::changeIsPosible(){
@@ -26,6 +27,7 @@ WEICHE::POSITION Weiche::abzweig() {
   }
   postion = WEICHE::POSITION::RUNNING_ABZWEIG;
   a.impulse();
+  return WEICHE::POSITION::RUNNING_ABZWEIG;
 }
 
 WEICHE::POSITION Weiche::status() {
