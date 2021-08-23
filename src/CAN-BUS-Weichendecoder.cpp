@@ -1,6 +1,7 @@
 #include <Arduino.h>
 
 #include "OutputControl.h"
+#include "Weiche.h"
 
 #define IMPULSE_LENGTH 1000
 
@@ -26,6 +27,8 @@ OUTPUT_CONF configuration = {
 
 OutputControl* control = (OutputControl*)malloc(sizeof(OutputControl) * 10);
 
+Weiche* weiche = (Weiche*)malloc(sizeof(Weiche) * 5);
+
 void init_led() {
   Serial.println("Beginn");
 
@@ -41,6 +44,13 @@ void init_led() {
   control[9] = OutputControl(&configuration, LED_10);
   Serial.println("Ausgänge sind nun konfigiert. Warte 2s");
 
+  weiche[0] = Weiche(control[0], control[1]);
+  weiche[1] = Weiche(control[2], control[3]);
+  weiche[2] = Weiche(control[4], control[5]);
+  weiche[3] = Weiche(control[6], control[7]);
+  weiche[4] = Weiche(control[8], control[9]);
+
+
   delay(2000);
 
   Serial.println("Es geht nun in die Schleife");
@@ -52,9 +62,18 @@ void setup() {
 }
 
 void processControl() {
-  for (byte k = 0; k < 10; k++) {
-      control[k].process();
+  for (byte k = 0; k < 5; k++) {
+      weiche[k].process();
   }
+
+  Serial.print("Weichen: ");
+  for (byte k = 0; k < 5; k++) {
+      Serial.print("[");
+      Serial.print(weiche[k].status());
+      Serial.print("]");
+    }
+    Serial.println();
+
 }
 
 unsigned long lastChanged = millis();
@@ -62,21 +81,27 @@ byte index = 0;
 
 void loop() {
   if ((lastChanged + IMPULSE_LENGTH * 4 ) < millis()){
-
-
-
     Serial.print("impulse: ");
     Serial.println(index);
-    control[index].impulse();
-    control[index+2].impulse();
-    control[index+4].impulse();
-    control[index+6].impulse();
-    control[index+8].impulse();
     lastChanged = millis();
 
     if (index == 0){
+      Serial.println("Abzweig");
+      WEICHE::POSITION p0 = weiche[0].abzweig();
+      Serial.print("Position: ");
+      Serial.println(p0);
+      weiche[1].abzweig();
+      weiche[2].abzweig();
+      weiche[3].abzweig();
+      weiche[4].abzweig();
       index = 1;
     } else {
+      Serial.println("Gerade");
+      weiche[0].gerade();
+      weiche[1].gerade();
+      weiche[2].gerade();
+      weiche[3].gerade();
+      weiche[4].gerade();
       index = 0;
     }
 

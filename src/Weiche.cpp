@@ -1,6 +1,6 @@
 #include "Weiche.h"
 
-Weiche::Weiche(OutputControl _g, OutputControl _a) : g(_g), a(_a){};
+Weiche::Weiche(OutputControl &_g, OutputControl &_a) : g(_g), a(_a){};
 
 WEICHE::POSITION Weiche::gerade() {
   if (a.isOn()) {
@@ -51,4 +51,9 @@ WEICHE::POSITION Weiche::status() {
         default:
             return WEICHE::POSITION::UNKNOWN;
     }
+}
+
+void Weiche::process() {
+  g.process();
+  a.process();
 }

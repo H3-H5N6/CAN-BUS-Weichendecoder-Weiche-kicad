@@ -18,7 +18,7 @@ namespace WEICHE {
 
 class Weiche {
  public:
-  Weiche(OutputControl g, OutputControl a);
+  explicit Weiche(OutputControl &g, OutputControl &a);
 
   WEICHE::POSITION gerade();
 
@@ -33,6 +33,8 @@ class Weiche {
   WEICHE::POSITION status();
 
   boolean changeIsPosible();
+
+  void process();
 
  private:
   OutputControl g;
