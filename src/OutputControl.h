@@ -38,28 +38,13 @@ typedef struct {
   uint16_t duration;
   /** Zeit, ab der die nächste Aktion wieder möglich ist */
   uint16_t duration_2;
-  /** Zeitpunkt der letzen Änderung in ms */
-  unsigned long lastChanged;
-  /** aktueller Zustand des Ausgang */
-  boolean state;
-  /** Pin des Ausgangs */
-  byte pin;
-} ACTOR;
+} OUTPUT_CONF;
 
 class OutputControl {
  public:
   // OutputControl();
 
-  explicit OutputControl(ACTOR *_actor);
-
-  /**
-   * 
-   * @param outputMode 
-   * @param activeMode legt fest, ober Ausgang aktiv LOW oder HIGHT ist
-   * @param duration in ms für den outputMode impulse
-   * @param pin
-   */
-  void init(OUTPUT_CONTROL::OUTPUT_MODE outputMode, OUTPUT_CONTROL::ACTIVE_MODE activeMode, uint16_t duration, byte pin);
+  explicit OutputControl(OUTPUT_CONF *_configuration, byte _pin);
 
   /**
    * Schaltet den Ausgang ein. 
@@ -110,7 +95,16 @@ class OutputControl {
   void offFlash();
 
  private:
-  ACTOR *actor;
+  OUTPUT_CONF *configuration;
+
+  /** Zeitpunkt der letzen Änderung in ms */
+  unsigned long lastChanged;
+
+  /** aktueller Zustand des Ausgang */
+  boolean state;
+  
+  /** Pin des Ausgangs */
+  byte pin;
 
   /**
    * Schaltet zweitverzögert den Ausgang via toggle() wieder um. Die 
