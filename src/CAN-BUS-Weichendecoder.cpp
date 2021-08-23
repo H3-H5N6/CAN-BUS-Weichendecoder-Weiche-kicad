@@ -39,7 +39,7 @@ void init_led() {
   control[7] = OutputControl(&configuration, LED_8);
   control[8] = OutputControl(&configuration, LED_9);
   control[9] = OutputControl(&configuration, LED_10);
-  Serial.println("Ausgänge sind nun konfigiert. Warte 4s");
+  Serial.println("Ausgänge sind nun konfigiert. Warte 2s");
 
   delay(2000);
 
@@ -58,7 +58,7 @@ void processControl() {
 }
 
 unsigned long lastChanged = millis();
-byte index = 4;
+byte index = 0;
 
 void loop() {
   if ((lastChanged + IMPULSE_LENGTH * 4 ) < millis()){
@@ -68,12 +68,16 @@ void loop() {
     Serial.print("impulse: ");
     Serial.println(index);
     control[index].impulse();
+    control[index+2].impulse();
+    control[index+4].impulse();
+    control[index+6].impulse();
+    control[index+8].impulse();
     lastChanged = millis();
 
-    if (index == 4){
-      index = 5;
+    if (index == 0){
+      index = 1;
     } else {
-      index = 4;
+      index = 0;
     }
 
   }
