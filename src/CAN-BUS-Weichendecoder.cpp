@@ -29,7 +29,7 @@ OutputControl* control = (OutputControl*)malloc(sizeof(OutputControl) * 10);
 
 Weiche* weiche = (Weiche*)malloc(sizeof(Weiche) * 5);
 
-void init_led() {
+void initWeiche() {
   Serial.println("Beginn");
 
   control[0] = OutputControl(&configuration, LED_1);
@@ -58,22 +58,13 @@ void init_led() {
 
 void setup() {
   Serial.begin(115200);
-  init_led();
+  initWeiche();
 }
 
-void processControl() {
+void processWeiche() {
   for (byte k = 0; k < 5; k++) {
       weiche[k].process();
   }
-
-  Serial.print("Weichen: ");
-  for (byte k = 0; k < 5; k++) {
-      Serial.print("[");
-      Serial.print(weiche[k].status());
-      Serial.print("]");
-    }
-    Serial.println();
-
 }
 
 unsigned long lastChanged = millis();
@@ -107,7 +98,7 @@ void loop() {
 
   }
   Serial.print(". ");
-  processControl();
+  processWeiche();
   delay(500);
 
 
