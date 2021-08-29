@@ -40,52 +40,42 @@ void init_can() {
   settings.mTransmitBuffer0Size = 8 ;
   const uint16_t errorCode = can.begin(settings, [] { can.isr(); });
   if (errorCode == 0) {
-    Serial.print("Bit Rate prescaler: ");
+    Serial.print(F("Bit Rate prescaler: "));
     Serial.println(settings.mBitRatePrescaler);
-    Serial.print("Propagation Segment: ");
+    Serial.print(F("Propagation Segment: "));
     Serial.println(settings.mPropagationSegment);
-    Serial.print("Phase segment 1: ");
+    Serial.print(F("Phase segment 1: "));
     Serial.println(settings.mPhaseSegment1);
-    Serial.print("Phase segment 2: ");
+    Serial.print(F("Phase segment 2: "));
     Serial.println(settings.mPhaseSegment2);
-    Serial.print("SJW: ");
+    Serial.print(F("SJW: "));
     Serial.println(settings.mSJW);
-    Serial.print("Triple Sampling: ");
+    Serial.print(F("Triple Sampling: "));
     Serial.println(settings.mTripleSampling ? "yes" : "no");
-    Serial.print("Actual bit rate: ");
+    Serial.print(F("Actual bit rate: "));
     Serial.print(settings.actualBitRate());
-    Serial.println(" bit/s");
-    Serial.print("Exact bit rate ? ");
+    Serial.println(F(" bit/s"));
+    Serial.print(F("Exact bit rate ? "));
     Serial.println(settings.exactBitRate() ? "yes" : "no");
-    Serial.print("Sample point: ");
+    Serial.print(F("Sample point: "));
     Serial.print(settings.samplePointFromBitStart());
-    Serial.println("%");
+    Serial.println(F("%"));
   } else {
-    Serial.print("Configuration error 0x");
+    Serial.print(F("Configuration error 0x"));
     Serial.println(errorCode, HEX);
   }
 }
 
 void debugFrame(CANMessage *frame){
-
+  Serial.println();
   Serial.print(F("Id ["));
   Serial.print(frame->id);
-  Serial.print(F("] Command ["));
-  Serial.print(frame->data[INDEX_COMMAND]);
-  Serial.print(F("] MSB ["));
-  Serial.print(frame->data[INDEX_MSB]);
-  Serial.print(F("] LSB ["));
-  Serial.print(frame->data[INDEX_LSB]);
-  Serial.print(F("] Aktor ["));
-  Serial.print(frame->data[INDEX_AKTOR]);
-  Serial.print(F("] DATA0 ["));
-  Serial.print(frame->data[INDEX_DATA0]);
-  Serial.print(F("] DATA1 ["));
-  Serial.print(frame->data[INDEX_DATA1]);
-  Serial.print(F("] DATA2 ["));
-  Serial.print(frame->data[INDEX_DATA2]);
-  Serial.print(F("] DATA3 ["));
-  Serial.print(frame->data[INDEX_DATA3]);
+  Serial.print(F("] Data ["));
+  for (byte i = 0; i < 8; i++) {
+    Serial.print(F("["));
+    Serial.print(frame->data[i]);
+    Serial.print(F("]"));
+  }
   Serial.println(F("]"));
 }
 

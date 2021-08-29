@@ -1,15 +1,9 @@
 #include <Arduino.h>
 
 #include "CanControl.h"
-
-
-// #include "OutputControl.h"
 #include "Weiche.h"
 
-
-
 #define IMPULSE_LENGTH 1000
-
 
 uint8_t LED_1 = 4;
 uint8_t LED_2 = 5;
@@ -17,7 +11,6 @@ uint8_t LED_3 = 6;
 uint8_t LED_4 = 7;
 uint8_t LED_5 = 8;
 uint8_t LED_6 = 9;
-
 uint8_t LED_7 = A0;
 uint8_t LED_8 = A1;
 uint8_t LED_9 = A2;
@@ -32,14 +25,11 @@ OUTPUT_CONF configuration = {
 
 CANMessage frame;
 
-
 OutputControl* control = (OutputControl*)malloc(sizeof(OutputControl) * 10);
-
 Weiche* weiche = (Weiche*)malloc(sizeof(Weiche) * 5);
 
-
 void initWeiche() {
-  Serial.println("Beginn");
+  Serial.println(F("Init Weiche Beginn"));
 
   control[0] = OutputControl(&configuration, 701, LED_1);
   control[1] = OutputControl(&configuration, 702, LED_2);
@@ -51,26 +41,21 @@ void initWeiche() {
   control[7] = OutputControl(&configuration, 708, LED_8);
   control[8] = OutputControl(&configuration, 709, LED_9);
   control[9] = OutputControl(&configuration, 710, LED_10);
-  Serial.println("Ausgänge sind nun konfigiert. Warte 2s");
 
   weiche[0] = Weiche(control[0], control[1]);
   weiche[1] = Weiche(control[2], control[3]);
   weiche[2] = Weiche(control[4], control[5]);
   weiche[3] = Weiche(control[6], control[7]);
   weiche[4] = Weiche(control[8], control[9]);
- 
-  Serial.println("Es geht nun in die Schleife");
+  Serial.println(F("Init Weiche End"));
 }
 
 void setup() {
   Serial.begin(115200);
 
-
-
   initWeiche();
 
-    init_can();
-
+  init_can();
 }
 
 void processWeiche() {
@@ -89,26 +74,14 @@ void change(uint16_t address){
   }
 }
 
-
-
-
 void loop() {
-  Serial.print(". ");
+  Serial.print(F("."));
   if (can.receive(frame)) {
-
-
-    Serial.print("Received: ");
-    Serial.print(" id: [");
-    Serial.print(frame.id);
-    Serial.print("] ");
-    Serial.print("Data: ");
+    debugFrame(&frame);
 
     uint16_t address_1 = ((uint16_t) frame.data[0]);
     uint16_t address_2 = ((uint16_t) frame.data[1]);
     uint16_t adr = address_1 * 256 + address_2;
-    
-    // Serial.println(address_1);  
-    // Serial.println(address_2);
     Serial.println(adr);
     change(adr);
   }
