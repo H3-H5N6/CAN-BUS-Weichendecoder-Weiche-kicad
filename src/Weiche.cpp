@@ -57,3 +57,13 @@ void Weiche::process() {
   g.process();
   a.process();
 }
+
+void Weiche::change (uint16_t address) {
+  if (a.getAddress() == address){
+    this->abzweig();
+  } else {
+    if (g.getAddress() == address){
+      this->gerade();
+    } 
+  }
+}

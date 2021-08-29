@@ -44,7 +44,7 @@ class OutputControl {
  public:
   // OutputControl();
 
-  explicit OutputControl(OUTPUT_CONF *_configuration, byte _pin);
+  explicit OutputControl(OUTPUT_CONF *_configuration, uint16_t _address,  byte _pin);
 
   /**
    * Schaltet den Ausgang ein. 
@@ -94,6 +94,8 @@ class OutputControl {
    */
   void offFlash();
 
+  uint16_t getAddress();
+
  private:
   OUTPUT_CONF *configuration;
 
@@ -105,6 +107,9 @@ class OutputControl {
   
   /** Pin des Ausgangs */
   byte pin;
+
+  /** Addresse */
+  uint16_t address;
 
   /**
    * Schaltet zweitverzögert den Ausgang via toggle() wieder um. Die 

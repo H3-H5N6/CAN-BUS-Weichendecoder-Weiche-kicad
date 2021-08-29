@@ -23,7 +23,7 @@
 #define INDEX_DATA3 0x07
 
 #include <ACAN2515.h>
-#include <SPI.h>
+//#include <SPI.h>
 
 static const byte MCP2515_CS = 10;  // CS input of MCP2515
 static const byte MCP2515_INT = 3;  // INT output of MCP2515
@@ -34,8 +34,10 @@ static const uint32_t QUARTZ_FREQUENCY = 16UL * 1000UL * 1000UL;  // 16 MHz
 
 void init_can() {
   SPI.begin();
-  ACAN2515Settings settings(QUARTZ_FREQUENCY, 125UL * 1000UL);  // CAN bit rate 125 kb/s
+  ACAN2515Settings settings(QUARTZ_FREQUENCY, 125UL * 1000UL);  // CAN bit rate 125 kb/
   settings.mRequestedMode = ACAN2515Settings::NormalMode;     // Select loopback mode
+  settings.mReceiveBufferSize = 16 ;
+  settings.mTransmitBuffer0Size = 8 ;
   const uint16_t errorCode = can.begin(settings, [] { can.isr(); });
   if (errorCode == 0) {
     Serial.print("Bit Rate prescaler: ");

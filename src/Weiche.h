@@ -4,17 +4,15 @@
 
 #include "OutputControl.h"
 
-
 namespace WEICHE {
-    enum POSITION {
-        UNKNOWN,
-        RUNNING_ABZWEIG,
-        RUNNING_GERADE,
-        ABZWEIG,
-        GERADE
-    };
+enum POSITION {
+  UNKNOWN,
+  RUNNING_ABZWEIG,
+  RUNNING_GERADE,
+  ABZWEIG,
+  GERADE
+};
 }
-
 
 class Weiche {
  public:
@@ -35,6 +33,8 @@ class Weiche {
   boolean changeIsPosible();
 
   void process();
+
+  void change (uint16_t address); 
 
  private:
   OutputControl g;

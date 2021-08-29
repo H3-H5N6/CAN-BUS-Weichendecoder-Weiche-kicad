@@ -2,8 +2,9 @@
 
 // OutputControl::OutputControl() {}
 
-OutputControl::OutputControl(OUTPUT_CONF *_configuration, byte _pin) {
+OutputControl::OutputControl(OUTPUT_CONF *_configuration, uint16_t _address, byte _pin) {
   this->configuration = _configuration;
+  this->address = _address;
   this->pin = _pin;
 
   // Ausgange "ausschalten" und state u. lastChange setzen
@@ -166,4 +167,9 @@ void OutputControl::flash() {
   // Serial.println("Umschalten");
 
   this->toggle();
+}
+
+
+uint16_t OutputControl::getAddress(){
+  return address;
 }
