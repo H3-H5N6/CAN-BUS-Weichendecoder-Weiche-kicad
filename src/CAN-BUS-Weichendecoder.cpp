@@ -82,12 +82,15 @@ void loop() {
     Serial.print("16: ");  
     Serial.println(frame.data16[0]);
 
-    uint16_t address_1 = ((uint16_t) frame.data[0]);
-    uint16_t address_2 = ((uint16_t) frame.data[1]);
-    uint16_t adr = address_2 * 256 + address_1;
-    Serial.print("8: ");  
-    Serial.println(adr);
-    change(adr);
+    for (byte i = 0; i < 4; i++){
+      uint16_t adr = frame.data16[i];
+      Serial.print(adr);
+      Serial.print(" ");
+      if (adr != 0 ) {
+        change(adr);
+      }
+    }
+    Serial.println();
   }
 
 /*
