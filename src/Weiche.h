@@ -30,6 +30,8 @@ class Weiche {
    */
   WEICHE::POSITION status();
 
+  uint16_t statusAsAddress();
+
   boolean changeIsPosible();
 
   void process();

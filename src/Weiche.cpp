@@ -30,6 +30,22 @@ WEICHE::POSITION Weiche::abzweig() {
   return WEICHE::POSITION::RUNNING_ABZWEIG;
 }
 
+
+uint16_t Weiche::statusAsAddress() {
+  switch (this->status()){
+      case WEICHE::POSITION::ABZWEIG:
+        return a.getAddress();
+      case WEICHE::POSITION::GERADE:
+        return g.getAddress();
+      default:
+        return 0;
+  }
+
+
+
+
+}
+
 WEICHE::POSITION Weiche::status() {
     switch (postion) {
         case WEICHE::POSITION::ABZWEIG:
