@@ -17,11 +17,10 @@ uint8_t LED_9 = A2;
 uint8_t LED_10 = A3;
 
 OUTPUT_CONF configuration = {
-  OUTPUT_CONTROL::OUTPUT_MODE::IMPULSE, 
-  OUTPUT_CONTROL::ACTIVE_MODE::low, 
-  IMPULSE_LENGTH , 
-  IMPULSE_LENGTH 
-};
+    OUTPUT_CONTROL::OUTPUT_MODE::IMPULSE,
+    OUTPUT_CONTROL::ACTIVE_MODE::low,
+    IMPULSE_LENGTH,
+    IMPULSE_LENGTH};
 
 CANMessage frame;
 
@@ -62,17 +61,48 @@ void setup() {
 
 void processWeiche() {
   for (byte k = 0; k < 5; k++) {
-      weiche[k].process();
+    weiche[k].process();
   }
 }
 
 unsigned long lastChanged = millis();
 byte index = 0;
 
-
-void change(uint16_t address){
-  for (byte i = 0; i < 5; i++){
+void change(uint16_t address) {
+  for (byte i = 0; i < 5; i++) {
     weiche[i].change(address);
+  }
+}
+
+void sendWeichenStatus() {
+  frame.id = 200;
+
+  frame.ext = false;
+  frame.rtr = false;
+  frame.len = 8;
+
+  for (byte i = 0; i < 4; i++){
+    frame.data16[i] = weiche[i].statusAsAddress();
+  }
+
+  bool ok = can.tryToSend(frame);
+  if (ok) {
+    Serial.print("Sent ok");
+  } else {
+    Serial.println("Send failure");
+  }
+
+  frame.id = 201;
+  frame.data16[0] = weiche[4].statusAsAddress();
+  frame.data16[1] = 0;
+  frame.data16[2] = 0;
+  frame.data16[3] = 0;
+
+  ok = can.tryToSend(frame);
+  if (ok) {
+    Serial.print("Sent ok");
+  } else {
+    Serial.println("Send failure");
   }
 }
 
@@ -81,25 +111,24 @@ void loop() {
   if (can.receive(frame)) {
     debugFrame(&frame);
 
-    Serial.print("16: ");  
+    Serial.print("16: ");
     Serial.println(frame.data16[0]);
 
-
-    if (frame.data16[0] == 999){
+    if (frame.data16[0] == 999) {
       Serial.println();
       Serial.print("Status: ");
-      for (byte i = 0; i < 5; i++){
+      for (byte i = 0; i < 5; i++) {
         Serial.print(weiche[i].statusAsAddress());
         Serial.print(" ");
       }
       Serial.println();
       send_mode = 1;
     } else {
-      for (byte i = 0; i < 4; i++){
+      for (byte i = 0; i < 4; i++) {
         uint16_t adr = frame.data16[i];
         Serial.print(adr);
         Serial.print(" ");
-        if (adr != 0 ) {
+        if (adr != 0) {
           change(adr);
         }
       }
@@ -107,45 +136,12 @@ void loop() {
     }
   }
 
-
   if (send_mode == 1) {
-    frame.id = 200;
-
-    frame.ext = false;
-    frame.rtr = false;
-    frame.len = 8;
-
-    frame.data16[0] = weiche[0].statusAsAddress();
-    frame.data16[1] = weiche[1].statusAsAddress();
-    frame.data16[2] = weiche[2].statusAsAddress();
-    frame.data16[3] = weiche[3].statusAsAddress();
-
-    bool ok = can.tryToSend(frame);
-    if (ok) {
-      Serial.print("Sent ok");
-    } else {
-      Serial.println("Send failure");
-    }
-
-    frame.id = 201;
-    frame.data16[0] = weiche[4].statusAsAddress();
-    frame.data16[1] = 0;
-    frame.data16[2] = 0;
-    frame.data16[3] = 0;
-
-    ok = can.tryToSend(frame);
-    if (ok) {
-      Serial.print("Sent ok");
-    } else {
-      Serial.println("Send failure");
-    }
+    sendWeichenStatus();
     send_mode = 0;
-
   }
 
   processWeiche();
 
   delay(500);
-
-
 }
