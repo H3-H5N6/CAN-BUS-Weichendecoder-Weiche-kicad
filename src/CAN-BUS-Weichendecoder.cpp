@@ -81,28 +81,17 @@ void sendWeichenStatus() {
   frame.rtr = false;
   frame.len = 8;
 
-  for (byte i = 0; i < 4; i++){
-    frame.data16[i] = weiche[i].statusAsAddress();
-  }
-
-  bool ok = can.tryToSend(frame);
-  if (ok) {
-    Serial.print("Sent ok");
-  } else {
-    Serial.println("Send failure");
-  }
-
-  frame.id = 201;
-  frame.data16[0] = weiche[4].statusAsAddress();
-  frame.data16[1] = 0;
-  frame.data16[2] = 0;
-  frame.data16[3] = 0;
-
-  ok = can.tryToSend(frame);
-  if (ok) {
-    Serial.print("Sent ok");
-  } else {
-    Serial.println("Send failure");
+  for (byte i = 0; i < 8; i++) {
+    frame.data16[i % 4] = (i < 5) ? weiche[i].statusAsAddress() : 0;
+    if (i % 4 == 3) {
+      bool ok = can.tryToSend(frame);
+      if (ok) {
+        Serial.print("Sent ok");
+      } else {
+        Serial.println("Send failure");
+      }
+      frame.id = frame.id + 1;
+    }
   }
 }
 
