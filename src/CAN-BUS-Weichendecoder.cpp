@@ -143,5 +143,5 @@ void loop() {
 
   processWeiche();
 
-  delay(500);
+  delay(5);
 }
