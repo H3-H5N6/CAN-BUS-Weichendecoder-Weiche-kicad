@@ -1,5 +1,24 @@
 #include <Arduino.h>
 
+#include <EEPROM.h>
+
+#define VERSION 2
+#define DEFAULT_MODUL_ID 800
+#define DEFAULT_WEICHEN_ID 801
+
+typedef struct {
+	uint16_t version;
+	uint16_t id;
+	uint16_t id_weichen[10];
+} CONFIGURATION;
+
+typedef union {
+	CONFIGURATION config;
+	uint16_t data[12];
+} CAN_CONFIGURATION;
+
+CAN_CONFIGURATION can_configuration;
+
 #include "CanControl.h"
 #include "Weiche.h"
 
@@ -29,19 +48,46 @@ uint16_t send_mode = 0;
 OutputControl* control = (OutputControl*)malloc(sizeof(OutputControl) * 10);
 Weiche* weiche = (Weiche*)malloc(sizeof(Weiche) * 5);
 
+void initCanConfiguraion(){
+  EEPROM.get(0, can_configuration.data);
+
+  if (can_configuration.config.version != VERSION){
+    can_configuration.config.version = VERSION;
+    can_configuration.config.id = DEFAULT_MODUL_ID;
+    for (int n = 0; n< 10; n++){
+      can_configuration.config.id_weichen[n] = DEFAULT_WEICHEN_ID + n;
+    }
+    EEPROM.put(0,can_configuration);
+  }
+
+  Serial.print("Version: [");
+  Serial.print(can_configuration.config.version);
+  Serial.println("]");
+  Serial.print("id: [");
+  Serial.print(can_configuration.config.id);
+  Serial.println("]");
+  for (int n = 0; n< 10; n++){
+    Serial.print("CAN ID: [");
+    Serial.print(can_configuration.config.id_weichen[n]);
+    Serial.println("]");
+  }
+}
+
+
+
 void initWeiche() {
   Serial.println(F("Init Weiche Beginn"));
 
-  control[0] = OutputControl(&configuration, 701, LED_1);
-  control[1] = OutputControl(&configuration, 702, LED_2);
-  control[2] = OutputControl(&configuration, 703, LED_3);
-  control[3] = OutputControl(&configuration, 704, LED_4);
-  control[4] = OutputControl(&configuration, 705, LED_5);
-  control[5] = OutputControl(&configuration, 706, LED_6);
-  control[6] = OutputControl(&configuration, 707, LED_7);
-  control[7] = OutputControl(&configuration, 708, LED_8);
-  control[8] = OutputControl(&configuration, 709, LED_9);
-  control[9] = OutputControl(&configuration, 710, LED_10);
+  control[0] = OutputControl(&configuration, can_configuration.config.id_weichen[0], LED_1);
+  control[1] = OutputControl(&configuration, can_configuration.config.id_weichen[1], LED_2);
+  control[2] = OutputControl(&configuration, can_configuration.config.id_weichen[2], LED_3);
+  control[3] = OutputControl(&configuration, can_configuration.config.id_weichen[3], LED_4);
+  control[4] = OutputControl(&configuration, can_configuration.config.id_weichen[4], LED_5);
+  control[5] = OutputControl(&configuration, can_configuration.config.id_weichen[5], LED_6);
+  control[6] = OutputControl(&configuration, can_configuration.config.id_weichen[6], LED_7);
+  control[7] = OutputControl(&configuration, can_configuration.config.id_weichen[7], LED_8);
+  control[8] = OutputControl(&configuration, can_configuration.config.id_weichen[8], LED_9);
+  control[9] = OutputControl(&configuration, can_configuration.config.id_weichen[9], LED_10);
 
   weiche[0] = Weiche(control[0], control[1]);
   weiche[1] = Weiche(control[2], control[3]);
@@ -53,6 +99,8 @@ void initWeiche() {
 
 void setup() {
   Serial.begin(115200);
+
+  initCanConfiguraion();
 
   initWeiche();
 
@@ -74,6 +122,10 @@ void change(uint16_t address) {
   }
 }
 
+/**
+ * Sendet den Status der Weichen mit der id 200 und 201
+ *
+ */
 void sendWeichenStatus() {
   frame.id = 200;
 
@@ -96,14 +148,14 @@ void sendWeichenStatus() {
 }
 
 void loop() {
-  Serial.print(F("."));
+  // Serial.print(F("."));
   if (can.receive(frame)) {
     debugFrame(&frame);
 
     Serial.print("16: ");
     Serial.println(frame.data16[0]);
 
-    if (frame.data16[0] == 999) {
+    if (frame.data16[0] == can_configuration.config.id) {
       Serial.println();
       Serial.print("Status: ");
       for (byte i = 0; i < 5; i++) {

@@ -16,7 +16,7 @@ void init_can() {
   settings.mRequestedMode = ACAN2515Settings::NormalMode;
   /** Buffer verkleinert, da wenig RAM verfügbar ist. Siehe auch 
    * https://github.com/pierremolinaro/acan2515/issues/2 */
-  settings.mReceiveBufferSize = 16 ;
+  settings.mReceiveBufferSize = 8 ;
   settings.mTransmitBuffer0Size = 8 ;
   const uint16_t errorCode = can.begin(settings, [] { can.isr(); });
   if (errorCode == 0) {
