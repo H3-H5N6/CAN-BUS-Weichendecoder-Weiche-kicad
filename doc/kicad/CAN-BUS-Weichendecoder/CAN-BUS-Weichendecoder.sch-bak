@@ -62,17 +62,6 @@ F 3 "http://www.nxp.com/documents/data_sheet/PCF8574_PCF8574A.pdf" H 7600 1750 5
 	1    7600 1750
 	1    0    0    -1  
 $EndComp
-$Comp
-L MCU_Module:Arduino_Nano_v3.x A1
-U 1 1 60416171
-P 4950 2350
-F 0 "A1" H 4750 1300 50  0000 C CNN
-F 1 "Arduino_Nano" H 5000 2700 50  0000 C CNN
-F 2 "Modules:Arduino_Nano" H 4950 2350 50  0001 C CIN
-F 3 "http://www.mouser.com/pdfdocs/Gravitech_Arduino_Nano3_0.pdf" H 4950 2350 50  0001 C CNN
-	1    4950 2350
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	7100 1450 6850 1450
 Wire Wire Line
@@ -450,8 +439,6 @@ F 3 "" H 5050 3350 50  0001 C CNN
 $EndComp
 NoConn ~ 4450 1750
 NoConn ~ 4450 1850
-NoConn ~ 4450 2050
-NoConn ~ 1000 1850
 Wire Wire Line
 	2650 2750 3150 3050
 Wire Wire Line
@@ -1398,23 +1385,181 @@ Wire Wire Line
 Wire Wire Line
 	8600 2050 8800 2050
 Wire Wire Line
-	8100 1950 8250 1750
+	8100 2050 8350 2050
 Wire Wire Line
-	8250 1750 8250 1600
+	8350 2050 8350 1600
 Wire Wire Line
-	8250 1600 8700 1600
+	8350 1600 8700 1600
 Wire Wire Line
 	8700 1600 8700 1650
 Wire Wire Line
 	8700 1650 8800 1650
 Wire Wire Line
-	8100 2050 8350 1850
+	8100 1950 8250 1950
 Wire Wire Line
-	8350 1850 8350 1500
+	8250 1950 8250 1500
 Wire Wire Line
-	8350 1500 8700 1500
+	8250 1500 8700 1500
 Wire Wire Line
 	8700 1500 8700 1550
 Wire Wire Line
 	8700 1550 8800 1550
+Wire Wire Line
+	8100 1850 8200 1850
+Wire Wire Line
+	8200 1850 8200 1400
+Wire Wire Line
+	8200 1400 8700 1400
+Wire Wire Line
+	8700 1400 8700 1450
+Wire Wire Line
+	8700 1450 8800 1450
+Wire Wire Line
+	8100 1750 8150 1750
+Wire Wire Line
+	8150 1750 8150 1300
+Wire Wire Line
+	8150 1300 8700 1300
+Wire Wire Line
+	8700 1300 8700 1350
+Wire Wire Line
+	8700 1350 8800 1350
+$Comp
+L Isolator:6N136 U9
+U 1 1 615246FE
+P 1900 1400
+F 0 "U9" H 1900 1825 50  0000 C CNN
+F 1 "6N136" H 1900 1734 50  0000 C CNN
+F 2 "Package_DIP:DIP-8_W7.62mm" H 1700 1100 50  0001 L CIN
+F 3 "https://optoelectronics.liteon.com/upload/download/DS70-2008-0032/6N135-L%206N136-L%20series.pdf" H 1900 1400 50  0001 L CNN
+	1    1900 1400
+	1    0    0    -1  
+$EndComp
+$Comp
+L Diode:1N4004 D1
+U 1 1 61525ABE
+P 1400 1350
+F 0 "D1" V 1354 1430 50  0000 L CNN
+F 1 "1N4004" V 1445 1430 50  0000 L CNN
+F 2 "Diode_THT:D_DO-41_SOD81_P10.16mm_Horizontal" H 1400 1175 50  0001 C CNN
+F 3 "http://www.vishay.com/docs/88503/1n4001.pdf" H 1400 1350 50  0001 C CNN
+	1    1400 1350
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R R7
+U 1 1 6154F62A
+P 1150 1200
+F 0 "R7" V 943 1200 50  0000 C CNN
+F 1 "1k5" V 1034 1200 50  0000 C CNN
+F 2 "Resistors_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal" V 1080 1200 50  0001 C CNN
+F 3 "~" H 1150 1200 50  0001 C CNN
+	1    1150 1200
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	1300 1200 1400 1200
+Wire Wire Line
+	1400 1200 1600 1200
+Wire Wire Line
+	1600 1200 1600 1300
+Connection ~ 1400 1200
+Wire Wire Line
+	1000 1500 1400 1500
+Wire Wire Line
+	1600 1500 1400 1500
+Connection ~ 1400 1500
+$Comp
+L power:GND #PWR0101
+U 1 1 61634386
+P 2200 1650
+F 0 "#PWR0101" H 2200 1400 50  0001 C CNN
+F 1 "GND" H 2205 1477 50  0000 C CNN
+F 2 "" H 2200 1650 50  0001 C CNN
+F 3 "" H 2200 1650 50  0001 C CNN
+	1    2200 1650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2200 1600 2200 1650
+Wire Wire Line
+	2200 1500 2800 1500
+Wire Wire Line
+	3800 1500 3800 2050
+Wire Wire Line
+	3800 2050 4450 2050
+$Comp
+L power:+5V #PWR0102
+U 1 1 61660705
+P 2400 950
+F 0 "#PWR0102" H 2400 800 50  0001 C CNN
+F 1 "+5V" H 2415 1123 50  0000 C CNN
+F 2 "" H 2400 950 50  0001 C CNN
+F 3 "" H 2400 950 50  0001 C CNN
+	1    2400 950 
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2200 1200 2400 1200
+Wire Wire Line
+	2400 1200 2400 950 
+$Comp
+L MCU_Module:Arduino_Nano_v3.x A1
+U 1 1 60416171
+P 4950 2350
+F 0 "A1" H 4750 1300 50  0000 C CNN
+F 1 "Arduino_Nano" H 5000 2700 50  0000 C CNN
+F 2 "Modules:Arduino_Nano" H 4950 2350 50  0001 C CIN
+F 3 "http://www.mouser.com/pdfdocs/Gravitech_Arduino_Nano3_0.pdf" H 4950 2350 50  0001 C CNN
+	1    4950 2350
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R8
+U 1 1 6168E6E9
+P 2800 1250
+F 0 "R8" H 2870 1296 50  0000 L CNN
+F 1 "10K" H 2870 1205 50  0000 L CNN
+F 2 "Resistors_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal" V 2730 1250 50  0001 C CNN
+F 3 "~" H 2800 1250 50  0001 C CNN
+	1    2800 1250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2800 1400 2800 1500
+Connection ~ 2800 1500
+Wire Wire Line
+	2800 1500 3800 1500
+$Comp
+L power:+5V #PWR0103
+U 1 1 616A6118
+P 2800 950
+F 0 "#PWR0103" H 2800 800 50  0001 C CNN
+F 1 "+5V" H 2815 1123 50  0000 C CNN
+F 2 "" H 2800 950 50  0001 C CNN
+F 3 "" H 2800 950 50  0001 C CNN
+	1    2800 950 
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2800 950  2800 1100
+Text Notes 1650 2050 0    50   ~ 0
+DCC-Interface
+$Comp
+L WAGO:2604-1102 J15
+U 1 1 61704909
+P 600 1300
+F 0 "J15" H 442 913 60  0000 C CNN
+F 1 "2604-1102" H 442 1019 60  0000 C CNN
+F 2 "CONN_2604-1102_4_WAG" H 600 1240 60  0001 C CNN
+F 3 "" H 600 1300 60  0000 C CNN
+	1    600  1300
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	1000 1300 1000 1200
+Connection ~ 1000 1200
+Wire Wire Line
+	1000 1400 1000 1500
+Connection ~ 1000 1500
 $EndSCHEMATC

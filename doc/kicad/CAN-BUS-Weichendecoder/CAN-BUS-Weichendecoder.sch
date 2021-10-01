@@ -62,17 +62,6 @@ F 3 "http://www.nxp.com/documents/data_sheet/PCF8574_PCF8574A.pdf" H 7600 1750 5
 	1    7600 1750
 	1    0    0    -1  
 $EndComp
-$Comp
-L MCU_Module:Arduino_Nano_v3.x A1
-U 1 1 60416171
-P 4950 2350
-F 0 "A1" H 4750 1300 50  0000 C CNN
-F 1 "Arduino_Nano" H 5000 2700 50  0000 C CNN
-F 2 "Modules:Arduino_Nano" H 4950 2350 50  0001 C CIN
-F 3 "http://www.mouser.com/pdfdocs/Gravitech_Arduino_Nano3_0.pdf" H 4950 2350 50  0001 C CNN
-	1    4950 2350
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	7100 1450 6850 1450
 Wire Wire Line
@@ -450,8 +439,6 @@ F 3 "" H 5050 3350 50  0001 C CNN
 $EndComp
 NoConn ~ 4450 1750
 NoConn ~ 4450 1850
-NoConn ~ 4450 2050
-NoConn ~ 1000 1850
 Wire Wire Line
 	2650 2750 3150 3050
 Wire Wire Line
@@ -1437,4 +1424,303 @@ Wire Wire Line
 	8700 1300 8700 1350
 Wire Wire Line
 	8700 1350 8800 1350
+$Comp
+L Isolator:6N136 U9
+U 1 1 615246FE
+P 1900 1400
+F 0 "U9" H 1900 1825 50  0000 C CNN
+F 1 "6N136" H 1900 1734 50  0000 C CNN
+F 2 "Package_DIP:DIP-8_W7.62mm" H 1700 1100 50  0001 L CIN
+F 3 "https://optoelectronics.liteon.com/upload/download/DS70-2008-0032/6N135-L%206N136-L%20series.pdf" H 1900 1400 50  0001 L CNN
+	1    1900 1400
+	1    0    0    -1  
+$EndComp
+$Comp
+L Diode:1N4004 D1
+U 1 1 61525ABE
+P 1400 1350
+F 0 "D1" V 1354 1430 50  0000 L CNN
+F 1 "1N4004" V 1445 1430 50  0000 L CNN
+F 2 "Diode_THT:D_DO-41_SOD81_P10.16mm_Horizontal" H 1400 1175 50  0001 C CNN
+F 3 "http://www.vishay.com/docs/88503/1n4001.pdf" H 1400 1350 50  0001 C CNN
+	1    1400 1350
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R R7
+U 1 1 6154F62A
+P 1150 1200
+F 0 "R7" V 943 1200 50  0000 C CNN
+F 1 "1k5" V 1034 1200 50  0000 C CNN
+F 2 "Resistors_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal" V 1080 1200 50  0001 C CNN
+F 3 "~" H 1150 1200 50  0001 C CNN
+	1    1150 1200
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	1300 1200 1400 1200
+Wire Wire Line
+	1400 1200 1600 1200
+Wire Wire Line
+	1600 1200 1600 1300
+Connection ~ 1400 1200
+Wire Wire Line
+	1000 1500 1400 1500
+Wire Wire Line
+	1600 1500 1400 1500
+Connection ~ 1400 1500
+$Comp
+L power:GND #PWR0101
+U 1 1 61634386
+P 2200 1650
+F 0 "#PWR0101" H 2200 1400 50  0001 C CNN
+F 1 "GND" H 2205 1477 50  0000 C CNN
+F 2 "" H 2200 1650 50  0001 C CNN
+F 3 "" H 2200 1650 50  0001 C CNN
+	1    2200 1650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2200 1600 2200 1650
+Wire Wire Line
+	2200 1500 2800 1500
+Wire Wire Line
+	3800 1500 3800 2050
+Wire Wire Line
+	3800 2050 4450 2050
+$Comp
+L power:+5V #PWR0102
+U 1 1 61660705
+P 2400 950
+F 0 "#PWR0102" H 2400 800 50  0001 C CNN
+F 1 "+5V" H 2415 1123 50  0000 C CNN
+F 2 "" H 2400 950 50  0001 C CNN
+F 3 "" H 2400 950 50  0001 C CNN
+	1    2400 950 
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2200 1200 2400 1200
+Wire Wire Line
+	2400 1200 2400 950 
+$Comp
+L MCU_Module:Arduino_Nano_v3.x A1
+U 1 1 60416171
+P 4950 2350
+F 0 "A1" H 4750 1300 50  0000 C CNN
+F 1 "Arduino_Nano" H 5000 2700 50  0000 C CNN
+F 2 "Modules:Arduino_Nano" H 4950 2350 50  0001 C CIN
+F 3 "http://www.mouser.com/pdfdocs/Gravitech_Arduino_Nano3_0.pdf" H 4950 2350 50  0001 C CNN
+	1    4950 2350
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R8
+U 1 1 6168E6E9
+P 2800 1250
+F 0 "R8" H 2870 1296 50  0000 L CNN
+F 1 "10K" H 2870 1205 50  0000 L CNN
+F 2 "Resistors_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal" V 2730 1250 50  0001 C CNN
+F 3 "~" H 2800 1250 50  0001 C CNN
+	1    2800 1250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2800 1400 2800 1500
+Connection ~ 2800 1500
+Wire Wire Line
+	2800 1500 3800 1500
+$Comp
+L power:+5V #PWR0103
+U 1 1 616A6118
+P 2800 950
+F 0 "#PWR0103" H 2800 800 50  0001 C CNN
+F 1 "+5V" H 2815 1123 50  0000 C CNN
+F 2 "" H 2800 950 50  0001 C CNN
+F 3 "" H 2800 950 50  0001 C CNN
+	1    2800 950 
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2800 950  2800 1100
+Text Notes 1650 2050 0    50   ~ 0
+DCC-Interface
+$Comp
+L WAGO:2604-1102 J15
+U 1 1 61704909
+P 600 1300
+F 0 "J15" H 442 913 60  0000 C CNN
+F 1 "2604-1102" H 442 1019 60  0000 C CNN
+F 2 "CONN_2604-1102_4_WAG" H 600 1240 60  0001 C CNN
+F 3 "" H 600 1300 60  0000 C CNN
+	1    600  1300
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	1000 1300 1000 1200
+Connection ~ 1000 1200
+Wire Wire Line
+	1000 1400 1000 1500
+Connection ~ 1000 1500
+$Comp
+L Regulator_Switching:TSR_1-24120 U?
+U 1 1 61513CB9
+P 50 6900
+F 0 "U?" H 50  7267 50  0000 C CNN
+F 1 "TSR_1-24120" H 50  7176 50  0000 C CNN
+F 2 "Converter_DCDC:Converter_DCDC_TRACO_TSR-1_THT" H 50  6750 50  0001 L CIN
+F 3 "http://www.tracopower.com/products/tsr1.pdf" H 50  6900 50  0001 C CNN
+	1    50   6900
+	1    0    0    -1  
+$EndComp
+$Comp
+L Regulator_Switching:TSR_1-2450 U?
+U 1 1 61514D3A
+P 0 8150
+F 0 "U?" H 0   8517 50  0000 C CNN
+F 1 "TSR_1-2450" H 0   8426 50  0000 C CNN
+F 2 "Converter_DCDC:Converter_DCDC_TRACO_TSR-1_THT" H 0   8000 50  0001 L CIN
+F 3 "http://www.tracopower.com/products/tsr1.pdf" H 0   8150 50  0001 C CNN
+	1    0    8150
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:D_Bridge_+AA- D?
+U 1 1 6151697F
+P -1950 6800
+F 0 "D?" H -1606 6846 50  0000 L CNN
+F 1 "B40C1500A" H -1606 6755 50  0000 L CNN
+F 2 "" H -1950 6800 50  0001 C CNN
+F 3 "~" H -1950 6800 50  0001 C CNN
+	1    -1950 6800
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:D_Bridge_+-AA D?
+U 1 1 615198C0
+P -1850 8050
+F 0 "D?" H -1506 8096 50  0000 L CNN
+F 1 "B140C1000A" H -1506 8005 50  0000 L CNN
+F 2 "Diodes_THT:Diode_Bridge_DIP-4_W7.62mm_P5.08mm" H -1850 8050 50  0001 C CNN
+F 3 "~" H -1850 8050 50  0001 C CNN
+	1    -1850 8050
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x02_Female J?
+U 1 1 6154B65C
+P -3350 6600
+F 0 "J?" H -3458 6275 50  0000 C CNN
+F 1 "Conn_01x02_Female" H -3458 6366 50  0000 C CNN
+F 2 "" H -3350 6600 50  0001 C CNN
+F 3 "~" H -3350 6600 50  0001 C CNN
+	1    -3350 6600
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	-3150 6500 -2650 6500
+Wire Wire Line
+	-3150 6600 -3150 7100
+Wire Wire Line
+	-3150 7100 -1950 7100
+Wire Wire Line
+	-1850 7750 -2650 7750
+Wire Wire Line
+	-2650 7750 -2650 6500
+Connection ~ -2650 6500
+Wire Wire Line
+	-2650 6500 -1950 6500
+Wire Wire Line
+	-3150 7100 -3150 8350
+Wire Wire Line
+	-3150 8350 -1850 8350
+Connection ~ -3150 7100
+$Comp
+L Device:CP C?
+U 1 1 615F4089
+P -900 7050
+F 0 "C?" H -782 7096 50  0000 L CNN
+F 1 "CP" H -782 7005 50  0000 L CNN
+F 2 "" H -862 6900 50  0001 C CNN
+F 3 "~" H -900 7050 50  0001 C CNN
+	1    -900 7050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	-1650 6800 -900 6800
+Wire Wire Line
+	-900 6800 -900 6900
+Wire Wire Line
+	-2250 6800 -2250 7300
+Wire Wire Line
+	-2250 7300 -900 7300
+Wire Wire Line
+	-900 7300 -900 7200
+$Comp
+L Device:CP C?
+U 1 1 61640734
+P -900 8300
+F 0 "C?" H -782 8346 50  0000 L CNN
+F 1 "CP" H -782 8255 50  0000 L CNN
+F 2 "" H -862 8150 50  0001 C CNN
+F 3 "~" H -900 8300 50  0001 C CNN
+	1    -900 8300
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	-2150 8050 -2150 8500
+Wire Wire Line
+	-2150 8500 -900 8500
+Wire Wire Line
+	-900 8500 -900 8450
+Wire Wire Line
+	-1550 8050 -900 8050
+Wire Wire Line
+	-900 8050 -900 8150
+Wire Wire Line
+	-900 8050 -400 8050
+Connection ~ -900 8050
+Wire Wire Line
+	0    8350 0    8500
+Wire Wire Line
+	0    8500 -900 8500
+Connection ~ -900 8500
+Wire Wire Line
+	-900 6800 -350 6800
+Connection ~ -900 6800
+Wire Wire Line
+	-900 7300 50   7300
+Wire Wire Line
+	50   7300 50   7100
+Connection ~ -900 7300
+$Comp
+L power:+5V #PWR?
+U 1 1 6176DD9A
+P 650 6650
+F 0 "#PWR?" H 650 6500 50  0001 C CNN
+F 1 "+5V" H 665 6823 50  0000 C CNN
+F 2 "" H 650 6650 50  0001 C CNN
+F 3 "" H 650 6650 50  0001 C CNN
+	1    650  6650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	450  6800 650  6800
+Wire Wire Line
+	650  6800 650  6650
+$Comp
+L power:+12V #PWR?
+U 1 1 6178B55D
+P 700 7850
+F 0 "#PWR?" H 700 7700 50  0001 C CNN
+F 1 "+12V" H 715 8023 50  0000 C CNN
+F 2 "" H 700 7850 50  0001 C CNN
+F 3 "" H 700 7850 50  0001 C CNN
+	1    700  7850
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	400  8050 700  8050
+Wire Wire Line
+	700  8050 700  7850
 $EndSCHEMATC
