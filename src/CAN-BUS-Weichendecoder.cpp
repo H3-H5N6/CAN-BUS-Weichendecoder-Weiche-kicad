@@ -44,20 +44,6 @@ Weiche* weiche = (Weiche*)malloc(sizeof(Weiche) * 5);
 
 SerialConfiguration serialConfiguration;
 
-void printConfiguration(){
-  Serial.print(F("Version: ["));
-  Serial.print(can_configuration.config.version);
-  Serial.println("]");
-  Serial.print("ID: [");
-  Serial.print(can_configuration.config.id);
-  Serial.println("]");
-  for (int n = 0; n< 10; n++){
-    Serial.print("CAN ID: [");
-    Serial.print(n);
-    Serial.print("] => ");
-    Serial.println(can_configuration.config.id_weichen[n]);
-  }
-}
 
 
 void initCanConfiguraion(){
@@ -102,7 +88,7 @@ void setup() {
   Serial.begin(115200);
 
   initCanConfiguraion();
-  printConfiguration();
+  serialConfiguration.printConfiguration();
 
   initWeiche();
 
