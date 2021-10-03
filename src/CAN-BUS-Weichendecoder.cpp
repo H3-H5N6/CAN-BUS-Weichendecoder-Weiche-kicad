@@ -48,6 +48,29 @@ uint16_t send_mode = 0;
 OutputControl* control = (OutputControl*)malloc(sizeof(OutputControl) * 10);
 Weiche* weiche = (Weiche*)malloc(sizeof(Weiche) * 5);
 
+
+boolean change_id = false;
+#define ZAHL_LENGTH 4
+
+uint8_t  zahl [ZAHL_LENGTH];
+uint8_t zahl_pos = 0;
+
+void printConfiguration(){
+  Serial.print(F("Version: ["));
+  Serial.print(can_configuration.config.version);
+  Serial.println("]");
+  Serial.print("ID: [");
+  Serial.print(can_configuration.config.id);
+  Serial.println("]");
+  for (int n = 0; n< 10; n++){
+    Serial.print("CAN ID: [");
+    Serial.print(n);
+    Serial.print("] => ");
+    Serial.println(can_configuration.config.id_weichen[n]);
+  }
+}
+
+
 void initCanConfiguraion(){
   EEPROM.get(0, can_configuration.data);
 
@@ -58,19 +81,7 @@ void initCanConfiguraion(){
       can_configuration.config.id_weichen[n] = DEFAULT_WEICHEN_ID + n;
     }
     EEPROM.put(0,can_configuration);
-  }
-
-  Serial.print("Version: [");
-  Serial.print(can_configuration.config.version);
-  Serial.println("]");
-  Serial.print("id: [");
-  Serial.print(can_configuration.config.id);
-  Serial.println("]");
-  for (int n = 0; n< 10; n++){
-    Serial.print("CAN ID: [");
-    Serial.print(can_configuration.config.id_weichen[n]);
-    Serial.println("]");
-  }
+  }  
 }
 
 
@@ -101,6 +112,7 @@ void setup() {
   Serial.begin(115200);
 
   initCanConfiguraion();
+  printConfiguration();
 
   initWeiche();
 
@@ -147,7 +159,79 @@ void sendWeichenStatus() {
   }
 }
 
+void reset_zahl() {
+  zahl_pos = 0;
+  for (uint8_t i = 0; i < ZAHL_LENGTH ; i++){
+    zahl[i] = 0;
+  }
+}
+
+uint16_t calc_zahl(){
+  uint16_t result = 0;
+  uint16_t stelle = 1;
+
+  for (uint8_t i = zahl_pos; i > 0 ; i--) {
+    result = result + (zahl[i-1] * stelle);
+    stelle = stelle * 10;
+
+  }
+  return result;
+
+}
+
 void loop() {
+
+  if (Serial.available()){
+    int input = Serial.read();
+    
+
+    switch (char(input)) {
+      case 'p':
+        change_id = false;
+        reset_zahl();
+        printConfiguration();
+        break;
+      case 'i':
+        change_id = true;
+        reset_zahl();
+        Serial.print(F("Neue ID: "));
+        break;
+      case '0':
+      case '1':
+      case '2':
+      case '3':
+      case '4':
+      case '5':
+      case '6':
+      case '7':
+      case '8':
+      case '9':
+        Serial.print(char(input));
+        if (zahl_pos > 3) {
+          reset_zahl();
+        }
+        zahl[zahl_pos] = input-48;
+        zahl_pos++;
+        break;
+      case '\r':
+        break;
+      case '\n':
+      Serial.print(char(input));
+        if (change_id) {
+          Serial.print("Setze neue Id: ");
+          Serial.println(calc_zahl());
+          can_configuration.config.id = calc_zahl();
+          EEPROM.put(0,can_configuration);
+          change_id = false;
+        }
+        reset_zahl();
+        break;
+      default:
+        change_id = false;
+        reset_zahl();
+    }
+  }
+
   // Serial.print(F("."));
   if (can.receive(frame)) {
     debugFrame(&frame);
