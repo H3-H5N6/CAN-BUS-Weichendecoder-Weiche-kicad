@@ -1,6 +1,8 @@
 #include "Weiche.h"
 
-Weiche::Weiche(OutputControl &_g, OutputControl &_a) : g(_g), a(_a){};
+Weiche::Weiche(OutputControl &_g, OutputControl &_a) : g(_g), a(_a){
+  this->gerade();
+};
 
 WEICHE::POSITION Weiche::gerade() {
   if (a.isOn()) {

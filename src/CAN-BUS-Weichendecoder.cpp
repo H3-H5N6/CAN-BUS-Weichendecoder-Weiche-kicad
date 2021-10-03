@@ -2,9 +2,9 @@
 
 #include <EEPROM.h>
 
-#define VERSION 2
-#define DEFAULT_MODUL_ID 800
-#define DEFAULT_WEICHEN_ID 801
+#define VERSION 1
+#define DEFAULT_MODUL_ID 2
+#define DEFAULT_WEICHEN_ID 811
 
 typedef struct {
 	uint16_t version;
@@ -37,7 +37,7 @@ uint8_t LED_10 = A3;
 
 OUTPUT_CONF configuration = {
     OUTPUT_CONTROL::OUTPUT_MODE::IMPULSE,
-    OUTPUT_CONTROL::ACTIVE_MODE::low,
+    OUTPUT_CONTROL::ACTIVE_MODE::high,
     IMPULSE_LENGTH,
     IMPULSE_LENGTH};
 

@@ -30,11 +30,11 @@ OutputControl::OutputControl(OUTPUT_CONF *_configuration, uint16_t _address, byt
 }
 
 void OutputControl::writeState() {
-  // Serial.print("Pin: ");
-  // Serial.print(this->actor->pin);
-  // Serial.print(" State [");
-  // Serial.print(this->actor->state);
-  // Serial.println("]");
+  Serial.print("Pin: ");
+  Serial.print(pin);
+  Serial.print(" State [");
+  Serial.print(state);
+  Serial.println("]");
   digitalWrite(pin, state);
 }
 
