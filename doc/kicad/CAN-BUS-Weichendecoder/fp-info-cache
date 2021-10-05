@@ -1,4 +1,4 @@
-1058746431379702
+1065351875031162
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -1231,6 +1231,13 @@ PUIAudio_SMT_0825_S_4_R
 0
 0
 0
+CAN-BUS-MODULE
+MCP2515_CAN_MODULE_BY0-10
+
+
+0
+11
+10
 Capacitors_SMD
 CP_Elec_3x5.3
 
@@ -21622,13 +21629,6 @@ Fuseholder_Fuse_TR5_Littlefuse-No560_No460
 0
 0
 0
-HFD2_005-S-L2-D
-HFD2005SL2D
-HFD2/005-S-L2-D-3
-Relay or Contactor
-0
-10
-10
 Hall-Effect_Transducers_LEM
 HTFS-Series_LEM-HallEffektCurrentTransducer
 
@@ -21783,6 +21783,13 @@ Heatsink_Stonecold_HS-132_32x14mm_2xFixation1.5mm
 0
 0
 0
+HongFa
+HFD2005SL2D
+HFD2/005-S-L2-D-3
+Relay or Contactor
+0
+10
+10
 Housings_BGA
 BGA-9_3x3_1.6x1.6mm_Pitch0.5mm
 
@@ -28965,6 +28972,13 @@ L_Toroid_Vertical_L67.6mm_W36.1mm_P31.80mm_Vishay_TJ9
 0
 0
 0
+Kingbright-LED
+DIPS750W80P254L2540H825Q20N
+10 SEGMENT BAR GRAPH ARRAY
+Display
+0
+20
+20
 LEDs
 LED-L1T2_LUMILEDS
 
@@ -54746,6 +54760,27 @@ RV_Disc_D21.5_W11.4_P10
 0
 0
 0
+Wago
+CONN_250-1404_WAG
+
+
+0
+4
+4
+Wago
+CONN_250-1406_WAG
+
+
+0
+6
+6
+Wago
+CONN_2604-1102_4_WAG
+
+
+0
+4
+4
 Wire_Connections_Bridges
 WireConnection_0.80mmDrill
 
@@ -55026,10 +55061,3 @@ SolderWirePad_single_SMD_5x10mm
 0
 0
 0
-kicad-lib
-MCP2515_CAN_MODULE_BY0-10
-
-
-0
-9
-9
