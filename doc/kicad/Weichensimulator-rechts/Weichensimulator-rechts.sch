@@ -69,12 +69,12 @@ F 3 "" H 4500 1700 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L HFD2_005-S-L2-D:HFD2_005-S-L2-D K1
+L HongFa:HFD2_005-S-L2-D K1
 U 1 1 6125B40D
 P 6750 3150
 F 0 "K1" H 7400 3415 50  0000 C CNN
 F 1 "HFD2_005-S-L2-D" H 7400 3324 50  0000 C CNN
-F 2 "HFD2005SL2D" H 7900 3250 50  0001 L CNN
+F 2 "HongFa:HFD2005SL2D" H 7900 3250 50  0001 L CNN
 F 3 "http://www.hongfa.com/pro/pdf/HFD2_en.pdf" H 7900 3150 50  0001 L CNN
 F 4 "Hongfa Europe GMBH DPDT Non-Latching Relay PCB Mount, 5V dc Coil, 3 A, 3 A Subminiature DIP Relay" H 7900 3050 50  0001 L CNN "Description"
 F 5 "10.6" H 7900 2950 50  0001 L CNN "Height"

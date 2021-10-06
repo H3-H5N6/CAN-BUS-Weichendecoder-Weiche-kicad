@@ -1,7 +1,7 @@
 (export (version D)
   (design
     (source /home/harald/project/arduino/vscode/CAN-BUS-Weichendecoder/doc/kicad/Weichensimulator-rechts/Weichensimulator-rechts.sch)
-    (date "Sa 22 Mai 2021 01:19:00 CEST")
+    (date "Mo 04 Okt 2021 20:34:12 CEST")
     (tool "Eeschema 5.1.10")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
@@ -45,7 +45,7 @@
       (tstamp 61212C6E))
     (comp (ref K1)
       (value HFD2_005-S-L2-D)
-      (footprint HFD2005SL2D)
+      (footprint HongFa:HFD2005SL2D)
       (datasheet http://www.hongfa.com/pro/pdf/HFD2_en.pdf)
       (fields
         (field (name "Arrow Part Number") HFD2/005-S-L2-D)
@@ -54,7 +54,7 @@
         (field (name Height) 10.6)
         (field (name Manufacturer_Name) Hongfa)
         (field (name Manufacturer_Part_Number) HFD2/005-S-L2-D))
-      (libsource (lib HFD2_005-S-L2-D) (part HFD2_005-S-L2-D) (description "Hongfa Europe GMBH DPDT Non-Latching Relay PCB Mount, 5V dc Coil, 3 A, 3 A Subminiature DIP Relay"))
+      (libsource (lib HongFa) (part HFD2_005-S-L2-D) (description ""))
       (sheetpath (names /) (tstamps /))
       (tstamp 6125B40D))
     (comp (ref J1)
@@ -140,9 +140,7 @@
       (pins
         (pin (num 1) (name ~) (type passive))
         (pin (num 2) (name ~) (type passive))))
-    (libpart (lib HFD2_005-S-L2-D) (part HFD2_005-S-L2-D)
-      (description "Hongfa Europe GMBH DPDT Non-Latching Relay PCB Mount, 5V dc Coil, 3 A, 3 A Subminiature DIP Relay")
-      (docs http://www.hongfa.com/pro/pdf/HFD2_en.pdf)
+    (libpart (lib HongFa) (part HFD2_005-S-L2-D)
       (fields
         (field (name Reference) K)
         (field (name Value) HFD2_005-S-L2-D)
@@ -178,8 +176,8 @@
       (uri /usr/share/kicad/library/Connector.lib))
     (library (logical Device)
       (uri /usr/share/kicad/library/Device.lib))
-    (library (logical HFD2_005-S-L2-D)
-      (uri /home/harald/Downloads/HFD2_005-S-L2-D/KiCad/HFD2_005-S-L2-D.lib))
+    (library (logical HongFa)
+      (uri /home/harald/project/kicad/HongFa/HongFa.lib))
     (library (logical Mechanical)
       (uri /usr/share/kicad/library/Mechanical.lib)))
   (nets
