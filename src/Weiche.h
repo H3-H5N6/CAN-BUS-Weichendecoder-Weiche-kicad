@@ -12,6 +12,15 @@ enum POSITION {
   ABZWEIG,
   GERADE
 };
+
+enum STATE {
+  OFF,
+  ON,
+  RUNNING,
+  BLOCKED_STATE,
+  UNKNOWN_STATE
+};
+
 }
 
 class Weiche {
@@ -31,6 +40,8 @@ class Weiche {
   WEICHE::POSITION status();
 
   uint16_t statusAsAddress();
+
+  void statusForCan(uint16_t (&data)[8]);
 
   boolean changeIsPosible();
 

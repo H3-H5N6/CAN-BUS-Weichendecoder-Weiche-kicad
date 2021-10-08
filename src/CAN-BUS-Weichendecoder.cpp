@@ -1,20 +1,18 @@
 #include <Arduino.h>
-
 #include <EEPROM.h>
+
 #include "CanConfiguration.h"
 
 #define VERSION 1
 #define DEFAULT_MODUL_ID 2
 #define DEFAULT_WEICHEN_ID 811
 
-
-
 CAN_CONFIGURATION can_configuration;
 
 #include "CanControl.h"
 #include "Weiche.h"
 
-#define IMPULSE_LENGTH 1000
+#define IMPULSE_LENGTH 10000
 
 uint8_t LED_1 = 4;
 uint8_t LED_2 = 5;
@@ -44,23 +42,19 @@ Weiche* weiche = (Weiche*)malloc(sizeof(Weiche) * 5);
 
 SerialConfiguration serialConfiguration;
 
-
-
-void initCanConfiguraion(){
+void initCanConfiguraion() {
   EEPROM.get(0, can_configuration.data);
 
-  if (can_configuration.config.version != VERSION){
+  if (can_configuration.config.version != VERSION) {
     can_configuration.config.version = VERSION;
     can_configuration.config.id = DEFAULT_MODUL_ID;
-    for (int n = 0; n< 10; n++){
+    for (int n = 0; n < 10; n++) {
       can_configuration.config.id_weichen[n] = DEFAULT_WEICHEN_ID + n;
     }
-    EEPROM.put(0,can_configuration);
-  }  
+    EEPROM.put(0, can_configuration);
+  }
   serialConfiguration.init(can_configuration);
 }
-
-
 
 void initWeiche() {
   Serial.println(F("Init Weiche Beginn"));
@@ -110,6 +104,41 @@ void change(uint16_t address) {
   }
 }
 
+void sendDetailWeichenStatus() {
+  frame.id = 300;
+
+  frame.ext = false;
+  frame.rtr = false;
+  frame.len = 8;
+
+  uint16_t data[8];
+
+  for (byte i = 0; i < 5; i++) {
+    weiche[i].statusForCan(data);
+    Serial.print("Frame ID: ");
+    Serial.print(frame.id);
+    Serial.print(" Data: ");
+    for (byte z = 0; z<8; z++) {
+      Serial.print(data[z]);
+      Serial.print(" ");
+    }
+    Serial.println("");
+    
+    for (byte n = 0; n < 2; n++) {
+      for (byte k = 0; k < 4; k++) {
+        frame.data16[k] = data[n * 4 + k];
+      }
+      bool ok = can.tryToSend(frame);
+      if (ok) {
+        Serial.print("Sent ok");
+      } else {
+        Serial.println("Send failure");
+      }
+      frame.id = frame.id + 1;
+    }
+  }
+}
+
 /**
  * Sendet den Status der Weichen mit der id 200 und 201
  *
@@ -135,11 +164,8 @@ void sendWeichenStatus() {
   }
 }
 
-
-
 void loop() {
-
-  serialConfiguration.process();  
+  serialConfiguration.process();
 
   // Serial.print(F("."));
   if (can.receive(frame)) {
@@ -171,7 +197,8 @@ void loop() {
   }
 
   if (send_mode == 1) {
-    sendWeichenStatus();
+    Serial.println("sendDetailWeichenStatus");
+    sendDetailWeichenStatus();
     send_mode = 0;
   }
 

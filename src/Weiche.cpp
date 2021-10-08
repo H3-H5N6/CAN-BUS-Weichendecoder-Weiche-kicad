@@ -1,6 +1,6 @@
 #include "Weiche.h"
 
-Weiche::Weiche(OutputControl &_g, OutputControl &_a) : g(_g), a(_a){
+Weiche::Weiche(OutputControl &_g, OutputControl &_a) : g(_g), a(_a) {
   this->gerade();
 };
 
@@ -16,8 +16,8 @@ WEICHE::POSITION Weiche::gerade() {
   return WEICHE::POSITION::RUNNING_GERADE;
 }
 
-boolean Weiche::changeIsPosible(){
-    return (a.isImpulePosible() && g.isImpulePosible());
+boolean Weiche::changeIsPosible() {
+  return (a.isImpulePosible() && g.isImpulePosible());
 }
 
 WEICHE::POSITION Weiche::abzweig() {
@@ -32,43 +32,96 @@ WEICHE::POSITION Weiche::abzweig() {
   return WEICHE::POSITION::RUNNING_ABZWEIG;
 }
 
-
-uint16_t Weiche::statusAsAddress() {
-  switch (this->status()){
-      case WEICHE::POSITION::ABZWEIG:
-        return a.getAddress();
-      case WEICHE::POSITION::GERADE:
-        return g.getAddress();
-      default:
-        return 0;
+void Weiche::statusForCan(uint16_t (&data)[8]) {
+  uint16_t current;
+  switch (this->status()) {
+    case WEICHE::POSITION::ABZWEIG:
+    case WEICHE::POSITION::RUNNING_ABZWEIG:
+      current = a.getAddress();
+      break;
+    case WEICHE::POSITION::GERADE:
+    case WEICHE::POSITION::RUNNING_GERADE:
+      current = g.getAddress();
+      break;
   }
 
+  // Gerade
+  data[0] = g.getAddress();
+  switch (this->status()) {
+    case WEICHE::POSITION::GERADE:
+      data[1] = WEICHE::STATE::ON;
+      break;
+    case WEICHE::POSITION::RUNNING_GERADE:
+      data[1] = WEICHE::STATE::RUNNING;
+      break;
+    case WEICHE::POSITION::UNKNOWN:
+      data[1] = WEICHE::STATE::UNKNOWN_STATE;
+      break;
+    default:
+      data[1] = WEICHE::STATE::OFF;
+  }
+  data[2] = current;
+  data[3] = 0;
 
+  // Abzweig
+  data[4] = a.getAddress();
+  switch (this->status()) {
+    case WEICHE::POSITION::ABZWEIG:
+      data[5] = WEICHE::STATE::ON;
+      break;
+    case WEICHE::POSITION::RUNNING_ABZWEIG:
+      data[5] = WEICHE::STATE::RUNNING;
+      break;
+    case WEICHE::POSITION::UNKNOWN:
+      data[5] = WEICHE::STATE::UNKNOWN_STATE;
+      break;
+    default:
+      data[5] = WEICHE::STATE::OFF;
+  }
+  data[6] = current;
+  data[7] = 0;
 
+  if (data[1] == WEICHE::STATE::RUNNING){
+    data[5] =  WEICHE::STATE::BLOCKED_STATE;
+  }
+  if (data[5] == WEICHE::STATE::RUNNING){
+    data[1] =  WEICHE::STATE::BLOCKED_STATE;
+  }
 
 }
 
+uint16_t Weiche::statusAsAddress() {
+  switch (this->status()) {
+    case WEICHE::POSITION::ABZWEIG:
+      return a.getAddress();
+    case WEICHE::POSITION::GERADE:
+      return g.getAddress();
+    default:
+      return 0;
+  }
+}
+
 WEICHE::POSITION Weiche::status() {
-    switch (postion) {
-        case WEICHE::POSITION::ABZWEIG:
-        case WEICHE::POSITION::GERADE:
-        case WEICHE::POSITION::UNKNOWN:
-            return postion;
-        case WEICHE::POSITION::RUNNING_ABZWEIG:
-            if (a.isOn()){
-                return postion;
-            }
-            return WEICHE::POSITION::ABZWEIG;
-            break;
-        case WEICHE::POSITION::RUNNING_GERADE:
-            if (g.isOn()){
-                return postion;
-            }
-            return WEICHE::POSITION::GERADE;
-            break;
-        default:
-            return WEICHE::POSITION::UNKNOWN;
-    }
+  switch (postion) {
+    case WEICHE::POSITION::ABZWEIG:
+    case WEICHE::POSITION::GERADE:
+    case WEICHE::POSITION::UNKNOWN:
+      return postion;
+    case WEICHE::POSITION::RUNNING_ABZWEIG:
+      if (a.isOn()) {
+        return postion;
+      }
+      return WEICHE::POSITION::ABZWEIG;
+      break;
+    case WEICHE::POSITION::RUNNING_GERADE:
+      if (g.isOn()) {
+        return postion;
+      }
+      return WEICHE::POSITION::GERADE;
+      break;
+    default:
+      return WEICHE::POSITION::UNKNOWN;
+  }
 }
 
 void Weiche::process() {
@@ -76,12 +129,12 @@ void Weiche::process() {
   a.process();
 }
 
-void Weiche::change (uint16_t address) {
-  if (a.getAddress() == address){
+void Weiche::change(uint16_t address) {
+  if (a.getAddress() == address) {
     this->abzweig();
   } else {
-    if (g.getAddress() == address){
+    if (g.getAddress() == address) {
       this->gerade();
-    } 
+    }
   }
 }
