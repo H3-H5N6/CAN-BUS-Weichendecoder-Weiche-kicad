@@ -4,21 +4,28 @@
 
 #include "OutputControl.h"
 
-
 namespace WEICHE {
-    enum POSITION {
-        UNKNOWN,
-        RUNNING_ABZWEIG,
-        RUNNING_GERADE,
-        ABZWEIG,
-        GERADE
-    };
-}
+enum POSITION {
+  UNKNOWN,
+  RUNNING_ABZWEIG,
+  RUNNING_GERADE,
+  ABZWEIG,
+  GERADE
+};
 
+enum STATE {
+  OFF,
+  ON,
+  RUNNING,
+  BLOCKED_STATE,
+  UNKNOWN_STATE
+};
+
+}
 
 class Weiche {
  public:
-  Weiche(OutputControl g, OutputControl a);
+  explicit Weiche(OutputControl &g, OutputControl &a);
 
   WEICHE::POSITION gerade();
 
@@ -32,7 +39,15 @@ class Weiche {
    */
   WEICHE::POSITION status();
 
+  uint16_t statusAsAddress();
+
+  void statusForCan(uint16_t (&data)[8]);
+
   boolean changeIsPosible();
+
+  void process();
+
+  void change (uint16_t address); 
 
  private:
   OutputControl g;

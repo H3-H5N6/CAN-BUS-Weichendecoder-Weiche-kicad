@@ -1,2 +1,3 @@
 (sym_lib_table
+  (lib (name CAN-BUS-Weichendecoder-rescue)(type Legacy)(uri ${KIPRJMOD}/CAN-BUS-Weichendecoder-rescue.lib)(options "")(descr "")(disabled))
 )

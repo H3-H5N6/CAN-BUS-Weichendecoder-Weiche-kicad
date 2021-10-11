@@ -1,0 +1,15 @@
+RAM:   [===       ]  34.3% (used 702 bytes from 2048 bytes)
+Flash: [====      ]  38.2% (used 11724 bytes from 30720 bytes)
+
+
+RAM:   [===       ]  33.5% (used 686 bytes from 2048 bytes)
+Flash: [====      ]  38.2% (used 11724 bytes from 30720 bytes)
+
+RAM:   [===       ]  33.5% (used 686 bytes from 2048 bytes)
+Flash: [====      ]  38.6% (used 11846 bytes from 30720 bytes)
+
+RAM:   [===       ]  33.5% (used 686 bytes from 2048 bytes)
+Flash: [====      ]  38.1% (used 11702 bytes from 30720 bytes)
+
+RAM:   [===       ]  33.5% (used 686 bytes from 2048 bytes)
+Flash: [====      ]  38.1% (used 11702 bytes from 30720 bytes)

@@ -1,29 +1,7 @@
 #ifndef CAN_CONTROL_H
 #define CAN_CONTROL_H
 
-
-#define ID_STATUS 400
-#define ID_SET 200
-
-#define MSB_IS_MODUL 0xFF
-
-#define COMMAND_CONFIG 0x03
-
-#define AKTOR_WEICHE 0x01
-#define AKTOR_HP 0x02
-#define AKTOR_VERSION 0x80
-
-#define INDEX_COMMAND 0x00
-#define INDEX_MSB 0x01
-#define INDEX_LSB 0x02
-#define INDEX_AKTOR 0x03
-#define INDEX_DATA0 0x04
-#define INDEX_DATA1 0x05
-#define INDEX_DATA2 0x06
-#define INDEX_DATA3 0x07
-
 #include <ACAN2515.h>
-#include <SPI.h>
 
 static const byte MCP2515_CS = 10;  // CS input of MCP2515
 static const byte MCP2515_INT = 3;  // INT output of MCP2515
@@ -34,56 +12,50 @@ static const uint32_t QUARTZ_FREQUENCY = 16UL * 1000UL * 1000UL;  // 16 MHz
 
 void init_can() {
   SPI.begin();
-  ACAN2515Settings settings(QUARTZ_FREQUENCY, 125UL * 1000UL);  // CAN bit rate 125 kb/s
-  settings.mRequestedMode = ACAN2515Settings::NormalMode;     // Select loopback mode
+  ACAN2515Settings settings(QUARTZ_FREQUENCY, 125UL * 1000UL);
+  settings.mRequestedMode = ACAN2515Settings::NormalMode;
+  /** Buffer verkleinert, da wenig RAM verfügbar ist. Siehe auch 
+   * https://github.com/pierremolinaro/acan2515/issues/2 */
+  settings.mReceiveBufferSize = 8 ;
+  settings.mTransmitBuffer0Size = 8 ;
   const uint16_t errorCode = can.begin(settings, [] { can.isr(); });
   if (errorCode == 0) {
-    Serial.print("Bit Rate prescaler: ");
+    Serial.print(F("Bit Rate prescaler: "));
     Serial.println(settings.mBitRatePrescaler);
-    Serial.print("Propagation Segment: ");
+    Serial.print(F("Propagation Segment: "));
     Serial.println(settings.mPropagationSegment);
-    Serial.print("Phase segment 1: ");
+    Serial.print(F("Phase segment 1: "));
     Serial.println(settings.mPhaseSegment1);
-    Serial.print("Phase segment 2: ");
+    Serial.print(F("Phase segment 2: "));
     Serial.println(settings.mPhaseSegment2);
-    Serial.print("SJW: ");
+    Serial.print(F("SJW: "));
     Serial.println(settings.mSJW);
-    Serial.print("Triple Sampling: ");
+    Serial.print(F("Triple Sampling: "));
     Serial.println(settings.mTripleSampling ? "yes" : "no");
-    Serial.print("Actual bit rate: ");
+    Serial.print(F("Actual bit rate: "));
     Serial.print(settings.actualBitRate());
-    Serial.println(" bit/s");
-    Serial.print("Exact bit rate ? ");
+    Serial.println(F(" bit/s"));
+    Serial.print(F("Exact bit rate ? "));
     Serial.println(settings.exactBitRate() ? "yes" : "no");
-    Serial.print("Sample point: ");
+    Serial.print(F("Sample point: "));
     Serial.print(settings.samplePointFromBitStart());
-    Serial.println("%");
+    Serial.println(F("%"));
   } else {
-    Serial.print("Configuration error 0x");
+    Serial.print(F("Configuration error 0x"));
     Serial.println(errorCode, HEX);
   }
 }
 
 void debugFrame(CANMessage *frame){
-
+  Serial.println();
   Serial.print(F("Id ["));
   Serial.print(frame->id);
-  Serial.print(F("] Command ["));
-  Serial.print(frame->data[INDEX_COMMAND]);
-  Serial.print(F("] MSB ["));
-  Serial.print(frame->data[INDEX_MSB]);
-  Serial.print(F("] LSB ["));
-  Serial.print(frame->data[INDEX_LSB]);
-  Serial.print(F("] Aktor ["));
-  Serial.print(frame->data[INDEX_AKTOR]);
-  Serial.print(F("] DATA0 ["));
-  Serial.print(frame->data[INDEX_DATA0]);
-  Serial.print(F("] DATA1 ["));
-  Serial.print(frame->data[INDEX_DATA1]);
-  Serial.print(F("] DATA2 ["));
-  Serial.print(frame->data[INDEX_DATA2]);
-  Serial.print(F("] DATA3 ["));
-  Serial.print(frame->data[INDEX_DATA3]);
+  Serial.print(F("] Data ["));
+  for (byte i = 0; i < 8; i++) {
+    Serial.print(F("["));
+    Serial.print(frame->data[i]);
+    Serial.print(F("]"));
+  }
   Serial.println(F("]"));
 }
 

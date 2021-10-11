@@ -2,74 +2,57 @@
 
 // OutputControl::OutputControl() {}
 
-OutputControl::OutputControl(ACTOR *_actor) {
-  this->actor = _actor;
-}
+OutputControl::OutputControl(OUTPUT_CONF *_configuration, uint16_t _address, byte _pin) {
+  this->configuration = _configuration;
+  this->address = _address;
+  this->pin = _pin;
 
-void OutputControl::init(OUTPUT_CONTROL::OUTPUT_MODE outputMode, OUTPUT_CONTROL::ACTIVE_MODE activeMode, uint16_t duration, byte pin) {
-  unsigned long lastChanged = millis();
-
-  boolean state;
-  switch (activeMode) {
+  // Ausgange "ausschalten" und state u. lastChange setzen
+  switch (this->configuration->activeMode) {
     case OUTPUT_CONTROL::ACTIVE_MODE::low:
+      pinMode(pin, INPUT_PULLUP);
       state = HIGH;
       break;
     case OUTPUT_CONTROL::ACTIVE_MODE::high:
+      pinMode(pin, INPUT);
       state = LOW;
       break;
   }
-
-  this->actor->outputMode = outputMode;
-  this->actor->activeMode = activeMode;
-  this->actor->duration = duration;
-  if (outputMode == OUTPUT_CONTROL::OUTPUT_MODE::IMPULSE) {
-    this->actor->duration_2 = duration;
-  } else {
-    this->actor->duration_2 = 0;
-  }
-  this->actor->lastChanged = 0;
-  this->actor->state = state;
-  this->actor->pin = pin;
-
-  // Ausgange "ausschalten"
-  switch (activeMode) {
-    case OUTPUT_CONTROL::ACTIVE_MODE::low:
-      pinMode(pin, INPUT_PULLUP);
-      break;
-    case OUTPUT_CONTROL::ACTIVE_MODE::high:
-      pinMode(pin, INPUT);
-      break;
-  }
-  // Serial.print("PIN: ");
-  // Serial.print(pin);
-  // Serial.println(" Output");
   pinMode(pin, OUTPUT);
+  lastChanged = millis();
+
+  // Pause zwischen den Implsen definieren
+  if (this->configuration->outputMode == OUTPUT_CONTROL::OUTPUT_MODE::IMPULSE) {
+    this->configuration->duration_2 = this->configuration->duration;
+  } else {
+    this->configuration->duration_2 = 0;
+  }
 }
 
 void OutputControl::writeState() {
-  // Serial.print("Pin: ");
-  // Serial.print(this->actor->pin);
-  // Serial.print(" State [");
-  // Serial.print(this->actor->state);
-  // Serial.println("]");
-  digitalWrite(this->actor->pin, this->actor->state);
+  Serial.print("Pin: ");
+  Serial.print(pin);
+  Serial.print(" State [");
+  Serial.print(state);
+  Serial.println("]");
+  digitalWrite(pin, state);
 }
 
 boolean OutputControl::isImpulePosible(){
-  Serial.print(this->actor->lastChanged/1000);
+  Serial.print(lastChanged/1000);
   Serial.print("-");
-  Serial.print(this->actor->duration/1000);
+  Serial.print(this->configuration->duration/1000);
   Serial.print("-");
-  Serial.print(this->actor->duration_2/1000);
+  Serial.print(this->configuration->duration_2/1000);
   Serial.print("-");
   Serial.println(millis()/1000);
-  if (this->actor->lastChanged == 0 ){
+  if (lastChanged == 0 ){
     return true;
   }
   if (isOn()){  // Bei Impulse ist der Ausgang aktiv
     return false;
   }
-  if (this->actor->lastChanged + this->actor->duration + this->actor->duration_2 > millis()) {
+  if (lastChanged + this->configuration->duration + this->configuration->duration_2 > millis()) {
     // Serial.println("Noch nicht wieder frei");
     return false;
   }
@@ -79,45 +62,45 @@ boolean OutputControl::isImpulePosible(){
 
 void OutputControl::on() {
   // Serial.println("on");
-  if (this->actor->outputMode != OUTPUT_CONTROL::OUTPUT_MODE::PERMANENT) {
+  if (this->configuration->outputMode != OUTPUT_CONTROL::OUTPUT_MODE::PERMANENT) {
     // return;
   }
 
   // Serial.print("active Mode: [");
   // Serial.print(this->actor->activeMode);
   // Serial.println("]");
-  if (this->actor->state == this->actor->activeMode) {
+  if (state == this->configuration->activeMode) {
     // Serial.println("Keine Änderung");
     return;
   }
 
-  this->actor->state = this->actor->activeMode;
-  this->actor->lastChanged = millis();
+  state = this->configuration->activeMode;
+  lastChanged = millis();
   this->writeState();
 }
 
 void OutputControl::off() {
   // Serial.println("off");
-  if (this->actor->outputMode == OUTPUT_CONTROL::OUTPUT_MODE::PERMANENT) {
+  if (this->configuration->outputMode == OUTPUT_CONTROL::OUTPUT_MODE::PERMANENT) {
     // return;
   }
 
   // Serial.print("active Mode: [");
   // Serial.print(this->actor->activeMode);
   // Serial.println("]");
-  if (this->actor->state != this->actor->activeMode) {
+  if (state != this->configuration->activeMode) {
     return;
   }
 
-  this->actor->state = (!this->actor->activeMode);
-  if (this->actor->outputMode != OUTPUT_CONTROL::OUTPUT_MODE::IMPULSE) {
-    this->actor->lastChanged = millis();
+  state = (!this->configuration->activeMode);
+  if (this->configuration->outputMode != OUTPUT_CONTROL::OUTPUT_MODE::IMPULSE) {
+    lastChanged = millis();
   }
   this->writeState();
 }
 
 void OutputControl::toggle() {
-  if (this->actor->state == this->actor->activeMode) {
+  if (state == this->configuration->activeMode) {
     this->off();
   } else {
     this->on();
@@ -128,41 +111,41 @@ void OutputControl::impulse() {
   // Serial.print("impulse: Mode: [");
   // Serial.print(this->actor->outputMode);
   // Serial.println("]");
-  if (this->actor->outputMode == OUTPUT_CONTROL::OUTPUT_MODE::IMPULSE) {
+  if (this->configuration->outputMode == OUTPUT_CONTROL::OUTPUT_MODE::IMPULSE) {
     this->on();
   }
 }
 
 boolean OutputControl::isOn() {
-  boolean result = (this->actor->state == this->actor->activeMode);
+  boolean result = (state == this->configuration->activeMode);
   return result;
 }
 
 void OutputControl::offFlash(){
-  if (this->actor->outputMode == OUTPUT_CONTROL::OUTPUT_MODE::FLASH_ON) {
-    this->actor->outputMode = OUTPUT_CONTROL::OUTPUT_MODE::FLASH_OFF;
+  if (this->configuration->outputMode == OUTPUT_CONTROL::OUTPUT_MODE::FLASH_ON) {
+    this->configuration->outputMode = OUTPUT_CONTROL::OUTPUT_MODE::FLASH_OFF;
   }
 }
 
 void OutputControl::onFlash(){
-  if (this->actor->outputMode == OUTPUT_CONTROL::OUTPUT_MODE::FLASH_OFF) {
-    this->actor->outputMode = OUTPUT_CONTROL::OUTPUT_MODE::FLASH_ON;
+  if (this->configuration->outputMode == OUTPUT_CONTROL::OUTPUT_MODE::FLASH_OFF) {
+    this->configuration->outputMode = OUTPUT_CONTROL::OUTPUT_MODE::FLASH_ON;
   }
 }
 
 void OutputControl::process() {
-  if (this->actor->outputMode == OUTPUT_CONTROL::OUTPUT_MODE::FLASH_ON) {
+  if (this->configuration->outputMode == OUTPUT_CONTROL::OUTPUT_MODE::FLASH_ON) {
     this->flash();
   }
 
-  if (this->actor->outputMode == OUTPUT_CONTROL::OUTPUT_MODE::FLASH_OFF) {
+  if (this->configuration->outputMode == OUTPUT_CONTROL::OUTPUT_MODE::FLASH_OFF) {
     if (isOn()) {
       this->flash();
     }
   }
 
 
-  if (this->actor->outputMode == OUTPUT_CONTROL::OUTPUT_MODE::IMPULSE) {
+  if (this->configuration->outputMode == OUTPUT_CONTROL::OUTPUT_MODE::IMPULSE) {
     if (isOn()) {
       this->flash();
     }
@@ -176,7 +159,7 @@ void OutputControl::flash() {
   // Serial.print(" > ");
   // Serial.println(millis());
 
-  if (this->actor->lastChanged + this->actor->duration > millis()) {
+  if (lastChanged + this->configuration->duration > millis()) {
     // Serial.println("Kein Umschalten");
     return;
   }
@@ -184,4 +167,9 @@ void OutputControl::flash() {
   // Serial.println("Umschalten");
 
   this->toggle();
+}
+
+
+uint16_t OutputControl::getAddress(){
+  return address;
 }

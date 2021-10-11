@@ -1,23 +1,18 @@
 #include <Arduino.h>
+#include <EEPROM.h>
+
+#include "CanConfiguration.h"
+
+#define VERSION 1
+#define DEFAULT_MODUL_ID 2
+#define DEFAULT_WEICHEN_ID 811
+
+CAN_CONFIGURATION can_configuration;
 
 #include "CanControl.h"
-#include "I2C_Expander.h"
-#include "I2C_Tools.h"
-#include "OutputControl.h"
-#include "PCF8574.h"
-#include "Signal_i2c.h"
 #include "Weiche.h"
 
-I2C_Expander i2c_expander;
-
-Signal_i2c signal[] = {Signal_i2c(1,0), Signal_i2c(2,8), Signal_i2c(3,16)};
-
-#define IMPULSE_LENGTH 4000
-
-#define VERSION_MAJOR 1
-#define VERSION_MINOR 3
-
-byte modul_nr = 0x0C;
+#define IMPULSE_LENGTH 10000
 
 uint8_t LED_1 = 4;
 uint8_t LED_2 = 5;
@@ -25,230 +20,189 @@ uint8_t LED_3 = 6;
 uint8_t LED_4 = 7;
 uint8_t LED_5 = 8;
 uint8_t LED_6 = 9;
-
 uint8_t LED_7 = A0;
 uint8_t LED_8 = A1;
 uint8_t LED_9 = A2;
 uint8_t LED_10 = A3;
 
-ACTOR actor[10];
+OUTPUT_CONF configuration = {
+    OUTPUT_CONTROL::OUTPUT_MODE::IMPULSE,
+    OUTPUT_CONTROL::ACTIVE_MODE::high,
+    IMPULSE_LENGTH,
+    IMPULSE_LENGTH};
+
+CANMessage frame;
+
+uint16_t send_mode = 0;
 
 OutputControl* control = (OutputControl*)malloc(sizeof(OutputControl) * 10);
 Weiche* weiche = (Weiche*)malloc(sizeof(Weiche) * 5);
 
-void init_led() {
-  Serial.println("Beginn");
+#include "SerialConfiguration.h"
 
-  for (byte j = 0; j < 10; j++) {
-    control[j] = OutputControl(&actor[j]);
+SerialConfiguration serialConfiguration;
+
+void initCanConfiguraion() {
+  EEPROM.get(0, can_configuration.data);
+
+  if (can_configuration.config.version != VERSION) {
+    can_configuration.config.version = VERSION;
+    can_configuration.config.id = DEFAULT_MODUL_ID;
+    for (int n = 0; n < 10; n++) {
+      can_configuration.config.id_weichen[n] = DEFAULT_WEICHEN_ID + n;
+    }
+    EEPROM.put(0, can_configuration);
   }
+  serialConfiguration.init(can_configuration);
+}
 
-  control[0].init(OUTPUT_CONTROL::OUTPUT_MODE::IMPULSE, OUTPUT_CONTROL::ACTIVE_MODE::low, IMPULSE_LENGTH, LED_1);
-  control[1].init(OUTPUT_CONTROL::OUTPUT_MODE::IMPULSE, OUTPUT_CONTROL::ACTIVE_MODE::low, IMPULSE_LENGTH, LED_2);
-  control[2].init(OUTPUT_CONTROL::OUTPUT_MODE::IMPULSE, OUTPUT_CONTROL::ACTIVE_MODE::low, IMPULSE_LENGTH, LED_3);
-  control[3].init(OUTPUT_CONTROL::OUTPUT_MODE::IMPULSE, OUTPUT_CONTROL::ACTIVE_MODE::low, IMPULSE_LENGTH, LED_4);
-  control[4].init(OUTPUT_CONTROL::OUTPUT_MODE::IMPULSE, OUTPUT_CONTROL::ACTIVE_MODE::low, IMPULSE_LENGTH, LED_5);
-  control[5].init(OUTPUT_CONTROL::OUTPUT_MODE::IMPULSE, OUTPUT_CONTROL::ACTIVE_MODE::low, IMPULSE_LENGTH, LED_6);
-  control[6].init(OUTPUT_CONTROL::OUTPUT_MODE::IMPULSE, OUTPUT_CONTROL::ACTIVE_MODE::low, IMPULSE_LENGTH, LED_7);
-  control[7].init(OUTPUT_CONTROL::OUTPUT_MODE::IMPULSE, OUTPUT_CONTROL::ACTIVE_MODE::low, IMPULSE_LENGTH, LED_8);
-  control[8].init(OUTPUT_CONTROL::OUTPUT_MODE::IMPULSE, OUTPUT_CONTROL::ACTIVE_MODE::low, IMPULSE_LENGTH, LED_9);
-  control[9].init(OUTPUT_CONTROL::OUTPUT_MODE::IMPULSE, OUTPUT_CONTROL::ACTIVE_MODE::low, IMPULSE_LENGTH, LED_10);
+void initWeiche() {
+  Serial.println(F("Init Weiche Beginn"));
+
+  control[0] = OutputControl(&configuration, can_configuration.config.id_weichen[0], LED_1);
+  control[1] = OutputControl(&configuration, can_configuration.config.id_weichen[1], LED_2);
+  control[2] = OutputControl(&configuration, can_configuration.config.id_weichen[2], LED_3);
+  control[3] = OutputControl(&configuration, can_configuration.config.id_weichen[3], LED_4);
+  control[4] = OutputControl(&configuration, can_configuration.config.id_weichen[4], LED_5);
+  control[5] = OutputControl(&configuration, can_configuration.config.id_weichen[5], LED_6);
+  control[6] = OutputControl(&configuration, can_configuration.config.id_weichen[6], LED_7);
+  control[7] = OutputControl(&configuration, can_configuration.config.id_weichen[7], LED_8);
+  control[8] = OutputControl(&configuration, can_configuration.config.id_weichen[8], LED_9);
+  control[9] = OutputControl(&configuration, can_configuration.config.id_weichen[9], LED_10);
 
   weiche[0] = Weiche(control[0], control[1]);
   weiche[1] = Weiche(control[2], control[3]);
   weiche[2] = Weiche(control[4], control[5]);
   weiche[3] = Weiche(control[6], control[7]);
-
-  Serial.println("Ausgänge sind nun konfigiert. Warte 4s");
-
-  delay(4000);
-
-  Serial.println("Es geht nun in die Schleife");
+  weiche[4] = Weiche(control[8], control[9]);
+  Serial.println(F("Init Weiche End"));
 }
 
 void setup() {
   Serial.begin(115200);
-  // while (!Serial)
-  //   ;
-  // Serial.begin(115200);
-  Serial.println("Start");
 
-  Wire.begin();
-  scan_i2c();
+  initCanConfiguraion();
+  serialConfiguration.printConfiguration();
 
-  i2c_expander.init();
-
-  i2c_expander.checkAll();
-
-  Serial.print("Before");
-  Serial.println(signal[0].get());
-
-  signal[0].set(SIGNAL::HP0);
-  signal[1].set(SIGNAL::HP0);
-
-  Serial.print("After");
-  Serial.println(signal[0].get());  
-  i2c_expander.setSignal(signal[0]);
-  i2c_expander.setSignal(signal[1]);
-  delay(2000);
-
-  signal[0].set(SIGNAL::HP0_SH1);
-  signal[1].set(SIGNAL::HP0_SH1);
-  i2c_expander.setSignal(signal[0]);
-  i2c_expander.setSignal(signal[1]);
-  delay(2000);
-
-  signal[0].set(SIGNAL::HP1);
-  signal[1].set(SIGNAL::HP1);
-  i2c_expander.setSignal(signal[0]);
-  i2c_expander.setSignal(signal[1]);
-  delay(2000);
-
-  signal[0].set(SIGNAL::HP2);
-  signal[1].set(SIGNAL::HP2);
-  i2c_expander.setSignal(signal[0]);
-  i2c_expander.setSignal(signal[1]);
-  delay(2000);
-
-  signal[0].set(SIGNAL::HP0);
-  signal[1].set(SIGNAL::HP0);
-  i2c_expander.setSignal(signal[0]);
-  i2c_expander.setSignal(signal[1]);
-  delay(2000);
-
+  initWeiche();
 
   init_can();
-
-  init_led();
 }
 
-void myDelayAndProcess(unsigned long duration) {
-  unsigned long count = duration / 100;
-
-  for (unsigned long i = 0; i < count; i++) {
-    delay(500);
-    for (byte k = 0; k < 10; k++) {
-      control[k].process();
-    }
-    Serial.print("Weichen: ");
-    for (byte k = 0; k < 4; k++) {
-      Serial.print("[");
-      Serial.print(weiche[k].status());
-      Serial.print("]");
-    }
-    Serial.println();
+void processWeiche() {
+  for (byte k = 0; k < 5; k++) {
+    weiche[k].process();
   }
 }
 
-void sendVersion() {
-  CANMessage frame;
-  frame.id = ID_STATUS;
+unsigned long lastChanged = millis();
+byte index = 0;
+
+void change(uint16_t address) {
+  for (byte i = 0; i < 5; i++) {
+    weiche[i].change(address);
+  }
+}
+
+void sendDetailWeichenStatus() {
+  frame.id = 300;
 
   frame.ext = false;
   frame.rtr = false;
   frame.len = 8;
 
-  frame.data[INDEX_COMMAND] = COMMAND_CONFIG;
-  frame.data[INDEX_MSB] = MSB_IS_MODUL;
-  frame.data[INDEX_LSB] = modul_nr;
-  frame.data[INDEX_AKTOR] = AKTOR_VERSION;
-  frame.data[INDEX_DATA0] = VERSION_MAJOR;
-  frame.data[INDEX_DATA1] = VERSION_MINOR;
-  frame.data[INDEX_DATA2] = 0;
-  frame.data[INDEX_DATA3] = 0;
+  uint16_t data[8];
 
-  boolean result = can.tryToSend(frame);
-  if (result) {
-    Serial.println("Send OK");
-  } else {
-    Serial.println("Send Failed");
+  for (byte i = 0; i < 5; i++) {
+    weiche[i].statusForCan(data);
+    Serial.print("Frame ID: ");
+    Serial.print(frame.id);
+    Serial.print(" Data: ");
+    for (byte z = 0; z<8; z++) {
+      Serial.print(data[z]);
+      Serial.print(" ");
+    }
+    Serial.println("");
+    
+    for (byte n = 0; n < 2; n++) {
+      for (byte k = 0; k < 4; k++) {
+        frame.data16[k] = data[n * 4 + k];
+      }
+      bool ok = can.tryToSend(frame);
+      if (ok) {
+        Serial.print("Sent ok");
+      } else {
+        Serial.println("Send failure");
+      }
+      // frame.id = frame.id + 1;
+    }
+  }
+}
+
+/**
+ * Sendet den Status der Weichen mit der id 200 und 201
+ *
+ */
+void sendWeichenStatus() {
+  frame.id = 200;
+
+  frame.ext = false;
+  frame.rtr = false;
+  frame.len = 8;
+
+  for (byte i = 0; i < 8; i++) {
+    frame.data16[i % 4] = (i < 5) ? weiche[i].statusAsAddress() : 0;
+    if (i % 4 == 3) {
+      bool ok = can.tryToSend(frame);
+      if (ok) {
+        Serial.print("Sent ok");
+      } else {
+        Serial.println("Send failure");
+      }
+      frame.id = frame.id + 1;
+    }
   }
 }
 
 void loop() {
-  CANMessage frame;
-  /*frame.id = id;
-  id++;
-  if (id > 103) {
-    id = 100;
-  }
+  serialConfiguration.process();
 
-  frame.ext = false;
-  frame.rtr = false;
-  frame.len = 8;
+  // Serial.print(F("."));
+  if (can.receive(frame)) {
+    debugFrame(&frame);
 
-  frame.data[0] = 0;
-  frame.data[1] = 0;
-  frame.data[2] = 0;
-  frame.data[3] = 0;
-  frame.data[4] = 0;
-  frame.data[5] = 0;
-  frame.data[6] = 0;
-  frame.data[7] = 0;
+    Serial.print("16: ");
+    Serial.println(frame.data16[0]);
 
-  const bool ok = can.tryToSend(frame);
-  if (ok) {
-    gSentFrameCount += 1;
-    Serial.print("Sent: ");
-    Serial.println(gSentFrameCount);
-  } else {
-    Serial.println("Send failure");
-  }
-
-  myDelayAndProcess(500);
-  */
-
-  boolean changeIsPosible = true;
-
-  if (can.available()) {
-    can.receive(frame);
-    Serial.print("Received: ");
-    Serial.print(" id: [");
-    Serial.print(frame.id);
-    Serial.println("]");
-
-    switch (frame.data[0]) {
-      case 49:
-        Serial.println("Weichen gerade");
-
-        for (byte k = 0; k < 4; k++) {
-          if (weiche[0].changeIsPosible()) {
-            continue;
-          }
-          changeIsPosible = false;
+    if (frame.data16[0] == can_configuration.config.id) {
+      Serial.println();
+      Serial.print("Status: ");
+      for (byte i = 0; i < 5; i++) {
+        Serial.print(weiche[i].statusAsAddress());
+        Serial.print(" ");
+      }
+      Serial.println();
+      send_mode = 1;
+    } else {
+      for (byte i = 0; i < 4; i++) {
+        uint16_t adr = frame.data16[i];
+        Serial.print(adr);
+        Serial.print(" ");
+        if (adr != 0) {
+          change(adr);
         }
-
-        if (changeIsPosible) {
-          weiche[0].gerade();
-          weiche[1].gerade();
-          weiche[2].gerade();
-          weiche[3].gerade();
-        } else {
-          Serial.println(">>>>> Ignore");
-        }
-
-        break;
-      case 50:
-        Serial.println("Weiche abzweig");
-
-        weiche[0].abzweig();
-        weiche[1].abzweig();
-        weiche[2].abzweig();
-        weiche[3].abzweig();
-
-        break;
-      case 52:
-        // Serial.println("Flash 10 off");
-        // control[9].offFlash();
-        Serial.println("Version senden");
-        sendVersion();
-        break;
-      default:
-        Serial.println("Skip");
-    }
-
-    if (!changeIsPosible) {
+      }
+      Serial.println();
     }
   }
-  myDelayAndProcess(100);
+
+  if (send_mode == 1) {
+    Serial.println("sendDetailWeichenStatus");
+    sendDetailWeichenStatus();
+    send_mode = 0;
+  }
+
+  processWeiche();
+
+  delay(5);
 }
