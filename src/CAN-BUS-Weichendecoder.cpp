@@ -134,7 +134,7 @@ void sendDetailWeichenStatus() {
       } else {
         Serial.println("Send failure");
       }
-      frame.id = frame.id + 1;
+      // frame.id = frame.id + 1;
     }
   }
 }
