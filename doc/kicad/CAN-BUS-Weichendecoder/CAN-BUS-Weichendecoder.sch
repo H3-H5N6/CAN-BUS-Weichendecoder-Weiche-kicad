@@ -381,12 +381,12 @@ $EndComp
 $Comp
 L CAN-BUS-MODULE-TJA1050:CAN-BUS_MODULE_TJA1050 Shield1001
 U 1 1 60585225
-P 2000 2650
-F 0 "Shield1001" H 1950 1975 50  0000 C CNN
-F 1 "CAN-BUS_MODULE_TJA1050" H 1950 1884 50  0000 C CNN
-F 2 "CAN-BUS-MODULE:MCP2515_CAN_MODULE_BY0-10" H 2000 2650 50  0001 C CIN
-F 3 "" H 2000 2650 50  0001 C CNN
-	1    2000 2650
+P 2200 2650
+F 0 "Shield1001" H 2150 1975 50  0000 C CNN
+F 1 "CAN-BUS_MODULE_TJA1050" H 2150 1884 50  0000 C CNN
+F 2 "CAN-BUS-MODULE:MCP2515_CAN_MODULE_BY0-10" H 2200 2650 50  0001 C CIN
+F 3 "" H 2200 2650 50  0001 C CNN
+	1    2200 2650
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
@@ -826,32 +826,15 @@ Wire Wire Line
 Wire Wire Line
 	2700 5000 2150 5000
 Wire Wire Line
-	1400 2850 1200 2850
+	1400 2850 1150 2850
 Wire Wire Line
 	1150 2850 1150 3550
 Wire Wire Line
-	1400 2750 1200 2750
+	1400 2750 1100 2750
 Wire Wire Line
 	1100 2750 1100 3600
 Wire Wire Line
 	4750 1750 3800 1750
-Connection ~ 1200 2850
-Wire Wire Line
-	1200 2850 1150 2850
-Connection ~ 1200 2750
-$Comp
-L Connector:Conn_01x07_Female J1003
-U 1 1 60962CDF
-P 2700 2750
-F 0 "J1003" H 2592 2225 50  0000 C CNN
-F 1 "Conn_01x07_Female" H 2592 2316 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x07_Pitch2.54mm" H 2700 2750 50  0001 C CNN
-F 3 "~" H 2700 2750 50  0001 C CNN
-	1    2700 2750
-	-1   0    0    1   
-$EndComp
-Wire Wire Line
-	1100 2750 1200 2750
 $Comp
 L Isolator:6N136 U1001
 U 1 1 615246FE
@@ -1054,34 +1037,21 @@ Connection ~ 1150 7000
 Wire Wire Line
 	1150 7200 1150 7100
 Connection ~ 1150 7100
-$Comp
-L Connector:Conn_01x02_Female J1001
-U 1 1 61A1EF28
-P 2100 2250
-F 0 "J1001" V 1946 2298 50  0000 L CNN
-F 1 "Conn_01x02_Female" V 2037 2298 50  0000 L CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" H 2100 2250 50  0001 C CNN
-F 3 "~" H 2100 2250 50  0001 C CNN
-	1    2100 2250
-	0    1    1    0   
-$EndComp
 Wire Wire Line
-	1750 1900 1750 2050
+	1950 2100 1950 2250
 Wire Wire Line
-	1750 2050 2000 2050
+	1950 2250 2200 2250
 Wire Wire Line
-	2100 2050 2350 2050
-Wire Wire Line
-	2350 2050 2350 1900
+	2550 2250 2550 2100
 $Comp
 L Device:Jumper JP11
 U 1 1 61A202D7
-P 2050 1900
-F 0 "JP11" H 2050 2100 50  0000 C CNN
-F 1 "Jumper" H 2050 2073 50  0001 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" H 2050 1900 50  0001 C CNN
-F 3 "~" H 2050 1900 50  0001 C CNN
-	1    2050 1900
+P 2250 2100
+F 0 "JP11" H 2250 2300 50  0000 C CNN
+F 1 "Jumper" H 2250 2273 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" H 2250 2100 50  0001 C CNN
+F 3 "~" H 2250 2100 50  0001 C CNN
+	1    2250 2100
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
@@ -1866,4 +1836,50 @@ Wire Wire Line
 Wire Wire Line
 	3450 7350 2850 7350
 Connection ~ 2850 7350
+Wire Wire Line
+	2300 2250 2550 2250
+$Comp
+L Mechanical:MountingHole H1
+U 1 1 622C717E
+P 10250 6000
+F 0 "H1" H 10350 6046 50  0000 L CNN
+F 1 "MountingHole" H 10350 5955 50  0000 L CNN
+F 2 "Mounting_Holes:MountingHole_3.2mm_M3" H 10250 6000 50  0001 C CNN
+F 3 "~" H 10250 6000 50  0001 C CNN
+	1    10250 6000
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole H2
+U 1 1 622C9821
+P 10250 6250
+F 0 "H2" H 10350 6296 50  0000 L CNN
+F 1 "MountingHole" H 10350 6205 50  0000 L CNN
+F 2 "Mounting_Holes:MountingHole_3.2mm_M3" H 10250 6250 50  0001 C CNN
+F 3 "~" H 10250 6250 50  0001 C CNN
+	1    10250 6250
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole H4
+U 1 1 62312DA2
+P 9950 6250
+F 0 "H4" H 10050 6296 50  0000 L CNN
+F 1 "MountingHole" H 10050 6205 50  0000 L CNN
+F 2 "Mounting_Holes:MountingHole_3.2mm_M3" H 9950 6250 50  0001 C CNN
+F 3 "~" H 9950 6250 50  0001 C CNN
+	1    9950 6250
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole H3
+U 1 1 62380421
+P 9950 5900
+F 0 "H3" H 10050 5946 50  0000 L CNN
+F 1 "MountingHole" H 10050 5855 50  0000 L CNN
+F 2 "Mounting_Holes:MountingHole_3.2mm_M3" H 9950 5900 50  0001 C CNN
+F 3 "~" H 9950 5900 50  0001 C CNN
+	1    9950 5900
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
