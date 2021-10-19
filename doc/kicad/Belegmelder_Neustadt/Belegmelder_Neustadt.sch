@@ -1,0 +1,345 @@
+EESchema Schematic File Version 4
+EELAYER 30 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L Device:L_Core_Iron L1
+U 1 1 616B5B71
+P 2700 1900
+F 0 "L1" H 2656 1854 50  0000 R CNN
+F 1 "Talema AS100" V 2850 2150 50  0000 R CNN
+F 2 "" H 2700 1900 50  0001 C CNN
+F 3 "~" H 2700 1900 50  0001 C CNN
+	1    2700 1900
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	2700 1750 2700 1650
+Wire Wire Line
+	2700 2050 2700 2150
+$Comp
+L Device:R R1
+U 1 1 616B7E81
+P 3400 1400
+F 0 "R1" H 3470 1446 50  0000 L CNN
+F 1 "3k3" H 3470 1355 50  0000 L CNN
+F 2 "" V 3330 1400 50  0001 C CNN
+F 3 "~" H 3400 1400 50  0001 C CNN
+	1    3400 1400
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R2
+U 1 1 616B8D10
+P 3400 2350
+F 0 "R2" H 3470 2396 50  0000 L CNN
+F 1 "560" H 3470 2305 50  0000 L CNN
+F 2 "" V 3330 2350 50  0001 C CNN
+F 3 "~" H 3400 2350 50  0001 C CNN
+	1    3400 2350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3400 1550 3400 1650
+Wire Wire Line
+	3400 2200 3400 1650
+Connection ~ 3400 1650
+$Comp
+L Device:D D1
+U 1 1 616BA94D
+P 3400 2650
+F 0 "D1" V 3446 2570 50  0000 R CNN
+F 1 "1N4148" V 3355 2570 50  0000 R CNN
+F 2 "" H 3400 2650 50  0001 C CNN
+F 3 "~" H 3400 2650 50  0001 C CNN
+	1    3400 2650
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 616BB44F
+P 3400 3050
+F 0 "#PWR?" H 3400 2800 50  0001 C CNN
+F 1 "GND" H 3405 2877 50  0000 C CNN
+F 2 "" H 3400 3050 50  0001 C CNN
+F 3 "" H 3400 3050 50  0001 C CNN
+	1    3400 3050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3400 2800 3400 2900
+$Comp
+L Device:R R3
+U 1 1 616BC131
+P 4050 2000
+F 0 "R3" V 3843 2000 50  0000 C CNN
+F 1 "220k" V 3934 2000 50  0000 C CNN
+F 2 "" V 3980 2000 50  0001 C CNN
+F 3 "~" H 4050 2000 50  0001 C CNN
+	1    4050 2000
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:C C?
+U 1 1 616BC7F1
+P 4050 2300
+F 0 "C?" H 4165 2346 50  0000 L CNN
+F 1 "C" H 4165 2255 50  0000 L CNN
+F 2 "" H 4088 2150 50  0001 C CNN
+F 3 "~" H 4050 2300 50  0001 C CNN
+	1    4050 2300
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	3900 2000 3900 2150
+Wire Wire Line
+	3900 2300 3900 2150
+Connection ~ 3900 2150
+Wire Wire Line
+	2700 1650 3000 1650
+Wire Wire Line
+	2700 2150 3000 2150
+$Comp
+L Device:C C1
+U 1 1 616BE31B
+P 3000 1900
+F 0 "C1" H 2885 1854 50  0000 R CNN
+F 1 "100nF" H 2885 1945 50  0000 R CNN
+F 2 "" H 3038 1750 50  0001 C CNN
+F 3 "~" H 3000 1900 50  0001 C CNN
+	1    3000 1900
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	3000 1750 3000 1650
+Connection ~ 3000 1650
+Wire Wire Line
+	3000 1650 3400 1650
+Wire Wire Line
+	3000 2050 3000 2150
+Connection ~ 3000 2150
+Wire Wire Line
+	3000 2150 3900 2150
+Wire Wire Line
+	4200 2000 4300 2000
+Wire Wire Line
+	4300 2000 4300 2300
+Wire Wire Line
+	4300 2300 4200 2300
+$Comp
+L Device:D D2
+U 1 1 616BF3C6
+P 4300 2650
+F 0 "D2" V 4254 2730 50  0000 L CNN
+F 1 "1N4148" V 4345 2730 50  0000 L CNN
+F 2 "" H 4300 2650 50  0001 C CNN
+F 3 "~" H 4300 2650 50  0001 C CNN
+	1    4300 2650
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	4300 2300 4300 2500
+Connection ~ 4300 2300
+Wire Wire Line
+	4300 2800 4300 2900
+Wire Wire Line
+	4300 2900 3400 2900
+Connection ~ 3400 2900
+Wire Wire Line
+	3400 2900 3400 3050
+$Comp
+L Transistor_BJT:BC547 T1
+U 1 1 616C214F
+P 4650 2000
+F 0 "T1" H 4841 2046 50  0000 L CNN
+F 1 "BC547" H 4841 1955 50  0000 L CNN
+F 2 "Package_TO_SOT_THT:TO-92_Inline" H 4850 1925 50  0001 L CIN
+F 3 "https://www.onsemi.com/pub/Collateral/BC550-D.pdf" H 4650 2000 50  0001 L CNN
+	1    4650 2000
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4450 2000 4300 2000
+Connection ~ 4300 2000
+Wire Wire Line
+	4750 2200 4750 2900
+Wire Wire Line
+	4750 2900 4300 2900
+Connection ~ 4300 2900
+$Comp
+L Device:R R4
+U 1 1 616C4B23
+P 4750 1400
+F 0 "R4" H 4820 1446 50  0000 L CNN
+F 1 "3k3" H 4820 1355 50  0000 L CNN
+F 2 "" V 4680 1400 50  0001 C CNN
+F 3 "~" H 4750 1400 50  0001 C CNN
+	1    4750 1400
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4750 1550 4750 1750
+Wire Wire Line
+	3400 1250 3400 1000
+Wire Wire Line
+	3400 1000 4750 1000
+Wire Wire Line
+	4750 1000 4750 1250
+$Comp
+L Device:D D3
+U 1 1 616C5CEA
+P 5050 1750
+F 0 "D3" H 5050 1533 50  0000 C CNN
+F 1 "1N4148" H 5050 1624 50  0000 C CNN
+F 2 "" H 5050 1750 50  0001 C CNN
+F 3 "~" H 5050 1750 50  0001 C CNN
+	1    5050 1750
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	4900 1750 4750 1750
+Connection ~ 4750 1750
+Wire Wire Line
+	4750 1750 4750 1800
+$Comp
+L Device:CP C3
+U 1 1 616C7767
+P 5300 2450
+F 0 "C3" H 5418 2496 50  0000 L CNN
+F 1 "1µF/16V" H 5418 2405 50  0000 L CNN
+F 2 "" H 5338 2300 50  0001 C CNN
+F 3 "~" H 5300 2450 50  0001 C CNN
+	1    5300 2450
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R5
+U 1 1 616C8704
+P 5800 2200
+F 0 "R5" H 5870 2246 50  0000 L CNN
+F 1 "220k" H 5870 2155 50  0000 L CNN
+F 2 "" V 5730 2200 50  0001 C CNN
+F 3 "~" H 5800 2200 50  0001 C CNN
+	1    5800 2200
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5200 1750 5300 1750
+Wire Wire Line
+	5300 1750 5300 2300
+Wire Wire Line
+	5300 1750 5800 1750
+Wire Wire Line
+	5800 1750 5800 2050
+Connection ~ 5300 1750
+Wire Wire Line
+	5300 2600 5300 2900
+Wire Wire Line
+	5300 2900 4750 2900
+Connection ~ 4750 2900
+Wire Wire Line
+	5800 2350 5800 2900
+Wire Wire Line
+	5800 2900 5300 2900
+Connection ~ 5300 2900
+$Comp
+L Transistor_FET:BS170 Q?
+U 1 1 616CA598
+P 6100 1750
+F 0 "Q?" H 6304 1796 50  0000 L CNN
+F 1 "BS170" H 6304 1705 50  0000 L CNN
+F 2 "Package_TO_SOT_THT:TO-92_Inline" H 6300 1675 50  0001 L CIN
+F 3 "https://www.onsemi.com/pub/Collateral/BS170-D.PDF" H 6100 1750 50  0001 L CNN
+	1    6100 1750
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6200 1950 6200 2900
+Wire Wire Line
+	6200 2900 5800 2900
+Connection ~ 5800 2900
+Wire Wire Line
+	5800 1750 5900 1750
+Connection ~ 5800 1750
+$Comp
+L power:+5P #PWR?
+U 1 1 616CB964
+P 3400 800
+F 0 "#PWR?" H 3400 650 50  0001 C CNN
+F 1 "+5P" H 3415 973 50  0000 C CNN
+F 2 "" H 3400 800 50  0001 C CNN
+F 3 "" H 3400 800 50  0001 C CNN
+	1    3400 800 
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3400 800  3400 1000
+Connection ~ 3400 1000
+Wire Wire Line
+	6200 1550 6200 1400
+Wire Wire Line
+	6200 1400 6900 1400
+$Comp
+L Device:R R7
+U 1 1 616DC4CF
+P 6900 1200
+F 0 "R7" H 6970 1246 50  0000 L CNN
+F 1 "10k" H 6970 1155 50  0000 L CNN
+F 2 "" V 6830 1200 50  0001 C CNN
+F 3 "~" H 6900 1200 50  0001 C CNN
+	1    6900 1200
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6900 1350 6900 1400
+Wire Wire Line
+	4750 1000 6900 1000
+Wire Wire Line
+	6900 1000 6900 1050
+Connection ~ 4750 1000
+Wire Wire Line
+	6900 1400 7600 1400
+Connection ~ 6900 1400
+$Comp
+L Device:R R6
+U 1 1 616DEE8D
+P 6900 1850
+F 0 "R6" H 6970 1896 50  0000 L CNN
+F 1 "2k2" H 6970 1805 50  0000 L CNN
+F 2 "" V 6830 1850 50  0001 C CNN
+F 3 "~" H 6900 1850 50  0001 C CNN
+	1    6900 1850
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:LED D?
+U 1 1 616DF90F
+P 6900 2350
+F 0 "D?" V 6939 2232 50  0000 R CNN
+F 1 "LED" V 6848 2232 50  0000 R CNN
+F 2 "" H 6900 2350 50  0001 C CNN
+F 3 "~" H 6900 2350 50  0001 C CNN
+	1    6900 2350
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	6900 1400 6900 1700
+Wire Wire Line
+	6900 2000 6900 2200
+Wire Wire Line
+	6900 2500 6900 2900
+Wire Wire Line
+	6900 2900 6200 2900
+Connection ~ 6200 2900
+$EndSCHEMATC
