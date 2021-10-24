@@ -4,15 +4,15 @@
 #include "CanConfiguration.h"
 
 #define VERSION 1
-#define DEFAULT_MODUL_ID 2
-#define DEFAULT_WEICHEN_ID 811
+#define DEFAULT_MODUL_ID 1
+#define DEFAULT_WEICHEN_ID 801
 
 CAN_CONFIGURATION can_configuration;
 
 #include "CanControl.h"
 #include "Weiche.h"
 
-#define IMPULSE_LENGTH 10000
+#define IMPULSE_LENGTH 2000
 
 uint8_t LED_1 = 4;
 uint8_t LED_2 = 5;
@@ -118,12 +118,12 @@ void sendDetailWeichenStatus() {
     Serial.print("Frame ID: ");
     Serial.print(frame.id);
     Serial.print(" Data: ");
-    for (byte z = 0; z<8; z++) {
+    for (byte z = 0; z < 8; z++) {
       Serial.print(data[z]);
       Serial.print(" ");
     }
     Serial.println("");
-    
+
     for (byte n = 0; n < 2; n++) {
       for (byte k = 0; k < 4; k++) {
         frame.data16[k] = data[n * 4 + k];
@@ -139,28 +139,35 @@ void sendDetailWeichenStatus() {
   }
 }
 
-/**
- * Sendet den Status der Weichen mit der id 200 und 201
- *
- */
-void sendWeichenStatus() {
-  frame.id = 200;
+void processCanMessage(CANMessage& frame) {
+  Serial.print("16: ");
+  Serial.println(frame.data16[0]);
 
-  frame.ext = false;
-  frame.rtr = false;
-  frame.len = 8;
-
-  for (byte i = 0; i < 8; i++) {
-    frame.data16[i % 4] = (i < 5) ? weiche[i].statusAsAddress() : 0;
-    if (i % 4 == 3) {
-      bool ok = can.tryToSend(frame);
-      if (ok) {
-        Serial.print("Sent ok");
-      } else {
-        Serial.println("Send failure");
-      }
-      frame.id = frame.id + 1;
+  if (frame.data16[0] == can_configuration.config.id) {
+    Serial.println();
+    Serial.print("Status: ");
+    for (byte i = 0; i < 5; i++) {
+      Serial.print(weiche[i].statusAsAddress());
+      Serial.print(" ");
     }
+    Serial.println();
+    send_mode = 1;
+  } else {
+    for (byte i = 0; i < 4; i++) {
+      uint16_t adr = frame.data16[i];
+      Serial.print(adr);
+      Serial.print(" ");
+      if (adr != 0) {
+        change(adr);
+      }
+    }
+    Serial.println();
+  }
+
+  if (send_mode == 1) {
+    Serial.println("sendDetailWeichenStatus");
+    sendDetailWeichenStatus();
+    send_mode = 0;
   }
 }
 
@@ -169,37 +176,15 @@ void loop() {
 
   // Serial.print(F("."));
   if (can.receive(frame)) {
-    debugFrame(&frame);
+    debugFrame(frame);
 
-    Serial.print("16: ");
-    Serial.println(frame.data16[0]);
-
-    if (frame.data16[0] == can_configuration.config.id) {
-      Serial.println();
-      Serial.print("Status: ");
-      for (byte i = 0; i < 5; i++) {
-        Serial.print(weiche[i].statusAsAddress());
-        Serial.print(" ");
-      }
-      Serial.println();
-      send_mode = 1;
-    } else {
-      for (byte i = 0; i < 4; i++) {
-        uint16_t adr = frame.data16[i];
-        Serial.print(adr);
-        Serial.print(" ");
-        if (adr != 0) {
-          change(adr);
-        }
-      }
-      Serial.println();
+    switch (frame.id) {
+      case 100:
+      case 200:
+        processCanMessage(frame);
+        break;
+      
     }
-  }
-
-  if (send_mode == 1) {
-    Serial.println("sendDetailWeichenStatus");
-    sendDetailWeichenStatus();
-    send_mode = 0;
   }
 
   processWeiche();
