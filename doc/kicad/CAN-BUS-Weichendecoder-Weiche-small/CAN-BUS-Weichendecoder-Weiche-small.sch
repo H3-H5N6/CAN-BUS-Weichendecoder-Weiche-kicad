@@ -284,10 +284,10 @@ $EndComp
 Wire Wire Line
 	2950 2850 2900 2850
 $Comp
-L ASSMANN_WSW:A-20042-LP_FS CAN-Bus
+L ASSMANN_WSW:A-20042-LP_FS CAN-Bus1002
 U 1 1 60B7A5DF
 P 1700 5150
-F 0 "CAN-Bus" V 1350 4900 50  0000 C CNN
+F 0 "CAN-Bus1002" V 1350 4900 50  0000 C CNN
 F 1 "J22" H 1757 5726 50  0001 C CNN
 F 2 "ASSMANN_WSW:A20042LPFS" V 1700 5175 50  0001 C CNN
 F 3 "~" V 1700 5175 50  0001 C CNN
@@ -554,21 +554,6 @@ F 3 "http://www.vishay.com/docs/31509/csc.pdf" H 6000 7350 50  0001 C CNN
 	1    6000 7350
 	0    1    -1   0   
 $EndComp
-$Comp
-L Wago:250-1404 J5
-U 1 1 616E29D2
-P 7150 6000
-F 0 "J5" H 7678 5850 60  0000 L CNN
-F 1 "250-1404" H 7678 5850 60  0001 L CNN
-F 2 "Wago:250-1404" H 7678 5744 60  0001 L CNN
-F 3 "" H 7150 6000 60  0001 C CNN
-	1    7150 6000
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	7150 6000 6150 6000
-Wire Wire Line
-	7150 6300 6250 6300
 Wire Wire Line
 	4450 7450 4600 7450
 Wire Wire Line
@@ -716,57 +701,12 @@ F 3 "http://www.ti.com/lit/ds/symlink/uln2803a.pdf" H 5150 5200 50  0001 C CNN
 	1    5050 5400
 	1    0    0    -1  
 $EndComp
-Connection ~ 6250 5700
 Wire Wire Line
-	6250 5700 6250 6300
-Connection ~ 6150 5400
+	5700 4500 5700 5100
 Wire Wire Line
-	6150 5400 6150 6000
+	5800 4400 5800 5000
 Wire Wire Line
-	5600 4500 5600 5600
-Wire Wire Line
-	5650 4400 5650 5500
-Wire Wire Line
-	5850 4200 5850 4600
-Connection ~ 6250 4800
-Wire Wire Line
-	6250 4800 6250 4950
-Connection ~ 6150 4500
-Wire Wire Line
-	6150 4500 6150 5000
-Connection ~ 6250 4300
-Wire Wire Line
-	6250 4300 6250 4800
-Wire Wire Line
-	7150 5700 6250 5700
-Wire Wire Line
-	7150 5400 6150 5400
-$Comp
-L Wago:250-1404 J4
-U 1 1 616E1E7E
-P 7150 5400
-F 0 "J4" H 7678 5250 60  0000 L CNN
-F 1 "250-1404" H 7678 5250 60  0001 L CNN
-F 2 "Wago:250-1404" H 7678 5144 60  0001 L CNN
-F 3 "" H 7150 5400 60  0001 C CNN
-	1    7150 5400
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	6250 4800 7100 4800
-Wire Wire Line
-	7100 4500 6150 4500
-$Comp
-L Wago:250-1404 J3
-U 1 1 616E033D
-P 7100 4500
-F 0 "J3" H 7628 4350 60  0000 L CNN
-F 1 "250-1404" H 7628 4350 60  0001 L CNN
-F 2 "Wago:250-1404" H 7628 4244 60  0001 L CNN
-F 3 "" H 7100 4500 60  0001 C CNN
-	1    7100 4500
-	1    0    0    -1  
-$EndComp
+	6050 4200 6050 4800
 Wire Wire Line
 	6250 3300 4350 3300
 $Comp
@@ -814,15 +754,15 @@ Wire Wire Line
 Wire Wire Line
 	4250 3900 4650 3900
 Wire Wire Line
-	5450 4000 6050 4000
+	5450 4000 6400 4000
 Wire Wire Line
-	5450 4200 5850 4200
+	5450 4200 6050 4200
 Wire Wire Line
-	5450 4300 5750 4300
+	5450 4300 5950 4300
 Wire Wire Line
-	5450 4400 5650 4400
+	5450 4400 5800 4400
 Wire Wire Line
-	5450 4500 5600 4500
+	5450 4500 5700 4500
 Wire Wire Line
 	4350 3800 4650 3800
 $Comp
@@ -837,52 +777,9 @@ F 3 "http://www.ti.com/lit/ds/symlink/uln2803a.pdf" H 5150 3800 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	5450 4100 5950 4100
+	5450 4100 6300 4100
 Wire Wire Line
-	5750 4300 5750 4700
-Wire Wire Line
-	5450 5200 5550 5200
-Wire Wire Line
-	5450 5300 5500 5300
-Wire Wire Line
-	5950 4100 5950 4200
-Wire Wire Line
-	6050 4000 6050 4100
-Wire Wire Line
-	6150 4000 6150 3500
-Wire Wire Line
-	6150 4000 6150 4500
-Connection ~ 6150 4000
-Wire Wire Line
-	5950 4200 6700 4200
-$Comp
-L Wago:250-1404 J2
-U 1 1 616186ED
-P 7100 4000
-F 0 "J2" H 7628 3850 60  0000 L CNN
-F 1 "250-1404" H 7628 3850 60  0001 L CNN
-F 2 "Wago:250-1404" H 7628 3744 60  0001 L CNN
-F 3 "" H 7100 4000 60  0001 C CNN
-	1    7100 4000
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	6250 3800 6250 4300
-Wire Wire Line
-	7100 3800 6250 3800
-Wire Wire Line
-	7100 3500 6150 3500
-$Comp
-L Wago:250-1404 J1
-U 1 1 62056259
-P 7100 3500
-F 0 "J1" H 7628 3403 60  0000 L CNN
-F 1 "250-1404" H 7628 3297 60  0001 L CNN
-F 2 "Wago:250-1404" H 7500 3240 60  0001 C CNN
-F 3 "" H 7100 3500 60  0001 C CNN
-	1    7100 3500
-	1    0    0    -1  
-$EndComp
+	5950 4300 5950 4900
 Wire Wire Line
 	4650 2850 4650 2450
 Wire Wire Line
@@ -913,10 +810,10 @@ Wire Wire Line
 	4550 7550 4550 5300
 Connection ~ 4550 5300
 $Comp
-L ASSMANN_WSW:A-20042-LP_FS CAN-Bus
+L ASSMANN_WSW:A-20042-LP_FS CAN-Bus1001
 U 1 1 64B4E74A
 P 1700 4100
-F 0 "CAN-Bus" V 1350 3850 50  0000 C CNN
+F 0 "CAN-Bus1001" V 1350 3850 50  0000 C CNN
 F 1 "J22" H 1757 4676 50  0000 C CNN
 F 2 "ASSMANN_WSW:A20042LPFS" V 1700 4125 50  0001 C CNN
 F 3 "~" V 1700 4125 50  0001 C CNN
@@ -1103,7 +1000,6 @@ F 3 "" H 6250 6300 50  0001 C CNN
 	1    6250 6300
 	1    0    0    -1  
 $EndComp
-Connection ~ 6250 6300
 $Comp
 L power:GND1 #PWR0105
 U 1 1 61C5F996
@@ -1236,200 +1132,118 @@ Wire Wire Line
 NoConn ~ 5250 2750
 Wire Wire Line
 	7150 2150 8550 2150
-Wire Wire Line
-	5500 5300 5500 6200
-Wire Wire Line
-	5500 6200 6700 6200
-Wire Wire Line
-	5550 5200 5550 6100
-Wire Wire Line
-	6500 3000 8100 3000
-Wire Wire Line
-	8100 3000 8100 3550
-Wire Wire Line
-	8100 3550 8500 3550
-Wire Wire Line
-	5800 3700 6500 3700
-Wire Wire Line
-	6550 3050 8050 3050
-Wire Wire Line
-	8050 3050 8050 3650
-Wire Wire Line
-	8050 3650 8500 3650
 $Comp
 L Connector:Conn_01x16_Male J1002
 U 1 1 61B3C7FA
-P 8700 4250
-F 0 "J1002" H 8672 4224 50  0000 R CNN
-F 1 "Conn_01x16_Male" H 8672 4133 50  0000 R CNN
-F 2 "Connectors:he10-16d" H 8700 4250 50  0001 C CNN
-F 3 "~" H 8700 4250 50  0001 C CNN
-	1    8700 4250
+P 8150 4900
+F 0 "J1002" H 8122 4874 50  0000 R CNN
+F 1 "Conn_01x16_Male" H 8122 4783 50  0000 R CNN
+F 2 "Connectors_Samtec:SL-116-X-XX_1x16" H 8150 4900 50  0001 C CNN
+F 3 "~" H 8150 4900 50  0001 C CNN
+	1    8150 4900
 	-1   0    0    -1  
 $EndComp
-Wire Wire Line
-	6700 3200 7900 3200
-Wire Wire Line
-	7900 3200 7900 3750
-Wire Wire Line
-	7900 3750 8500 3750
-Wire Wire Line
-	6750 3250 7850 3250
-Wire Wire Line
-	7850 3250 7850 3850
-Wire Wire Line
-	7850 3850 8500 3850
-Wire Wire Line
-	7100 4300 6250 4300
-Wire Wire Line
-	6750 3250 6750 4100
-Wire Wire Line
-	6150 4000 7100 4000
-Wire Wire Line
-	6900 3300 7800 3300
-Wire Wire Line
-	7800 3300 7800 3950
-Wire Wire Line
-	7800 3950 8500 3950
-Wire Wire Line
-	6950 3350 7750 3350
-Wire Wire Line
-	7750 3350 7750 4050
-Wire Wire Line
-	7750 4050 8500 4050
-Wire Wire Line
-	6500 5050 7900 5050
-Wire Wire Line
-	7900 5050 7900 4150
-Wire Wire Line
-	7900 4150 8500 4150
-Wire Wire Line
-	6550 5100 7950 5100
-Wire Wire Line
-	7950 5100 7950 4250
-Wire Wire Line
-	7950 4250 8500 4250
-Wire Wire Line
-	6700 5200 8050 5200
-Wire Wire Line
-	8050 5200 8050 4350
-Wire Wire Line
-	8050 4350 8500 4350
-Wire Wire Line
-	6750 5250 8100 5250
-Wire Wire Line
-	8100 5250 8100 4450
-Wire Wire Line
-	8100 4450 8500 4450
-Wire Wire Line
-	6500 3000 6500 3700
-Connection ~ 6550 3600
-Wire Wire Line
-	6550 3600 6550 3050
-Wire Wire Line
-	6550 3600 7100 3600
-Wire Wire Line
-	6500 3700 7100 3700
-Connection ~ 6500 3700
-Wire Wire Line
-	6050 4100 6750 4100
-Wire Wire Line
-	6700 3200 6700 4200
-Connection ~ 6750 4100
-Wire Wire Line
-	6750 4100 7100 4100
-Wire Wire Line
-	7100 4200 6700 4200
-Connection ~ 6700 4200
-Wire Wire Line
-	6900 4700 5750 4700
-Wire Wire Line
-	6900 3300 6900 4700
-Wire Wire Line
-	5850 4600 6950 4600
-Connection ~ 6950 4600
-Wire Wire Line
-	6950 4600 6950 3350
-Wire Wire Line
-	6950 4600 7100 4600
-Wire Wire Line
-	7100 4700 6900 4700
-Connection ~ 6900 4700
-Wire Wire Line
-	5600 5600 6500 5600
-Connection ~ 6500 5600
-Wire Wire Line
-	6500 5050 6500 5600
-Wire Wire Line
-	5650 5500 6550 5500
-Wire Wire Line
-	5550 6100 6750 6100
-Wire Wire Line
-	6700 5200 6700 6200
-Connection ~ 6550 5500
-Wire Wire Line
-	6550 5500 6550 5100
-Wire Wire Line
-	6550 5500 7150 5500
-Wire Wire Line
-	6500 5600 7150 5600
-Connection ~ 6750 6100
-Wire Wire Line
-	6750 6100 6750 5250
-Wire Wire Line
-	6750 6100 7150 6100
-Wire Wire Line
-	6700 6200 7150 6200
-Connection ~ 6700 6200
-Wire Wire Line
-	8500 4550 8400 4550
-Wire Wire Line
-	8400 4550 8400 4750
-Wire Wire Line
-	8400 4750 8500 4750
-Wire Wire Line
-	8400 4750 8400 4950
-Wire Wire Line
-	8400 4950 8500 4950
-Connection ~ 8400 4750
-Wire Wire Line
-	8500 4650 8300 4650
-Wire Wire Line
-	8300 4650 8300 4850
-Wire Wire Line
-	8300 4850 8500 4850
-Wire Wire Line
-	8300 4850 8300 5000
-Wire Wire Line
-	8300 5050 8500 5050
-Connection ~ 8300 4850
-Wire Wire Line
-	6250 4950 8400 4950
-Connection ~ 6250 4950
-Wire Wire Line
-	6250 4950 6250 5700
-Connection ~ 8400 4950
-Wire Wire Line
-	6150 5000 8300 5000
-Connection ~ 6150 5000
-Wire Wire Line
-	6150 5000 6150 5400
-Connection ~ 8300 5000
-Wire Wire Line
-	8300 5000 8300 5050
-Wire Wire Line
-	5450 3900 5800 3900
-Wire Wire Line
-	5800 3900 5800 3700
-Wire Wire Line
-	5450 3800 5700 3800
-Wire Wire Line
-	5700 3800 5700 3600
-Wire Wire Line
-	5700 3600 6550 3600
 Wire Wire Line
 	5450 3700 5550 3700
 Connection ~ 5550 3700
 Wire Wire Line
 	5550 3700 5550 3500
+Wire Wire Line
+	7750 3500 7750 4200
+Wire Wire Line
+	7750 4200 7950 4200
+Wire Wire Line
+	6150 3500 7750 3500
+Wire Wire Line
+	7600 3800 7600 4400
+Wire Wire Line
+	7600 4400 7950 4400
+Wire Wire Line
+	7500 3900 7500 4500
+Wire Wire Line
+	7500 4500 7950 4500
+Wire Wire Line
+	7750 4200 7750 4300
+Wire Wire Line
+	7750 4300 7950 4300
+Connection ~ 7750 4200
+Wire Wire Line
+	7900 6300 7900 5700
+Wire Wire Line
+	7900 5700 7950 5700
+Wire Wire Line
+	6250 6300 7900 6300
+Wire Wire Line
+	7950 5600 7900 5600
+Wire Wire Line
+	7900 5600 7900 5700
+Connection ~ 7900 5700
+Wire Wire Line
+	5800 5000 7950 5000
+Wire Wire Line
+	5700 5100 7950 5100
+Wire Wire Line
+	5450 5200 7950 5200
+Wire Wire Line
+	5450 5300 7950 5300
+Wire Wire Line
+	5950 4900 7950 4900
+Wire Wire Line
+	6050 4800 7950 4800
+Wire Wire Line
+	6300 4100 6300 4700
+Wire Wire Line
+	6300 4700 7950 4700
+Wire Wire Line
+	6400 4000 6400 4600
+Wire Wire Line
+	6400 4600 7950 4600
+Wire Wire Line
+	5450 3900 7500 3900
+Wire Wire Line
+	5450 3800 7600 3800
+$Comp
+L Mechanical:MountingHole H1
+U 1 1 61DA88C0
+P 9300 4600
+F 0 "H1" H 9400 4646 50  0000 L CNN
+F 1 "MountingHole" H 9400 4555 50  0000 L CNN
+F 2 "Mounting_Holes:MountingHole_3.2mm_M3" H 9300 4600 50  0001 C CNN
+F 3 "~" H 9300 4600 50  0001 C CNN
+	1    9300 4600
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole H2
+U 1 1 61DAA099
+P 9750 5000
+F 0 "H2" H 9850 5046 50  0000 L CNN
+F 1 "MountingHole" H 9850 4955 50  0000 L CNN
+F 2 "Mounting_Holes:MountingHole_3.2mm_M3" H 9750 5000 50  0001 C CNN
+F 3 "~" H 9750 5000 50  0001 C CNN
+	1    9750 5000
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole H3
+U 1 1 61DDA765
+P 9800 5300
+F 0 "H3" H 9900 5346 50  0000 L CNN
+F 1 "MountingHole" H 9900 5255 50  0000 L CNN
+F 2 "Mounting_Holes:MountingHole_3.2mm_M3" H 9800 5300 50  0001 C CNN
+F 3 "~" H 9800 5300 50  0001 C CNN
+	1    9800 5300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Mechanical:MountingHole H4
+U 1 1 61DEB211
+P 10000 5700
+F 0 "H4" H 10100 5746 50  0000 L CNN
+F 1 "MountingHole" H 10100 5655 50  0000 L CNN
+F 2 "Mounting_Holes:MountingHole_3.2mm_M3" H 10000 5700 50  0001 C CNN
+F 3 "~" H 10000 5700 50  0001 C CNN
+	1    10000 5700
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
