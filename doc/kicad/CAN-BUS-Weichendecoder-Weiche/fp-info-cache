@@ -1,888 +1,643 @@
-1635180825054
-Connectors
-1pin
+1635446613451
+Mounting_Holes
+MountingHole_2.2mm_M2
 
 
 0
 0
 0
-Connectors
-3M-N7E50
+Mounting_Holes
+MountingHole_2.2mm_M2_DIN965
 
 
 0
 0
 0
-Connectors
-BARREL_JACK
+Mounting_Holes
+MountingHole_2.2mm_M2_DIN965_Pad
 
 
 0
 0
 0
-Connectors
-BNC
+Mounting_Holes
+MountingHole_2.2mm_M2_ISO7380
 
 
 0
 0
 0
-Connectors
-BUS_AT
+Mounting_Holes
+MountingHole_2.2mm_M2_ISO7380_Pad
 
 
 0
 0
 0
-Connectors
-BUS_PCI
+Mounting_Holes
+MountingHole_2.2mm_M2_ISO14580
 
 
 0
 0
 0
-Connectors
-Banana_Jack_1Pin
+Mounting_Holes
+MountingHole_2.2mm_M2_ISO14580_Pad
 
 
 0
 0
 0
-Connectors
-Banana_Jack_2Pin
+Mounting_Holes
+MountingHole_2.2mm_M2_Pad
 
 
 0
 0
 0
-Connectors
-Banana_Jack_3Pin
+Mounting_Holes
+MountingHole_2.2mm_M2_Pad_Via
 
 
 0
 0
 0
-Connectors
-Barrel_Jack_CUI_PJ-036AH-SMT
+Mounting_Holes
+MountingHole_2.5mm
 
 
 0
 0
 0
-Connectors
-Barrel_Jack_CUI_PJ-102AH
+Mounting_Holes
+MountingHole_2.5mm_Pad
 
 
 0
 0
 0
-Connectors
-C96ABCFD
+Mounting_Holes
+MountingHole_2.5mm_Pad_Via
 
 
 0
 0
 0
-Connectors
-C96ABCMD
+Mounting_Holes
+MountingHole_2.7mm
 
 
 0
 0
 0
-Connectors
-CNT3BRCMS
+Mounting_Holes
+MountingHole_2.7mm_M2.5
 
 
 0
 0
 0
-Connectors
-CR1220
+Mounting_Holes
+MountingHole_2.7mm_M2.5_DIN965
 
 
 0
 0
 0
-Connectors
-CR2032H
+Mounting_Holes
+MountingHole_2.7mm_M2.5_DIN965_Pad
 
 
 0
 0
 0
-Connectors
-CR2032V
+Mounting_Holes
+MountingHole_2.7mm_M2.5_ISO7380
 
 
 0
 0
 0
-Connectors
-CUI_PD-30
+Mounting_Holes
+MountingHole_2.7mm_M2.5_ISO7380_Pad
 
 
 0
 0
 0
-Connectors
-FMC_LPC_ASP-134604-01
+Mounting_Holes
+MountingHole_2.7mm_M2.5_ISO14580
 
 
 0
 0
 0
-Connectors
-Fan_Pin_Header_Straight_1x03
+Mounting_Holes
+MountingHole_2.7mm_M2.5_ISO14580_Pad
 
 
 0
 0
 0
-Connectors
-Fan_Pin_Header_Straight_1x04
+Mounting_Holes
+MountingHole_2.7mm_M2.5_Pad
 
 
 0
 0
 0
-Connectors
-GS2
+Mounting_Holes
+MountingHole_2.7mm_M2.5_Pad_Via
 
 
 0
 0
 0
-Connectors
-GS3
+Mounting_Holes
+MountingHole_2.7mm_Pad
 
 
 0
 0
 0
-Connectors
-GS_6x2
+Mounting_Holes
+MountingHole_2.7mm_Pad_Via
 
 
 0
 0
 0
-Connectors
-GS_8x2
+Mounting_Holes
+MountingHole_3.2mm_M3
 
 
 0
 0
 0
-Connectors
-GS_9x2
+Mounting_Holes
+MountingHole_3.2mm_M3_DIN965
 
 
 0
 0
 0
-Connectors
-GTK2400-H2
+Mounting_Holes
+MountingHole_3.2mm_M3_DIN965_Pad
 
 
 0
 0
 0
-Connectors
-GTK2400-V2
+Mounting_Holes
+MountingHole_3.2mm_M3_ISO7380
 
 
 0
 0
 0
-Connectors
-GoldTek_SCP20GR11
+Mounting_Holes
+MountingHole_3.2mm_M3_ISO7380_Pad
 
 
 0
 0
 0
-Connectors
-GoldTek_SCP20GS11
+Mounting_Holes
+MountingHole_3.2mm_M3_ISO14580
 
 
 0
 0
 0
-Connectors
-Grove_1x04
+Mounting_Holes
+MountingHole_3.2mm_M3_ISO14580_Pad
 
 
 0
 0
 0
-Connectors
-HE10-10C
+Mounting_Holes
+MountingHole_3.2mm_M3_Pad
 
 
 0
 0
 0
-Connectors
-HE10-20D
+Mounting_Holes
+MountingHole_3.2mm_M3_Pad_Via
 
 
 0
 0
 0
-Connectors
-HE10-26D
+Mounting_Holes
+MountingHole_3.5mm
 
 
 0
 0
 0
-Connectors
-HE10-34D
+Mounting_Holes
+MountingHole_3.5mm_Pad
 
 
 0
 0
 0
-Connectors
-HE10-40D
+Mounting_Holes
+MountingHole_3.5mm_Pad_Via
 
 
 0
 0
 0
-Connectors
-HE10-50D
+Mounting_Holes
+MountingHole_3.7mm
 
 
 0
 0
 0
-Connectors
-HE10-60D
+Mounting_Holes
+MountingHole_3.7mm_Pad
 
 
 0
 0
 0
-Connectors
-HE10-64D
+Mounting_Holes
+MountingHole_3.7mm_Pad_Via
 
 
 0
 0
 0
-Connectors
-IQRF_KON-SIM-01
+Mounting_Holes
+MountingHole_3mm
 
 
 0
 0
 0
-Connectors
-JACK_ALIM
+Mounting_Holes
+MountingHole_3mm_Pad
 
 
 0
 0
 0
-Connectors
-JWT_Vertical_A3963-RM3.96mm-2
+Mounting_Holes
+MountingHole_3mm_Pad_Via
 
 
 0
 0
 0
-Connectors
-NMJ6HCD2
+Mounting_Holes
+MountingHole_4.3mm_M4
 
 
 0
 0
 0
-Connectors
-PCI-EXPRESS
+Mounting_Holes
+MountingHole_4.3mm_M4_DIN965
 
 
 0
 0
 0
-Connectors
-PINHEAD1-2
+Mounting_Holes
+MountingHole_4.3mm_M4_DIN965_Pad
 
 
 0
 0
 0
-Connectors
-PINHEAD1-3
+Mounting_Holes
+MountingHole_4.3mm_M4_ISO7380
 
 
 0
 0
 0
-Connectors
-PINHEAD1-6
+Mounting_Holes
+MountingHole_4.3mm_M4_ISO7380_Pad
 
 
 0
 0
 0
-Connectors
-PINTST
+Mounting_Holes
+MountingHole_4.3mm_M4_ISO14580
 
 
 0
 0
 0
-Connectors
-PJ311_3.5mm_Jack
+Mounting_Holes
+MountingHole_4.3mm_M4_ISO14580_Pad
 
 
 0
 0
 0
-Connectors
-PJ320D_3.5mm_Jack
+Mounting_Holes
+MountingHole_4.3mm_M4_Pad
 
 
 0
 0
 0
-Connectors
-PJ320E_3.5mm_Jack
+Mounting_Holes
+MountingHole_4.3mm_M4_Pad_Via
 
 
 0
 0
 0
-Connectors
-PJ31060-I_3.5mm_Jack
+Mounting_Holes
+MountingHole_4.3x6.2mm_M4_Pad
 
 
 0
 0
 0
-Connectors
-Pin_d0.7mm_L6.5mm_W1.8mm_FlatFork
+Mounting_Holes
+MountingHole_4.3x6.2mm_M4_Pad_Via
 
 
 0
 0
 0
-Connectors
-Pin_d0.9mm_L10.0mm_W2.4mm_FlatFork
+Mounting_Holes
+MountingHole_4.5mm
 
 
 0
 0
 0
-Connectors
-Pin_d1.0mm_L10.0mm
+Mounting_Holes
+MountingHole_4.5mm_Pad
 
 
 0
 0
 0
-Connectors
-Pin_d1.0mm_L10.0mm_LooseFit
+Mounting_Holes
+MountingHole_4.5mm_Pad_Via
 
 
 0
 0
 0
-Connectors
-Pin_d1.1mm_L8.5mm_W2.5mm_FlatFork
+Mounting_Holes
+MountingHole_4mm
 
 
 0
 0
 0
-Connectors
-Pin_d1.1mm_L10.2mm_W3.5mm_Flat
+Mounting_Holes
+MountingHole_4mm_Pad
 
 
 0
 0
 0
-Connectors
-Pin_d1.2mm_L10.2mm_W2.9mm_FlatFork
+Mounting_Holes
+MountingHole_4mm_Pad_Via
 
 
 0
 0
 0
-Connectors
-Pin_d1.2mm_L11.3mm_W3.0mm_Flat
+Mounting_Holes
+MountingHole_5.3mm_M5
 
 
 0
 0
 0
-Connectors
-Pin_d1.3mm_L10.0mm_W3.5mm_Flat
+Mounting_Holes
+MountingHole_5.3mm_M5_DIN965
 
 
 0
 0
 0
-Connectors
-Pin_d1.3mm_L11.0mm
+Mounting_Holes
+MountingHole_5.3mm_M5_DIN965_Pad
 
 
 0
 0
 0
-Connectors
-Pin_d1.3mm_L11.0mm_LooseFit
+Mounting_Holes
+MountingHole_5.3mm_M5_ISO7380
 
 
 0
 0
 0
-Connectors
-Pin_d1.3mm_L11.3mm_W2.8mm_Flat
+Mounting_Holes
+MountingHole_5.3mm_M5_ISO7380_Pad
 
 
 0
 0
 0
-Connectors
-Pin_d1.4mm_L8.5mm_W2.8mm_FlatFork
+Mounting_Holes
+MountingHole_5.3mm_M5_ISO14580
 
 
 0
 0
 0
-Connectors
-QMS-1X52-FEMALE-SMD
+Mounting_Holes
+MountingHole_5.3mm_M5_ISO14580_Pad
 
 
 0
 0
 0
-Connectors
-QMS-1X52-SMD
+Mounting_Holes
+MountingHole_5.3mm_M5_Pad
 
 
 0
 0
 0
-Connectors
-QMS-2X52-SMD
+Mounting_Holes
+MountingHole_5.3mm_M5_Pad_Via
 
 
 0
 0
 0
-Connectors
-RJ12_E
+Mounting_Holes
+MountingHole_5.5mm
 
 
 0
 0
 0
-Connectors
-RJ45_8
+Mounting_Holes
+MountingHole_5.5mm_Pad
 
 
 0
 0
 0
-Connectors
-RJ45_TRANSFO
+Mounting_Holes
+MountingHole_5.5mm_Pad_Via
 
 
 0
 0
 0
-Connectors
-RJ45_TRANSFO_ver2
+Mounting_Holes
+MountingHole_5mm
 
 
 0
 0
 0
-Connectors
-RJHSE538X
+Mounting_Holes
+MountingHole_5mm_Pad
 
 
 0
 0
 0
-Connectors
-SAS_mini_1888174
+Mounting_Holes
+MountingHole_5mm_Pad_Via
 
 
 0
 0
 0
-Connectors
-SATA-7_SMD
+Mounting_Holes
+MountingHole_6.4mm_M6
 
 
 0
 0
 0
-Connectors
-SATA-7_THT_VERT_1
+Mounting_Holes
+MountingHole_6.4mm_M6_DIN965
 
 
 0
 0
 0
-Connectors
-SATA-7_THT_VERT_2
+Mounting_Holes
+MountingHole_6.4mm_M6_DIN965_Pad
 
 
 0
 0
 0
-Connectors
-SATA-22_SMD
+Mounting_Holes
+MountingHole_6.4mm_M6_ISO7380
 
 
 0
 0
 0
-Connectors
-SDS-50J
+Mounting_Holes
+MountingHole_6.4mm_M6_ISO7380_Pad
 
 
 0
 0
 0
-Connectors
-SD_Card_Receptacle
+Mounting_Holes
+MountingHole_6.4mm_M6_ISO14580
 
 
 0
 0
 0
-Connectors
-SMA_SMD_Jack_Straight
+Mounting_Holes
+MountingHole_6.4mm_M6_ISO14580_Pad
 
 
 0
 0
 0
-Connectors
-SMA_THT_Jack_Straight
+Mounting_Holes
+MountingHole_6.4mm_M6_Pad
 
 
 0
 0
 0
-Connectors
-SMB_Straight
+Mounting_Holes
+MountingHole_6.4mm_M6_Pad_Via
 
 
 0
 0
 0
-Connectors
-SOC676BR
+Mounting_Holes
+MountingHole_6.5mm
 
 
 0
 0
 0
-Connectors
-SOC676C
+Mounting_Holes
+MountingHole_6.5mm_Pad
 
 
 0
 0
 0
-Connectors
-SOC676NY
+Mounting_Holes
+MountingHole_6.5mm_Pad_Via
 
 
 0
 0
 0
-Connectors
-SUBCLICK
+Mounting_Holes
+MountingHole_6mm
 
 
 0
 0
 0
-Connectors
-Stereo_Jack_3.5mm_Switch_Ledino_KB3SPRS
+Mounting_Holes
+MountingHole_6mm_Pad
 
 
 0
 0
 0
-Connectors
-TE_Futurebus+_5536607-1
+Mounting_Holes
+MountingHole_6mm_Pad_Via
 
 
 0
 0
 0
-Connectors
-Tag-Connect_TC2030-IDC-FP
+Mounting_Holes
+MountingHole_8.4mm_M8
 
 
 0
 0
 0
-Connectors
-Tag-Connect_TC2030-IDC-NL
+Mounting_Holes
+MountingHole_8.4mm_M8_Pad
 
 
 0
 0
 0
-Connectors
-Tag-Connect_TC2050-IDC-FP
-
-
-0
-0
-0
-Connectors
-Tag-Connect_TC2050-IDC-NL
-
-
-0
-0
-0
-Connectors
-Tag-Connect_TC2070-IDC-FP
-
-
-0
-0
-0
-Connectors
-USB_A
-
-
-0
-0
-0
-Connectors
-USB_A_Vertical
-
-
-0
-0
-0
-Connectors
-USB_B
-
-
-0
-0
-0
-Connectors
-USB_B_MUSB_Straight
-
-
-0
-0
-0
-Connectors
-USB_Micro-B
-
-
-0
-0
-0
-Connectors
-USB_Micro-B_10103594-0001LF
-
-
-0
-0
-0
-Connectors
-USB_Mini-B
-
-
-0
-0
-0
-Connectors
-Wafer_Horizontal10x5.8x7RM2.5-3
-
-
-0
-0
-0
-Connectors
-Wafer_Horizontal15x5.8x7RM2.5-5
-
-
-0
-0
-0
-Connectors
-Wafer_Horizontal17.5x5.8x7RM2.5-6
-
-
-0
-0
-0
-Connectors
-Wafer_Horizontal20x5.8x7RM2.5-7
-
-
-0
-0
-0
-Connectors
-Wafer_Horizontal22.5x5.8x7RM2.5-8
-
-
-0
-0
-0
-Connectors
-Wafer_Vertical10x5.8x7RM2.5-3
-
-
-0
-0
-0
-Connectors
-Wafer_Vertical15x5.8x7RM2.5-5
-
-
-0
-0
-0
-Connectors
-Wafer_Vertical17.5x5.8x7RM2.5-6
-
-
-0
-0
-0
-Connectors
-Wafer_Vertical20x5.8x7RM2.5-7
-
-
-0
-0
-0
-Connectors
-Wafer_Vertical22.5x5.8x7RM2.5-8
-
-
-0
-0
-0
-Connectors
-XLR3MC
-
-
-0
-0
-0
-Connectors
-XLR5MC
-
-
-0
-0
-0
-Connectors
-bnc-ci
-
-
-0
-0
-0
-Connectors
-c64abfd
-
-
-0
-0
-0
-Connectors
-c64abmd
-
-
-0
-0
-0
-Connectors
-c64acfd
-
-
-0
-0
-0
-Connectors
-he10-10d
-
-
-0
-0
-0
-Connectors
-he10-14c
-
-
-0
-0
-0
-Connectors
-he10-14d
-
-
-0
-0
-0
-Connectors
-he10-16c
-
-
-0
-0
-0
-Connectors
-he10-16d
-
-
-0
-0
-0
-Connectors
-he10-20c
-
-
-0
-0
-0
-Connectors
-he10-26c
-
-
-0
-0
-0
-Connectors
-he10-34c
-
-
-0
-0
-0
-Connectors
-he10-40c
-
-
-0
-0
-0
-Connectors
-microSD_Card_Receptacle_Wuerth_693072010801
+Mounting_Holes
+MountingHole_8.4mm_M8_Pad_Via
 
 
 0
