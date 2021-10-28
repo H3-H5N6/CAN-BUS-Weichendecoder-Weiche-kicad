@@ -47,7 +47,7 @@ class Weiche {
 
   void process();
 
-  void change (uint16_t address); 
+  boolean change (uint16_t address); 
 
  private:
   OutputControl g;

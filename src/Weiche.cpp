@@ -129,12 +129,15 @@ void Weiche::process() {
   a.process();
 }
 
-void Weiche::change(uint16_t address) {
+boolean Weiche::change(uint16_t address) {
   if (a.getAddress() == address) {
     this->abzweig();
-  } else {
-    if (g.getAddress() == address) {
-      this->gerade();
-    }
+    return true;
+  } 
+  
+  if (g.getAddress() == address) {
+    this->gerade();
+    return true;
   }
+  return false;
 }

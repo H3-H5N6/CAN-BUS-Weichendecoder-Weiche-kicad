@@ -46,14 +46,14 @@ void init_can() {
   }
 }
 
-void debugFrame(CANMessage *frame){
+void debugFrame(CANMessage& frame){
   Serial.println();
-  Serial.print(F("Id ["));
-  Serial.print(frame->id);
+  Serial.print(F("DEBUG: Id ["));
+  Serial.print(frame.id);
   Serial.print(F("] Data ["));
-  for (byte i = 0; i < 8; i++) {
+  for (byte i = 0; i < 4; i++) {
     Serial.print(F("["));
-    Serial.print(frame->data[i]);
+    Serial.print(frame.data16[i]);
     Serial.print(F("]"));
   }
   Serial.println(F("]"));

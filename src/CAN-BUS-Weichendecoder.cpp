@@ -3,9 +3,9 @@
 
 #include "CanConfiguration.h"
 
-#define VERSION 1
-#define DEFAULT_MODUL_ID 1
-#define DEFAULT_WEICHEN_ID 801
+#define VERSION 2
+#define DEFAULT_MODUL_ID 3
+#define DEFAULT_WEICHEN_ID 821
 
 CAN_CONFIGURATION can_configuration;
 
@@ -100,7 +100,12 @@ byte index = 0;
 
 void change(uint16_t address) {
   for (byte i = 0; i < 5; i++) {
-    weiche[i].change(address);
+    boolean changed = weiche[i].change(address);
+    if (changed){
+      Serial.print(F("DEBUG: Address ["));
+      Serial.print(address);
+      Serial.println(F("] found"));
+    }
   }
 }
 
@@ -139,10 +144,7 @@ void sendDetailWeichenStatus() {
   }
 }
 
-void processCanMessage(CANMessage& frame) {
-  Serial.print("16: ");
-  Serial.println(frame.data16[0]);
-
+void processCanMessageGetStatus(CANMessage& frame) {
   if (frame.data16[0] == can_configuration.config.id) {
     Serial.println();
     Serial.print("Status: ");
@@ -152,40 +154,44 @@ void processCanMessage(CANMessage& frame) {
     }
     Serial.println();
     send_mode = 1;
-  } else {
-    for (byte i = 0; i < 4; i++) {
-      uint16_t adr = frame.data16[i];
-      Serial.print(adr);
-      Serial.print(" ");
-      if (adr != 0) {
-        change(adr);
-      }
+  }
+}
+
+void processCanMessageChangeState(CANMessage& frame) {
+  for (byte i = 0; i < 4; i++) {
+    uint16_t adr = frame.data16[i];
+    if (adr != 0) {
+      change(adr);
     }
-    Serial.println();
+  }
+  Serial.println();
+}
+
+void processCanMessage(CANMessage& frame) {
+  if (can.receive(frame)) {
+    debugFrame(frame);
+
+    switch (frame.id) {
+      case 100:
+        processCanMessageChangeState(frame);
+        break;
+      case 200:
+        processCanMessageGetStatus(frame);
+        break;
+    }
   }
 
   if (send_mode == 1) {
     Serial.println("sendDetailWeichenStatus");
     sendDetailWeichenStatus();
     send_mode = 0;
-  }
+  } 
 }
 
 void loop() {
   serialConfiguration.process();
 
-  // Serial.print(F("."));
-  if (can.receive(frame)) {
-    debugFrame(frame);
-
-    switch (frame.id) {
-      case 100:
-      case 200:
-        processCanMessage(frame);
-        break;
-      
-    }
-  }
+  processCanMessage(frame);
 
   processWeiche();
 
