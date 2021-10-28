@@ -1,83 +1,48 @@
 # CAN-BUS Weichendecoder
 
+## Serielle Console
+Auf der seriellen Console kann man die Konfiguration einsehen und und die Modul-Id ändern.
+
+Die Serielle Schnittstelle muss dazu auf 115200 gesetzt werden
+
+## Konfigiratuion ansehen
+
+Mit der Taste "p" wird die aktuelle Konfiguartion angezeigt. Beispiel:
+
+```
+==== CAN-Konfiguration ====
+Version:       1
+Status ID:     2
+CAN ID: [0] => 811
+CAN ID: [1] => 812
+CAN ID: [2] => 813
+CAN ID: [3] => 814
+CAN ID: [4] => 815
+CAN ID: [5] => 816
+CAN ID: [6] => 817
+CAN ID: [7] => 818
+CAN ID: [8] => 819
+CAN ID: [9] => 820
+===========================
+```
+
+## Modul-Adresse ändern:
+
+Mit der Eingabe &lt;i> + Nr + &lt;Return> kann die Modul-Adresse geändert werden.
+
+```
+Neue ID: 2
+Setze neue Id: 2
+```
+
+
 Der Weichendecoder liefert regelmäßig seinen aktuellen Zustand
 
 ## Protocol
 
 ### IDs
 
-* 0x200 Kommuikatien Zentrale -> Decoder
-* 0x400 Kommuication Decoder -> Zentrale (z.B. für die Übertragung des ajtuellen Zustandes)
 
-
-### Byte 0 Kommando
-
-* 0x01: Sendet Befehl zu Stellen eines Aktor
-* 0x02: Liefert den aktellen Status eines Aktor
-* 0x03: Liefert die aktuelle Koniguration
-
-### Byte 1 Adresse 0 (MSB)
-
-Adresse der Bus-Teilnehmers (MSB)
-
-* 0xFF  Es ist die Modul-Adresse
-* \< 0xFF Adresse des Aktor (MSB)
-### Byte 2 Adresse 1 (LSB)
-
-Adresse der Bus-Teilnehmers (LSB) 
-
-* MSB 0xFF: Nummer des Moduls (kein Aktor)
-* MSB <0x00: Adresse des Aktors (LSB)
-### Byte 3 Art des Aktor oder anderes
-
-* 0x01 W
-* 0x02 HP
-* ...
-* 0x80 Version (nur get)
-
-
-### Byte 4 Zustand des Aktor 
-#### Weichen W (0x01)
-
-* 0x00 Ungekannt
-* 0x01 wird auf Abzweig gestellt
-* 0x02 wird auf Gerade gestellt
-* 0x03 Abzweig
-* 0x04 Gerade
-
-Weitere Positionen für EKW/DKW, Dreiweiche noch nicht definiert
-#### Signale HP (0x02)
-
-* 0x00 unbekannt
-* 0x01 HP0
-* 0x02 HP1
-* 0x03 HP2
-* 0x04 HP0+Sh1
-
-#### Version (0x80)
-
-* xx Major-Version
-### Byte 5 Data 1 
-
-* xx Minor-Version
-### Byte 6 Data 2
-
-noch nicht benutzt
-### Byte 7 Data 3 
-
-noch nicht benutzt
-
-## Beispiele
-
-```
-+--+--+--+--+--+--+--+--+
-|01|nn|nn|AA|PO|  |  |  | set Position
-+--+--+--+--+--+--+--+--+
-|02|nn|nn|01|PO|  |  |  | liefert Status Weiche
-+--+--+--+--+--+--+--+--+
-|02|nn|nn|02|PO|  |  |  | liefert Status Signal HP
-+--+--+--+--+--+--+--+--+
-|02|00|NN|80|xx|xx|  |  | leifert Version des Decoders (nn)
-+--+--+--+--+--+--+--+--+
-```
+* 100 Frames mit der Id 100 dient dem Verändern des Zustandes
+* 200 Sendet den aktuellen Zustand des Decoders, wenn die im ersten Datafeld (u_int16) angegebene Moduladresse mit der des Moduls übereinstimmt. Der Status selbst wird mit der Id 300 gesendet
 
