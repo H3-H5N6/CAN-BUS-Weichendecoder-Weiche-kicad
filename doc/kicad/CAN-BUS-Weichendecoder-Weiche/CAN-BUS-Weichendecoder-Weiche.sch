@@ -300,11 +300,11 @@ Wire Wire Line
 Wire Wire Line
 	2600 5200 2150 5200
 Wire Wire Line
-	2650 4050 2650 5100
+	2650 4050 2650 4350
 Wire Wire Line
 	2650 5100 2150 5100
 Wire Wire Line
-	2700 3950 2700 5000
+	2700 3950 2700 4150
 Wire Wire Line
 	2700 5000 2150 5000
 Wire Wire Line
@@ -833,33 +833,11 @@ Wire Wire Line
 Wire Wire Line
 	2450 4450 2450 5500
 Wire Wire Line
-	1100 3600 2650 3600
-Connection ~ 2650 4050
+	1100 3600 2400 3600
 Wire Wire Line
 	2150 3950 2700 3950
 Wire Wire Line
-	1150 3550 2700 3550
-Connection ~ 2700 3950
-Wire Wire Line
-	2850 4350 2500 4350
-Connection ~ 2500 4350
-Wire Wire Line
-	2850 4450 2450 4450
-Connection ~ 2450 4450
-$Comp
-L power:GND #PWR0101
-U 1 1 64C41938
-P 2850 4450
-F 0 "#PWR0101" H 2850 4200 50  0001 C CNN
-F 1 "GND" H 2855 4277 50  0000 C CNN
-F 2 "" H 2850 4450 50  0001 C CNN
-F 3 "" H 2850 4450 50  0001 C CNN
-	1    2850 4450
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	2850 4350 2850 4450
-Connection ~ 2850 4450
+	1150 3550 2350 3550
 $Comp
 L Jumper:Jumper_2_Open JP1
 U 1 1 64C66E53
@@ -887,27 +865,17 @@ Wire Wire Line
 Wire Wire Line
 	1500 1100 1500 1500
 Wire Wire Line
-	2400 4550 2400 3700
-Wire Wire Line
-	2400 3700 950  3700
-Wire Wire Line
 	950  3700 950  2150
 Wire Wire Line
 	950  2150 1500 2150
 Wire Wire Line
 	1500 2150 1500 1900
-Connection ~ 2400 4550
-Wire Wire Line
-	2350 4650 2350 3750
-Wire Wire Line
-	2350 3750 900  3750
 Wire Wire Line
 	900  3750 900  2100
 Wire Wire Line
 	900  2100 1300 2100
 Wire Wire Line
 	1300 2100 1300 1900
-Connection ~ 2350 4650
 $Comp
 L Device:Jumper JP4
 U 1 1 6177E616
@@ -919,13 +887,6 @@ F 3 "~" H 3100 4150 50  0001 C CNN
 	1    3100 4150
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	2600 4150 2800 4150
-Connection ~ 2600 4150
-Wire Wire Line
-	2650 3600 2650 4050
-Wire Wire Line
-	2700 3550 2700 3950
 $Comp
 L power:+5V #PWR01044
 U 1 1 6176DD9A
@@ -1306,4 +1267,86 @@ F 3 "~" H 8750 2350 50  0001 C CNN
 $EndComp
 Text Notes 800  1150 1    50   ~ 0
 B  A
+Wire Wire Line
+	1650 5900 1750 5900
+Wire Wire Line
+	2250 4850 2250 6000
+Wire Wire Line
+	2250 6000 1750 6000
+Wire Wire Line
+	1750 6000 1750 5900
+Wire Wire Line
+	1650 4850 1750 4850
+Connection ~ 1750 4850
+Wire Wire Line
+	1750 4850 2250 4850
+Connection ~ 1750 5900
+$Comp
+L Device:Jumper JP8
+U 1 1 618B66A0
+P 2550 6000
+F 0 "JP8" H 2550 6150 50  0000 C CNN
+F 1 "Shield" H 2550 5900 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_1x02_Pitch2.54mm" H 2550 6000 50  0001 C CNN
+F 3 "~" H 2550 6000 50  0001 C CNN
+	1    2550 6000
+	1    0    0    -1  
+$EndComp
+Connection ~ 2250 6000
+$Comp
+L power:GND #PWR0101
+U 1 1 618B7783
+P 2850 6000
+F 0 "#PWR0101" H 2850 5750 50  0001 C CNN
+F 1 "GND" V 2855 5872 50  0000 R CNN
+F 2 "" H 2850 6000 50  0001 C CNN
+F 3 "" H 2850 6000 50  0001 C CNN
+	1    2850 6000
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	2350 4650 2350 3550
+Connection ~ 2350 4650
+Wire Wire Line
+	2400 4550 2400 3600
+Connection ~ 2400 4550
+$Comp
+L power:GND #PWR0108
+U 1 1 6197F624
+P 3100 4550
+F 0 "#PWR0108" H 3100 4300 50  0001 C CNN
+F 1 "GND" H 3105 4377 50  0000 C CNN
+F 2 "" H 3100 4550 50  0001 C CNN
+F 3 "" H 3100 4550 50  0001 C CNN
+	1    3100 4550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2450 4450 3100 4450
+Wire Wire Line
+	3100 4450 3100 4550
+Connection ~ 2450 4450
+Wire Wire Line
+	2650 4350 3100 4350
+Wire Wire Line
+	3100 4350 3100 4450
+Connection ~ 2650 4350
+Wire Wire Line
+	2650 4350 2650 5100
+Connection ~ 3100 4450
+Wire Wire Line
+	2700 4150 2800 4150
+Connection ~ 2700 4150
+Wire Wire Line
+	2700 4150 2700 5000
+Wire Wire Line
+	2500 4350 2500 3700
+Connection ~ 2500 4350
+Wire Wire Line
+	2500 3700 950  3700
+Wire Wire Line
+	2550 4250 2550 3750
+Connection ~ 2550 4250
+Wire Wire Line
+	2550 3750 900  3750
 $EndSCHEMATC
