@@ -42,6 +42,9 @@ Weiche* weiche = (Weiche*)malloc(sizeof(Weiche) * 5);
 
 SerialConfiguration serialConfiguration;
 
+
+int inputVal = 0;
+
 void initCanConfiguraion() {
   EEPROM.get(0, can_configuration.data);
 
@@ -87,6 +90,10 @@ void setup() {
   initWeiche();
 
   init_can();
+
+
+
+
 }
 
 void processWeiche() {
@@ -194,6 +201,20 @@ void loop() {
   processCanMessage(frame);
 
   processWeiche();
+
+
+  int val = analogRead(A6);
+  
+  if ( abs(inputVal - val)  > 50 ) {
+    Serial.print("InputVal: ");
+    Serial.println(val);
+    inputVal = val;    
+  } 
+  
+  
+    delay(1000);
+
+
 
   delay(5);
 }
