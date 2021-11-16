@@ -1,7 +1,15 @@
 #include <Arduino.h>
 #include <EEPROM.h>
+#include <NmraDcc.h>
 
 #include "CanConfiguration.h"
+
+NmraDcc Dcc;
+DCC_MSG Packet;
+
+#define DCC_PIN 2
+
+// #define NOTIFY_DCC_MSG
 
 #define VERSION 2
 #define DEFAULT_MODUL_ID 3
@@ -42,7 +50,6 @@ Weiche* weiche = (Weiche*)malloc(sizeof(Weiche) * 5);
 
 SerialConfiguration serialConfiguration;
 
-
 int inputVal = 0;
 
 void initCanConfiguraion() {
@@ -81,6 +88,36 @@ void initWeiche() {
   Serial.println(F("Init Weiche End"));
 }
 
+// This function is called whenever a normal DCC Turnout Packet is received and we're in Board Addressing Mode
+void notifyDccAccTurnoutBoard(uint16_t BoardAddr, uint8_t OutputPair, uint8_t Direction, uint8_t OutputPower) {
+  Serial.print("notifyDccAccTurnoutBoard: ");
+  Serial.print(BoardAddr, DEC);
+  Serial.print(',');
+  Serial.print(OutputPair, DEC);
+  Serial.print(',');
+  Serial.print(Direction, DEC);
+  Serial.print(',');
+  Serial.println(OutputPower, HEX);
+}
+
+// This function is called whenever a normal DCC Turnout Packet is received and we're in Output Addressing Mode
+void notifyDccAccTurnoutOutput(uint16_t Addr, uint8_t Direction, uint8_t OutputPower) {
+  Serial.print("notifyDccAccTurnoutOutput: ");
+  Serial.print(Addr, DEC);
+  Serial.print(',');
+  Serial.print(Direction, DEC);
+  Serial.print(',');
+  Serial.println(OutputPower, HEX);
+}
+
+// This function is called whenever a DCC Signal Aspect Packet is received
+void notifyDccSigOutputState(uint16_t Addr, uint8_t State) {
+  Serial.print("notifyDccSigOutputState: ");
+  Serial.print(Addr, DEC);
+  Serial.print(',');
+  Serial.println(State, HEX);
+}
+
 void setup() {
   Serial.begin(115200);
 
@@ -91,9 +128,15 @@ void setup() {
 
   init_can();
 
+  Serial.println("NMRA DCC");
+#ifdef digitalPinToInterrupt
+  Dcc.pin(DCC_PIN, 0);
+#else
+  Dcc.pin(0, DCC_PIN, 1);
+#endif
 
-
-
+  Dcc.init(MAN_ID_DIY, 10, CV29_ACCESSORY_DECODER | CV29_OUTPUT_ADDRESS_MODE, 0);
+  Serial.println("NMRA DCC Init Done");
 }
 
 void processWeiche() {
@@ -108,7 +151,7 @@ byte index = 0;
 void change(uint16_t address) {
   for (byte i = 0; i < 5; i++) {
     boolean changed = weiche[i].change(address);
-    if (changed){
+    if (changed) {
       Serial.print(F("DEBUG: Address ["));
       Serial.print(address);
       Serial.println(F("] found"));
@@ -192,8 +235,19 @@ void processCanMessage(CANMessage& frame) {
     Serial.println("sendDetailWeichenStatus");
     sendDetailWeichenStatus();
     send_mode = 0;
-  } 
+  }
 }
+
+#ifdef NOTIFY_DCC_MSG
+void notifyDccMsg(DCC_MSG* Msg) {
+  Serial.print("notifyDccMsg: ");
+  for (uint8_t i = 0; i < Msg->Size; i++) {
+    Serial.print(Msg->Data[i], HEX);
+    Serial.write(' ');
+  }
+  Serial.println();
+}
+#endif
 
 void loop() {
   serialConfiguration.process();
@@ -202,19 +256,16 @@ void loop() {
 
   processWeiche();
 
-
   int val = analogRead(A6);
-  
-  if ( abs(inputVal - val)  > 50 ) {
+
+  if (abs(inputVal - val) > 50) {
     Serial.print("InputVal: ");
     Serial.println(val);
-    inputVal = val;    
-  } 
-  
-  
-    delay(1000);
+    inputVal = val;
+  }
 
-
+  // delay(1000);
+  Dcc.process();
 
   delay(5);
 }
