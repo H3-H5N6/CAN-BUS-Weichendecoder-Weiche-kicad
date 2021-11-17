@@ -1,34 +1,12 @@
 #include <Arduino.h>
 #include <EEPROM.h>
-#include <NmraDcc.h>
+#include "Dcc.h"
 
 #include "CanConfiguration.h"
 
-#define DEBUG_DCC_MSG
 
-NmraDcc Dcc;
-DCC_MSG Packet;
 
-#define DCC_PIN 2
 
-// #define NOTIFY_DCC_MSG
-struct CVPair {
-  uint16_t CV;
-  uint8_t Value;
-};
-
-CVPair FactoryDefaultCVs[] =
-    {
-        {CV_ACCESSORY_DECODER_ADDRESS_LSB, DEFAULT_ACCESSORY_DECODER_ADDRESS & 0xFF},
-        {CV_ACCESSORY_DECODER_ADDRESS_MSB, DEFAULT_ACCESSORY_DECODER_ADDRESS >> 8}};
-
-uint8_t FactoryDefaultCVIndex = 0;
-
-void notifyCVResetFactoryDefault() {
-  // Make FactoryDefaultCVIndex non-zero and equal to num CV's to be reset
-  // to flag to the loop() function that a reset to Factory Defaults needs to be done
-  FactoryDefaultCVIndex = sizeof(FactoryDefaultCVs) / sizeof(CVPair);
-};
 
 #define VERSION 2
 #define DEFAULT_MODUL_ID 3
@@ -107,53 +85,6 @@ void initWeiche() {
   Serial.println(F("Init Weiche End"));
 }
 
-void notifyCVChange( uint16_t Addr, uint8_t Value ) {
-  Serial.print("notifyCVChange: ");
-  Serial.print(Addr, DEC);
-  Serial.print(',');
-  Serial.println(Value, DEC);
-}
-
-// This function is called whenever a normal DCC Turnout Packet is received and we're in Board Addressing Mode
-void notifyDccAccTurnoutBoard(uint16_t BoardAddr, uint8_t OutputPair, uint8_t Direction, uint8_t OutputPower) {
-  Serial.print("notifyDccAccTurnoutBoard: ");
-  Serial.print(BoardAddr, DEC);
-  Serial.print(',');
-  Serial.print(OutputPair, DEC);
-  Serial.print(',');
-  Serial.print(Direction, DEC);
-  Serial.print(',');
-  Serial.println(OutputPower, HEX);
-}
-
-// This function is called whenever a normal DCC Turnout Packet is received and we're in Output Addressing Mode
-void notifyDccAccTurnoutOutput(uint16_t Addr, uint8_t Direction, uint8_t OutputPower) {
-
-
-  Serial.print("Address: ");
-  Serial.print(Dcc.getAddr(), DEC);
-  Serial.print(" notifyDccAccTurnoutOutput: ");
-  Serial.print(Addr, DEC);
-  Serial.print(',');
-  Serial.print(Direction, DEC);
-  Serial.print(',');
-  Serial.print(OutputPower, HEX);
-
-  if ( ( Addr >= Dcc.getAddr()) && ( Addr < Dcc.getAddr() + 5 ) ){
-    Serial.println (" Found");
-  } else {
-    Serial.println ("");
-  }
-}
-
-// This function is called whenever a DCC Signal Aspect Packet is received
-void notifyDccSigOutputState(uint16_t Addr, uint8_t State) {
-  Serial.print("notifyDccSigOutputState: ");
-  Serial.print(Addr, DEC);
-  Serial.print(',');
-  Serial.println(State, HEX);
-}
-
 void setup() {
   Serial.begin(115200);
 
@@ -164,15 +95,7 @@ void setup() {
 
   init_can();
 
-  Serial.println("NMRA DCC");
-#ifdef digitalPinToInterrupt
-  Dcc.pin(DCC_PIN, 0);
-#else
-  Dcc.pin(0, DCC_PIN, 1);
-#endif
-
-  Dcc.init(MAN_ID_DIY, 10, CV29_ACCESSORY_DECODER | CV29_OUTPUT_ADDRESS_MODE, 0);
-  Serial.println("NMRA DCC Init Done");
+  init_DCC();
 }
 
 void processWeiche() {
@@ -314,6 +237,13 @@ void loop() {
     Serial.println(val, DEC);
 #endif
     Dcc.setCV(cv, val);
+  }
+
+  for (byte i=0 ; i < 10; i++) {
+    if (can_addr_buffer[i][1] != 0) {
+      change(can_addr_buffer[i][1]);
+      can_addr_buffer[i][1] = 0;
+    }
   }
 
   delay(5);
