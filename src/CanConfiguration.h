@@ -3,6 +3,8 @@
 
 #include <Arduino.h>
 
+#define CAN_BUS_OFFSET 256
+
 typedef struct {
   uint16_t version;
   uint16_t id;

@@ -4,12 +4,31 @@
 
 #include "CanConfiguration.h"
 
+#define DEBUG_DCC_MSG
+
 NmraDcc Dcc;
 DCC_MSG Packet;
 
 #define DCC_PIN 2
 
 // #define NOTIFY_DCC_MSG
+struct CVPair {
+  uint16_t CV;
+  uint8_t Value;
+};
+
+CVPair FactoryDefaultCVs[] =
+    {
+        {CV_ACCESSORY_DECODER_ADDRESS_LSB, DEFAULT_ACCESSORY_DECODER_ADDRESS & 0xFF},
+        {CV_ACCESSORY_DECODER_ADDRESS_MSB, DEFAULT_ACCESSORY_DECODER_ADDRESS >> 8}};
+
+uint8_t FactoryDefaultCVIndex = 0;
+
+void notifyCVResetFactoryDefault() {
+  // Make FactoryDefaultCVIndex non-zero and equal to num CV's to be reset
+  // to flag to the loop() function that a reset to Factory Defaults needs to be done
+  FactoryDefaultCVIndex = sizeof(FactoryDefaultCVs) / sizeof(CVPair);
+};
 
 #define VERSION 2
 #define DEFAULT_MODUL_ID 3
@@ -28,8 +47,8 @@ uint8_t LED_3 = 6;
 uint8_t LED_4 = 7;
 uint8_t LED_5 = 8;
 uint8_t LED_6 = 9;
-uint8_t LED_7 = A0;
-uint8_t LED_8 = A1;
+uint8_t LED_7 = A1;
+uint8_t LED_8 = A0;
 uint8_t LED_9 = A2;
 uint8_t LED_10 = A3;
 
@@ -53,7 +72,7 @@ SerialConfiguration serialConfiguration;
 int inputVal = 0;
 
 void initCanConfiguraion() {
-  EEPROM.get(0, can_configuration.data);
+  EEPROM.get(CAN_BUS_OFFSET, can_configuration.data);
 
   if (can_configuration.config.version != VERSION) {
     can_configuration.config.version = VERSION;
@@ -61,7 +80,7 @@ void initCanConfiguraion() {
     for (int n = 0; n < 10; n++) {
       can_configuration.config.id_weichen[n] = DEFAULT_WEICHEN_ID + n;
     }
-    EEPROM.put(0, can_configuration);
+    EEPROM.put(CAN_BUS_OFFSET, can_configuration);
   }
   serialConfiguration.init(can_configuration);
 }
@@ -88,6 +107,13 @@ void initWeiche() {
   Serial.println(F("Init Weiche End"));
 }
 
+void notifyCVChange( uint16_t Addr, uint8_t Value ) {
+  Serial.print("notifyCVChange: ");
+  Serial.print(Addr, DEC);
+  Serial.print(',');
+  Serial.println(Value, DEC);
+}
+
 // This function is called whenever a normal DCC Turnout Packet is received and we're in Board Addressing Mode
 void notifyDccAccTurnoutBoard(uint16_t BoardAddr, uint8_t OutputPair, uint8_t Direction, uint8_t OutputPower) {
   Serial.print("notifyDccAccTurnoutBoard: ");
@@ -102,12 +128,22 @@ void notifyDccAccTurnoutBoard(uint16_t BoardAddr, uint8_t OutputPair, uint8_t Di
 
 // This function is called whenever a normal DCC Turnout Packet is received and we're in Output Addressing Mode
 void notifyDccAccTurnoutOutput(uint16_t Addr, uint8_t Direction, uint8_t OutputPower) {
-  Serial.print("notifyDccAccTurnoutOutput: ");
+
+
+  Serial.print("Address: ");
+  Serial.print(Dcc.getAddr(), DEC);
+  Serial.print(" notifyDccAccTurnoutOutput: ");
   Serial.print(Addr, DEC);
   Serial.print(',');
   Serial.print(Direction, DEC);
   Serial.print(',');
-  Serial.println(OutputPower, HEX);
+  Serial.print(OutputPower, HEX);
+
+  if ( ( Addr >= Dcc.getAddr()) && ( Addr < Dcc.getAddr() + 5 ) ){
+    Serial.println (" Found");
+  } else {
+    Serial.println ("");
+  }
 }
 
 // This function is called whenever a DCC Signal Aspect Packet is received
@@ -266,6 +302,19 @@ void loop() {
 
   // delay(1000);
   Dcc.process();
+
+  if (FactoryDefaultCVIndex && Dcc.isSetCVReady()) {
+    FactoryDefaultCVIndex--;  // Decrement first as initially it is the size of the array
+    uint16_t cv = FactoryDefaultCVs[FactoryDefaultCVIndex].CV;
+    uint8_t val = FactoryDefaultCVs[FactoryDefaultCVIndex].Value;
+#ifdef DEBUG_DCC_MSG
+    Serial.print("loop: Write Default CV: ");
+    Serial.print(cv, DEC);
+    Serial.print(" Value: ");
+    Serial.println(val, DEC);
+#endif
+    Dcc.setCV(cv, val);
+  }
 
   delay(5);
 }
