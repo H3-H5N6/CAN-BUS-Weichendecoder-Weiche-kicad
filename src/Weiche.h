@@ -49,6 +49,8 @@ class Weiche {
 
   boolean change (uint16_t address); 
 
+  uint16_t nextAddress;
+
  private:
   OutputControl g;
   OutputControl a;

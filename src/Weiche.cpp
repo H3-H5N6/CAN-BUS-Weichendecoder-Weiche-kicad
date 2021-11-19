@@ -127,17 +127,36 @@ WEICHE::POSITION Weiche::status() {
 void Weiche::process() {
   g.process();
   a.process();
+
+  // Übernimmt ggf. die letzte Adresse
+  if (nextAddress != 0) {
+    change(nextAddress);
+  }
 }
 
+/**
+ * Liefert true, wenn die Weiche unter der jeweiligen Adresse erreichbar ist 
+ */
 boolean Weiche::change(uint16_t address) {
+  if ((a.getAddress() != address) && (g.getAddress() != address)) {
+    return false;
+  }
+  // Wenn die Stellung der Weiche nicht geändert werden kann, wird sich die Adresse gemerkt
+  if (status() == WEICHE::POSITION::RUNNING_GERADE || status() == WEICHE::POSITION::RUNNING_ABZWEIG ) {
+    this->nextAddress = address;
+    return true;
+  } 
+
+  // Weiche kann gestellt werden, nextAddress wird gelöscht
+  this->nextAddress = 0;
+  
+  // Weiche stellen
   if (a.getAddress() == address) {
     this->abzweig();
-    return true;
   } 
   
   if (g.getAddress() == address) {
     this->gerade();
-    return true;
   }
-  return false;
+  return true;
 }
