@@ -12,7 +12,7 @@ void SerialConfiguration::init(CAN_CONFIGURATION &_conf) {
 
 void SerialConfiguration::setAndWriteNewId() {
   can_configuration.config.id = calc_zahl();
-  EEPROM.put(0, can_configuration);
+  EEPROM.put(CAN_BUS_OFFSET, can_configuration);
 }
 
 void SerialConfiguration::reset_zahl() {

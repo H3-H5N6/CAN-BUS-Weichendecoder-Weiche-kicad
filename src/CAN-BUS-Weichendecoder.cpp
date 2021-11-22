@@ -4,10 +4,6 @@
 
 #include "CanConfiguration.h"
 
-
-
-
-
 #define VERSION 2
 #define DEFAULT_MODUL_ID 3
 #define DEFAULT_WEICHEN_ID 821
