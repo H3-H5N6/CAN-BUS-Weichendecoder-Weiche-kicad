@@ -1,12 +1,13 @@
 #include <Arduino.h>
 #include <EEPROM.h>
 #include "Dcc.h"
+#include "ConfigPin.h"
 
 #include "CanConfiguration.h"
 
-#define VERSION 2
-#define DEFAULT_MODUL_ID 3
-#define DEFAULT_WEICHEN_ID 821
+#define VERSION 3
+#define DEFAULT_MODUL_ID 2
+#define START_WEICHEN_ID 801
 
 CAN_CONFIGURATION can_configuration;
 
@@ -45,17 +46,41 @@ SerialConfiguration serialConfiguration;
 
 int inputVal = 0;
 
-void initCanConfiguraion() {
+void initCanConfiguraion(byte configPin) {
   EEPROM.get(CAN_BUS_OFFSET, can_configuration.data);
 
-  if (can_configuration.config.version != VERSION) {
-    can_configuration.config.version = VERSION;
+  boolean writeConfigToEEPROM = false;
+
+  // Modul ID und CAN-Bus-Adresse initialisieren
+  if (configPin == 3 || can_configuration.config.version == 0) {
+    Serial.print(F("Setze Mudul ID: ["));
+    Serial.print(DEFAULT_MODUL_ID);
+    Serial.println(F("]"));
+
+    Serial.print(F("Setze CAN Adresse: ["));
+    Serial.print(START_WEICHEN_ID + (10 * (DEFAULT_MODUL_ID-1 )));
+    Serial.println(F("]"));
+
     can_configuration.config.id = DEFAULT_MODUL_ID;
     for (int n = 0; n < 10; n++) {
-      can_configuration.config.id_weichen[n] = DEFAULT_WEICHEN_ID + n;
+      can_configuration.config.id_weichen[n] = START_WEICHEN_ID + (10 * (DEFAULT_MODUL_ID-1 )) + n;
     }
-    EEPROM.put(CAN_BUS_OFFSET, can_configuration);
   }
+
+  if (can_configuration.config.version != VERSION) {
+    Serial.print(F("Setze neue Version: ["));
+    Serial.print(VERSION);
+    Serial.println(F("]"));
+    can_configuration.config.version = VERSION;
+    writeConfigToEEPROM = true;
+  }
+
+  if (writeConfigToEEPROM){
+    Serial.print(F("Schreibe initiale Konfig ..."));
+    EEPROM.put(CAN_BUS_OFFSET, can_configuration);
+    Serial.print(F(". fertig"));
+  }
+
   serialConfiguration.init(can_configuration);
 }
 
@@ -81,10 +106,19 @@ void initWeiche() {
   Serial.println(F("Init Weiche End"));
 }
 
+
+
 void setup() {
   Serial.begin(115200);
 
-  initCanConfiguraion();
+  
+
+  byte configPin = readCongigPin();
+  Serial.print("Wert ConfigPin: [");
+  Serial.print(configPin);
+  Serial.println("]");
+
+  initCanConfiguraion(configPin);
   serialConfiguration.printConfiguration();
 
   initWeiche();
@@ -211,15 +245,7 @@ void loop() {
 
   processWeiche();
 
-  int val = analogRead(A6);
-
-  if (abs(inputVal - val) > 50) {
-    Serial.print("InputVal: ");
-    Serial.println(val);
-    inputVal = val;
-  }
-
-  // delay(1000);
+  
   Dcc.process();
 
   if (FactoryDefaultCVIndex && Dcc.isSetCVReady()) {
