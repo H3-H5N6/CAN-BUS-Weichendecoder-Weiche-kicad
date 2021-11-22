@@ -52,6 +52,14 @@ void SerialConfiguration::process() {
         reset_zahl();
         Serial.println(F(" Abbruch"));
         return;
+      case 'h':
+        Serial.println(F("Hilfe"));
+        Serial.println(F("======================================="));
+        Serial.println(F("p           : Ausgabe der Konfiguartion"));
+        Serial.println(F("i <MODUL_ID>: Neue Modul Id setzen"));
+        Serial.println(F("q           : Abbruch der Eingabe"));
+        Serial.println(F("h           : Diese Hilfe"));
+        return;
       case '0':
       case '1':
       case '2':
@@ -93,9 +101,10 @@ void SerialConfiguration::process() {
 
 void SerialConfiguration::printConfiguration() {
   Serial.println(F("==== CAN-Konfiguration ===="));
-  Serial.print(F("Version:       "));
+  //              CAN ID: [3] => 
+  Serial.print(F("SW-Version  => "));
   Serial.println(can_configuration.config.version);
-  Serial.print(F("Status ID:     "));
+  Serial.print(F("Modul Id    => "));
   Serial.println(can_configuration.config.id);
   for (int n = 0; n < 10; n++) {
     Serial.print("CAN ID: [");
