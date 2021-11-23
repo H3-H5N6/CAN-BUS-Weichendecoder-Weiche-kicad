@@ -3,11 +3,14 @@
 #include <Arduino.h>
 #include <EEPROM.h>
 
+
+
 SerialConfiguration::SerialConfiguration() {
 }
 
-void SerialConfiguration::init(CAN_CONFIGURATION &_conf) {
+void SerialConfiguration::init(CAN_CONFIGURATION &_conf, ChangeWeiche _cw ) {
   can_configuration = _conf;
+  changeWeicheCallback = _cw;
 }
 
 void SerialConfiguration::setAndWriteNewId() {
@@ -47,6 +50,11 @@ void SerialConfiguration::process() {
         reset_zahl();
         Serial.print(F("Neue ID: "));
         return;
+      case 'w':
+        change_weiche = true;
+        reset_zahl();
+        Serial.print(F("Output: "));
+        return;
       case 'q':
         change_id = false;
         reset_zahl();
@@ -70,7 +78,7 @@ void SerialConfiguration::process() {
       case '7':
       case '8':
       case '9':
-        if (!change_id) {
+        if (!change_id && !change_weiche) {
             return;
         }
         Serial.print(char(input));
@@ -90,6 +98,14 @@ void SerialConfiguration::process() {
           setAndWriteNewId();
           change_id = false;
         }
+
+        if (change_weiche) {
+          Serial.print(F("Stelle Weiche: "));
+          Serial.println(calc_zahl());
+          changeWeicheCallback(calc_zahl());
+          change_weiche = false;
+        }
+
         reset_zahl();
         return;
       default:

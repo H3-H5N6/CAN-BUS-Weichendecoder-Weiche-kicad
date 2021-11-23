@@ -46,7 +46,19 @@ SerialConfiguration serialConfiguration;
 
 int inputVal = 0;
 
+void change(uint16_t address) {
+  for (byte i = 0; i < 5; i++) {
+    boolean changed = weiche[i].change(address);
+    if (changed) {
+      Serial.print(F("DEBUG: Address ["));
+      Serial.print(address);
+      Serial.println(F("] found"));
+    }
+  }
+}
+
 void initCanConfiguraion(byte configPin) {
+
   EEPROM.get(CAN_BUS_OFFSET, can_configuration.data);
 
   boolean writeConfigToEEPROM = false;
@@ -81,7 +93,7 @@ void initCanConfiguraion(byte configPin) {
     Serial.print(F(". fertig"));
   }
 
-  serialConfiguration.init(can_configuration);
+  serialConfiguration.init(can_configuration, *change);
 }
 
 void initWeiche() {
@@ -137,16 +149,7 @@ void processWeiche() {
 unsigned long lastChanged = millis();
 byte index = 0;
 
-void change(uint16_t address) {
-  for (byte i = 0; i < 5; i++) {
-    boolean changed = weiche[i].change(address);
-    if (changed) {
-      Serial.print(F("DEBUG: Address ["));
-      Serial.print(address);
-      Serial.println(F("] found"));
-    }
-  }
-}
+
 
 void sendDetailWeichenStatus() {
   frame.id = 300;
