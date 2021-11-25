@@ -3,13 +3,13 @@
 
 #include <Arduino.h>
 
-uint16_t valueToKeyMap [4] = {1023, 700, 328, 285 };
+int valueToKeyMap [4] = {1023, 700, 328, 285 };
 
 byte mapValueToKey (int value) {
   Serial.print(F("Value ["));
   Serial.print(value);
   Serial.println(F("]"));
-  for (byte i=0; i <  ( sizeof valueToKeyMap / sizeof valueToKeyMap[0]) ; i++) {
+  for (byte i=0; i <  ( sizeof valueToKeyMap / sizeof valueToKeyMap[0]) ; i++) { 
     if (abs(value - valueToKeyMap[i]) < 10) {
       return i;
     }

@@ -57,6 +57,32 @@ void change(uint16_t address) {
   }
 }
 
+
+void initDccConfiguraion(byte configPin, byte canModulId) {
+
+  Serial.print ("DCC-Address: [");
+  uint16_t dccAddr = Dcc.getCV(CV_ACCESSORY_DECODER_ADDRESS_LSB) + (8 * Dcc.getCV(CV_ACCESSORY_DECODER_ADDRESS_MSB));
+  Serial.print(dccAddr);
+  Serial.println("]");
+
+  Serial.print ("Config Pin: [");
+  Serial.print(configPin);
+  Serial.println("]");
+
+
+  if (configPin == 1 ) {
+    uint16_t newDccAddr = ( (canModulId -1 ) * 5) + 1;
+
+    Serial.print ("Neue DCC-Addresse: [");
+    Serial.print(newDccAddr);
+    Serial.println("]");
+
+    Dcc.setCV(CV_ACCESSORY_DECODER_ADDRESS_LSB, newDccAddr & 0xFF);
+    Dcc.setCV(CV_ACCESSORY_DECODER_ADDRESS_MSB, newDccAddr >> 8);
+  }
+}
+
+
 void initCanConfiguraion(byte configPin) {
 
   EEPROM.get(CAN_BUS_OFFSET, can_configuration.data);
@@ -138,6 +164,7 @@ void setup() {
   init_can();
 
   init_DCC();
+  initDccConfiguraion(configPin, can_configuration.config.id);
 }
 
 void processWeiche() {
@@ -251,21 +278,11 @@ void loop() {
   
   Dcc.process();
 
-  if (FactoryDefaultCVIndex && Dcc.isSetCVReady()) {
-    FactoryDefaultCVIndex--;  // Decrement first as initially it is the size of the array
-    uint16_t cv = FactoryDefaultCVs[FactoryDefaultCVIndex].CV;
-    uint8_t val = FactoryDefaultCVs[FactoryDefaultCVIndex].Value;
-#ifdef DEBUG_DCC_MSG
-    Serial.print("loop: Write Default CV: ");
-    Serial.print(cv, DEC);
-    Serial.print(" Value: ");
-    Serial.println(val, DEC);
-#endif
-    Dcc.setCV(cv, val);
-  }
+  dccWriteFactotyDefaults();
 
   for (byte i=0 ; i < 10; i++) {
     if (can_addr_buffer[i][1] != 0) {
+      Serial.println("call Change");
       change(can_addr_buffer[i][1]);
       can_addr_buffer[i][1] = 0;
     }

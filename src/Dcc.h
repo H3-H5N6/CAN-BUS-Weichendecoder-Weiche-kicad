@@ -20,7 +20,8 @@ struct CVPair {
 CVPair FactoryDefaultCVs[] =
     {
         {CV_ACCESSORY_DECODER_ADDRESS_LSB, DEFAULT_ACCESSORY_DECODER_ADDRESS & 0xFF},
-        {CV_ACCESSORY_DECODER_ADDRESS_MSB, DEFAULT_ACCESSORY_DECODER_ADDRESS >> 8}};
+        {CV_ACCESSORY_DECODER_ADDRESS_MSB, DEFAULT_ACCESSORY_DECODER_ADDRESS >> 8}
+    };
 
 uint8_t FactoryDefaultCVIndex = 0;
 
@@ -38,7 +39,7 @@ void notifyCVChange(uint16_t Addr, uint8_t Value) {
 }
 
 uint16_t can_addr_buffer[10][2];
-
+#define DEBUG_DCC
 void notifyDccAccTurnoutOutput(uint16_t Addr, uint8_t Direction, uint8_t OutputPower) {
 #ifdef DEBUG_DCC
   Serial.print("Address: ");
@@ -48,12 +49,16 @@ void notifyDccAccTurnoutOutput(uint16_t Addr, uint8_t Direction, uint8_t OutputP
   Serial.print(',');
   Serial.print(Direction, DEC);
   Serial.print(',');
-  Serial.print(OutputPower, HEX);
+  Serial.println(OutputPower, HEX);
 #endif
 
   if ((Addr >= Dcc.getAddr()) && (Addr < Dcc.getAddr() + 5)) {
-    uint16_t can_addr = 821 + ((Addr - 1) * 2 + Direction);
-    byte index = can_addr - 821;
+    uint16_t can_addr = 801 + ((Addr - 1) * 2 + Direction);
+
+    
+    //              (6 -1)     * 2 + 0               6 -1 *  * 2
+    //               10                                10        
+    byte index = ((Addr - 1) * 2 + Direction) - ((Dcc.getAddr() - 1 ) * 2);
 
     if (can_addr_buffer[index][0] != can_addr) {
       if (OutputPower == 1) {
@@ -86,6 +91,21 @@ void init_DCC() {
 
   Dcc.init(MAN_ID_DIY, 10, CV29_ACCESSORY_DECODER | CV29_OUTPUT_ADDRESS_MODE, 0);
   Serial.println("NMRA DCC Init Done");
+}
+
+void dccWriteFactotyDefaults() {
+  if (FactoryDefaultCVIndex && Dcc.isSetCVReady()) {
+    FactoryDefaultCVIndex--;  // Decrement first as initially it is the size of the array
+    uint16_t cv = FactoryDefaultCVs[FactoryDefaultCVIndex].CV;
+    uint8_t val = FactoryDefaultCVs[FactoryDefaultCVIndex].Value;
+#ifdef DEBUG_DCC_MSG
+    Serial.print("loop: Write Default CV: ");
+    Serial.print(cv, DEC);
+    Serial.print(" Value: ");
+    Serial.println(val, DEC);
+#endif
+    Dcc.setCV(cv, val);
+  }
 }
 
 #endif
