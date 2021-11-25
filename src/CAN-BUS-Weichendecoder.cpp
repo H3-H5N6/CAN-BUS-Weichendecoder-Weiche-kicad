@@ -5,8 +5,8 @@
 
 #include "CanConfiguration.h"
 
-#define VERSION 3
-#define DEFAULT_MODUL_ID 2
+#define VERSION 4
+#define DEFAULT_MODUL_ID 1
 #define START_WEICHEN_ID 801
 
 CAN_CONFIGURATION can_configuration;

@@ -68,6 +68,18 @@ void SerialConfiguration::process() {
         Serial.println(F("q           : Abbruch der Eingabe"));
         Serial.println(F("h           : Diese Hilfe"));
         return;
+      case '+':
+        if (last_weiche > 0){
+          last_weiche=last_weiche+2;
+        }
+      case '-':
+        if (last_weiche > 1){
+          last_weiche--;
+        }
+        Serial.print(F("Stelle Weiche: "));
+        Serial.println(last_weiche);
+        changeWeicheCallback(last_weiche);
+        return;
       case '0':
       case '1':
       case '2':
@@ -103,6 +115,7 @@ void SerialConfiguration::process() {
           Serial.print(F("Stelle Weiche: "));
           Serial.println(calc_zahl());
           changeWeicheCallback(calc_zahl());
+          last_weiche = calc_zahl();
           change_weiche = false;
         }
 

@@ -20,6 +20,7 @@ class SerialConfiguration {
   CAN_CONFIGURATION can_configuration;
   boolean change_id = false;
   boolean change_weiche = false;
+  uint16_t last_weiche = -1;
   uint8_t zahl[ZAHL_LENGTH];
   uint8_t zahl_pos = 0;
   void setAndWriteNewId();
