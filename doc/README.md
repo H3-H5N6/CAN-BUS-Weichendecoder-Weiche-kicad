@@ -11,7 +11,8 @@ Geschaltet werden die Schaltausgänge
 
 CAN-BUS, DCC und auch 12V für die Versorgung der eigentlichen Eletronik erfolgt via einem RJ45-Netzwerkkarbel.
 
-Für Testzwecke gibt es auch eine kleine CAN-BUS-Zentrale  ![CAN-Bus-Zentrale](img/Testzentrale_CAN_BUS.jpg)
+Für Testzwecke gibt es auch eine kleine CAN-BUS-Zentrale  
+![CAN-Bus-Zentrale](img/Testzentrale_CAN_BUS.jpg)
 
 Über die Eingabe von einer "Adresse" können die einzelnen Schaltausgänge geschaltet werden. Auch das Schalten von Weichenstraße ist möglich.
 
@@ -19,12 +20,12 @@ Später soll das Ganze durch ein Stellpul mit Schaltern (und LEDs zur Anzeige) e
 
 Natürlich kann man die Ausgänge auch mit einer gewöhnlichen DCC-Zentrale geschaltet werden. Hier als Beispiel kommt eine ECOS von ESU zu Einsatz, die auch ein Stellpult kennt.
 
-[DCC-Zentrale](img/DCC-Zentrale_hier_ECOS_von_ESU.jpg)
+![DCC-Zentrale](img/DCC-Zentrale_hier_ECOS_von_ESU.jpg)
 
 Da aktuell die Anlage ca 120km steht, wurde ein Modellbahn-Simulator gebaut. Die Weichenantriebe sind durch Bistabile Relais nachgebildet und die LED stellen die aktuelle Lage der Weichen wieder.
 
-[Modellbahn-Simulator](img/Modellbahn-Simulator.jpg)
-[Modellbahn-Simulator Rückseite](img/Modellbahn-Simulator_von_hinten.jpg)
+![Modellbahn-Simulator](img/Modellbahn-Simulator.jpg)
+![Modellbahn-Simulator Rückseite](img/Modellbahn-Simulator_von_hinten.jpg)
 
 # CAN-BUS-Frames
 
