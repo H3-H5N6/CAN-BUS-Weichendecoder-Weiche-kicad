@@ -1,3 +1,31 @@
+# Aktueller Stand (26.11.2021)
+
+Kernstück des Ganzen sind die Weichendecoder für motorische Antriebe mit Impulssteuerung. Zum Einsatz sollen die Antriebe MP6 von MTB kommen. Diese werden mit kurzen Impulse gesteuert, indem der jeweilige Schalteingang kurz gegen Masse gezogen werden. Die Antriebe selbst werden mit 12V DC betrieben und haben auch gleich die Herzstückpolaristaion an Bord.
+
+![Drei Weichendecoder](img/3_Decoder-Prototypen.jpg)
+
+Geschaltet werden die Schaltausgänge 
+* via CAN-BUS (und eigennem Protokoll)
+* DCC
+* oder für Testzwecke via USB-Console
+
+CAN-BUS, DCC und auch 12V für die Versorgung der eigentlichen Eletronik erfolgt via einem RJ45-Netzwerkkarbel.
+
+Für Testzwecke gibt es auch eine kleine CAN-BUS-Zentrale  ![CAN-Bus-Zentrale](img/Testzentrale_CAN_BUS.jpg)
+
+Über die Eingabe von einer "Adresse" können die einzelnen Schaltausgänge geschaltet werden. Auch das Schalten von Weichenstraße ist möglich.
+
+Später soll das Ganze durch ein Stellpul mit Schaltern (und LEDs zur Anzeige) ersetzt werden.
+
+Natürlich kann man die Ausgänge auch mit einer gewöhnlichen DCC-Zentrale geschaltet werden. Hier als Beispiel kommt eine ECOS von ESU zu Einsatz, die auch ein Stellpult kennt.
+
+[DCC-Zentrale](img/DCC-Zentrale_hier_ECOS_von_ESU.jpg)
+
+Da aktuell die Anlage ca 120km steht, wurde ein Modellbahn-Simulator gebaut. Die Weichenantriebe sind durch Bistabile Relais nachgebildet und die LED stellen die aktuelle Lage der Weichen wieder.
+
+[Modellbahn-Simulator](img/Modellbahn-Simulator.jpg)
+[Modellbahn-Simulator Rückseite](img/Modellbahn-Simulator_von_hinten.jpg)
+
 # CAN-BUS-Frames
 
 Die einzelnen Aktoren haben eine id im Wertebereich uint_16 (2byte)
