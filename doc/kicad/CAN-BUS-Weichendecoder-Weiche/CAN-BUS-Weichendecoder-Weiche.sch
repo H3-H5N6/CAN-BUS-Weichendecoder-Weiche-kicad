@@ -31,7 +31,7 @@ Wire Wire Line
 Wire Wire Line
 	6150 1850 6150 3100
 Wire Wire Line
-	6150 3100 4250 3100
+	6150 3100 4200 3100
 Wire Wire Line
 	5750 1950 6050 1950
 Wire Wire Line
@@ -105,6 +105,8 @@ F 0 "Shield1" H 2200 1900 50  0000 C CNN
 F 1 "CAN-BUS-MODULE" H 2200 2000 50  0000 C CNN
 F 2 "CAN-BUS-MODULE:MCP2515_CAN_MODULE" H 2200 2650 50  0001 C CIN
 F 3 "" H 2200 2650 50  0001 C CNN
+F 4 "https://www.marotronics.de/MCP2515-Can-Bus-Modul-mit-TJA1050-Transciever-5V-SPI-Interface-fuer-Arduino-Pi" H 2200 2650 50  0001 C CNN "Quelle"
+F 5 "2,90" H 2200 2650 50  0001 C CNN "Preis"
 	1    2200 2650
 	1    0    0    -1  
 $EndComp
@@ -264,6 +266,8 @@ F 0 "J23" V 1350 4900 50  0000 C CNN
 F 1 "CAN-BUS" V 1250 4900 50  0000 C CNN
 F 2 "ASSMANN_WSW:A20042LPFS" V 1700 5175 50  0001 C CNN
 F 3 "~" V 1700 5175 50  0001 C CNN
+F 4 "https://www.reichelt.de/modular-einbaubuchse-8-8-geschirmt-mebp-8-8g-p24975.html?&nbc=1" V 1700 5150 50  0001 C CNN "Quelle"
+F 5 "0,70" V 1700 5150 50  0001 C CNN "Preis"
 	1    1700 5150
 	1    0    0    -1  
 $EndComp
@@ -325,6 +329,8 @@ F 0 "U1" H 2200 1625 50  0000 C CNN
 F 1 "6N136" H 2200 1534 50  0000 C CNN
 F 2 "Package_DIP:DIP-8_W7.62mm" H 2000 900 50  0001 L CIN
 F 3 "https://optoelectronics.liteon.com/upload/download/DS70-2008-0032/6N135-L%206N136-L%20series.pdf" H 2200 1200 50  0001 L CNN
+F 4 "https://www.reichelt.de/optokoppler-6n-137-p2858.html" H 2200 1200 50  0001 C CNN "Quelle"
+F 5 "0,52" H 2200 1200 50  0001 C CNN "Preis"
 	1    2200 1200
 	1    0    0    -1  
 $EndComp
@@ -342,16 +348,16 @@ $EndComp
 $Comp
 L Device:R R1
 U 1 1 6154F62A
-P 1450 1000
-F 0 "R1" V 1243 1000 50  0000 C CNN
-F 1 "1k5" V 1334 1000 50  0000 C CNN
-F 2 "Resistors_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal" V 1380 1000 50  0001 C CNN
-F 3 "~" H 1450 1000 50  0001 C CNN
-	1    1450 1000
+P 1500 1000
+F 0 "R1" V 1293 1000 50  0000 C CNN
+F 1 "1k5" V 1384 1000 50  0000 C CNN
+F 2 "Resistors_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal" V 1430 1000 50  0001 C CNN
+F 3 "~" H 1500 1000 50  0001 C CNN
+	1    1500 1000
 	0    1    1    0   
 $EndComp
 Wire Wire Line
-	1600 1000 1700 1000
+	1650 1000 1700 1000
 Wire Wire Line
 	1700 1000 1900 1000
 Wire Wire Line
@@ -402,6 +408,8 @@ F 0 "U2" H 5600 2700 50  0000 C CNN
 F 1 "Arduino_Nano" H 5300 2100 50  0000 C CNN
 F 2 "Modules:Arduino_Nano" H 5250 1750 50  0001 C CIN
 F 3 "http://www.mouser.com/pdfdocs/Gravitech_Arduino_Nano3_0.pdf" H 5250 1750 50  0001 C CNN
+F 4 "https://www.makershop.de/plattformen/arduino/3-nano-v3/" H 5250 1750 50  0001 C CNN "Quelle"
+F 5 "5,85" H 5250 1750 50  0001 C CNN "Preis"
 	1    5250 1750
 	1    0    0    -1  
 $EndComp
@@ -428,10 +436,6 @@ Wire Wire Line
 	1300 1200 1300 1300
 Wire Wire Line
 	2450 7350 2450 7300
-Wire Wire Line
-	2850 7000 2900 7000
-Wire Wire Line
-	2900 7000 2900 6800
 $Comp
 L power:+12V #PWR01046
 U 1 1 6178B55D
@@ -524,6 +528,8 @@ F 0 "R10" V 5700 7350 50  0000 C CNN
 F 1 "1k" V 5600 7350 50  0000 C CNN
 F 2 "Resistors_THT:R_Array_SIP6" V 6375 7350 50  0001 C CNN
 F 3 "http://www.vishay.com/docs/31509/csc.pdf" H 6000 7350 50  0001 C CNN
+F 4 "0,07" H 6000 7350 50  0001 C CNN "Preis"
+F 5 "https://www.reichelt.de/widerstandsnetzwerk-1-0-kohm-sternschaltung-5wid-6pins-sil-6-5-1-0k-p17784.html" H 6000 7350 50  0001 C CNN "Quelle"
 	1    6000 7350
 	0    1    -1   0   
 $EndComp
@@ -535,11 +541,11 @@ F 0 "J5" H 7628 6050 60  0000 L CNN
 F 1 "250-1404" H 7628 6050 60  0001 L CNN
 F 2 "Wago:CONN_250-1404_WAG" H 7628 5944 60  0001 L CNN
 F 3 "" H 7100 6200 60  0001 C CNN
+F 4 "0,71" H 7100 6200 50  0001 C CNN "Preis"
+F 5 "https://www.voelkner.de/products/55695/WAGO-250-1404-Federkraftklemmblock-0.50mm-Polzahl-num-4-Grau.html" H 7100 6200 50  0001 C CNN "Quelle"
 	1    7100 6200
 	1    0    0    1   
 $EndComp
-Wire Wire Line
-	7100 6200 6250 6200
 Wire Wire Line
 	4450 7450 4600 7450
 Wire Wire Line
@@ -602,6 +608,8 @@ F 0 "R9" V 5583 6850 50  0000 C CNN
 F 1 "1k" V 5674 6850 50  0000 C CNN
 F 2 "Resistors_THT:R_Array_SIP6" V 6375 6850 50  0001 C CNN
 F 3 "http://www.vishay.com/docs/31509/csc.pdf" H 6000 6850 50  0001 C CNN
+F 4 "https://www.reichelt.de/widerstandsnetzwerk-1-0-kohm-sternschaltung-5wid-6pins-sil-6-5-1-0k-p17784.html" H 6000 6850 50  0001 C CNN "Quelle"
+F 5 "0,07" H 6000 6850 50  0001 C CNN "Preis"
 	1    6000 6850
 	0    1    1    0   
 $EndComp
@@ -621,6 +629,8 @@ F 8 "N/A" H 5550 6150 50  0001 L CNN "Mouser Part Number"
 F 9 "https://www.mouser.com/Search/Refine.aspx?Keyword=N%2FA" H 5550 6050 50  0001 L CNN "Mouser Price/Stock"
 F 10 "" H 5550 5950 50  0001 L CNN "Arrow Part Number"
 F 11 "" H 5550 5850 50  0001 L CNN "Arrow Price/Stock"
+F 12 "https://www.reichelt.de/bargraph-anzeige-10-elemente-gruen-gbg-1000-p8141.html?&nbc=1" H 4600 6650 50  0001 C CNN "Quelle"
+F 13 "2,10" H 4600 6650 50  0001 C CNN "Preis"
 	1    4600 6650
 	1    0    0    -1  
 $EndComp
@@ -629,43 +639,7 @@ Wire Wire Line
 Wire Wire Line
 	4750 1950 4000 1950
 Wire Wire Line
-	4000 1950 4000 4100
-Connection ~ 4000 4100
-Wire Wire Line
-	4000 4100 4000 7050
-Wire Wire Line
-	3900 1850 3900 4200
-Connection ~ 3900 4200
-Wire Wire Line
-	3900 4200 3900 6950
-Wire Wire Line
-	3800 1750 3800 4300
-Connection ~ 3800 4300
-Wire Wire Line
-	3800 4300 3800 6850
-Wire Wire Line
-	4100 2050 4100 4000
-Connection ~ 4100 4000
-Wire Wire Line
-	4100 4000 4100 7150
-Wire Wire Line
-	4250 3100 4250 3900
-Connection ~ 4250 3900
-Wire Wire Line
-	4250 3900 4200 7250
-Wire Wire Line
 	5450 5100 5550 5100
-$Comp
-L Transistor_Array:ULN2803A U4
-U 1 1 606E8064
-P 5050 5400
-F 0 "U4" H 5050 5950 50  0000 C CNN
-F 1 "ULN2803A" H 5100 5850 50  0000 C CNN
-F 2 "Package_DIP:DIP-18_W7.62mm" H 5100 4750 50  0001 L CNN
-F 3 "http://www.ti.com/lit/ds/symlink/uln2803a.pdf" H 5150 5200 50  0001 C CNN
-	1    5050 5400
-	1    0    0    -1  
-$EndComp
 Connection ~ 6250 5700
 Wire Wire Line
 	5700 5300 5700 5600
@@ -687,6 +661,8 @@ F 0 "J4" H 7628 5550 60  0000 L CNN
 F 1 "250-1404" H 7628 5550 60  0001 L CNN
 F 2 "Wago:CONN_250-1404_WAG" H 7628 5444 60  0001 L CNN
 F 3 "" H 7100 5700 60  0001 C CNN
+F 4 "0,71" H 7100 5700 50  0001 C CNN "Preis"
+F 5 "https://www.voelkner.de/products/55695/WAGO-250-1404-Federkraftklemmblock-0.50mm-Polzahl-num-4-Grau.html" H 7100 5700 50  0001 C CNN "Quelle"
 	1    7100 5700
 	1    0    0    1   
 $EndComp
@@ -700,11 +676,13 @@ F 0 "J3" H 7628 4650 60  0000 L CNN
 F 1 "250-1404" H 7628 4650 60  0001 L CNN
 F 2 "Wago:CONN_250-1404_WAG" H 7628 4544 60  0001 L CNN
 F 3 "" H 7100 4800 60  0001 C CNN
+F 4 "0,71" H 7100 4800 50  0001 C CNN "Preis"
+F 5 "https://www.voelkner.de/products/55695/WAGO-250-1404-Federkraftklemmblock-0.50mm-Polzahl-num-4-Grau.html" H 7100 4800 50  0001 C CNN "Quelle"
 	1    7100 4800
 	1    0    0    1   
 $EndComp
 Wire Wire Line
-	6250 3200 4350 3200
+	6250 3200 4300 3200
 $Comp
 L power:+12V #PWR01014
 U 1 1 60761D5B
@@ -729,22 +707,7 @@ F 3 "~" H 5850 3350 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	4350 3800 4300 7350
-Connection ~ 4350 3800
-Wire Wire Line
-	4350 3200 4350 3800
-Wire Wire Line
 	5550 5100 5550 3700
-Wire Wire Line
-	3800 4300 4650 4300
-Wire Wire Line
-	3900 4200 4650 4200
-Wire Wire Line
-	4000 4100 4650 4100
-Wire Wire Line
-	4100 4000 4650 4000
-Wire Wire Line
-	4250 3900 4650 3900
 Wire Wire Line
 	5450 4200 5850 4200
 Wire Wire Line
@@ -753,8 +716,6 @@ Wire Wire Line
 	5450 5200 5750 5200
 Wire Wire Line
 	5450 5300 5700 5300
-Wire Wire Line
-	4350 3800 4650 3800
 $Comp
 L Transistor_Array:ULN2803A U3
 U 1 1 605E2384
@@ -763,6 +724,8 @@ F 0 "U3" H 5050 4567 50  0000 C CNN
 F 1 "ULN2803A" H 5050 4476 50  0000 C CNN
 F 2 "Package_DIP:DIP-18_W7.62mm" H 5100 3350 50  0001 L CNN
 F 3 "http://www.ti.com/lit/ds/symlink/uln2803a.pdf" H 5150 3800 50  0001 C CNN
+F 4 "https://www.reichelt.de/eight-darlington-arrays-dil-18-uln-2803a-p22085.html?search=ULN2803A" H 5050 4000 50  0001 C CNN "Quelle"
+F 5 "0,41" H 5050 4000 50  0001 C CNN "Preis"
 	1    5050 4000
 	1    0    0    -1  
 $EndComp
@@ -784,6 +747,8 @@ F 0 "J2" H 7628 4150 60  0000 L CNN
 F 1 "250-1404" H 7628 4150 60  0001 L CNN
 F 2 "Wago:CONN_250-1404_WAG" H 7628 4044 60  0001 L CNN
 F 3 "" H 7100 4300 60  0001 C CNN
+F 4 "0,71" H 7100 4300 50  0001 C CNN "Preis"
+F 5 "https://www.voelkner.de/products/55695/WAGO-250-1404-Federkraftklemmblock-0.50mm-Polzahl-num-4-Grau.html" H 7100 4300 50  0001 C CNN "Quelle"
 	1    7100 4300
 	1    0    0    1   
 $EndComp
@@ -823,6 +788,8 @@ F 0 "J22" V 1350 3850 50  0000 C CNN
 F 1 "CAN-BUS" V 1250 3850 50  0000 C CNN
 F 2 "ASSMANN_WSW:A20042LPFS" V 1700 4125 50  0001 C CNN
 F 3 "~" V 1700 4125 50  0001 C CNN
+F 4 "https://www.reichelt.de/modular-einbaubuchse-8-8-geschirmt-mebp-8-8g-p24975.html?&nbc=1" V 1700 4100 50  0001 C CNN "Quelle"
+F 5 "0,70" V 1700 4100 50  0001 C CNN "Preis"
 	1    1700 4100
 	1    0    0    -1  
 $EndComp
@@ -890,12 +857,12 @@ $EndComp
 $Comp
 L power:+5V #PWR01044
 U 1 1 6176DD9A
-P 2900 6800
-F 0 "#PWR01044" H 2900 6650 50  0001 C CNN
-F 1 "+5V" H 3000 6900 50  0000 C CNN
-F 2 "" H 2900 6800 50  0001 C CNN
-F 3 "" H 2900 6800 50  0001 C CNN
-	1    2900 6800
+P 3100 6800
+F 0 "#PWR01044" H 3100 6650 50  0001 C CNN
+F 1 "+5V" H 3200 6900 50  0000 C CNN
+F 2 "" H 3100 6800 50  0001 C CNN
+F 3 "" H 3100 6800 50  0001 C CNN
+	1    3100 6800
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
@@ -911,7 +878,6 @@ F 3 "" H 900 1100 60  0000 C CNN
 	1    900  1100
 	-1   0    0    1   
 $EndComp
-Connection ~ 1300 1000
 Connection ~ 1300 1100
 $Comp
 L Regulator_Switching:TSR_1-24120 U5
@@ -957,18 +923,6 @@ Wire Wire Line
 Wire Wire Line
 	1400 7350 2200 7350
 $Comp
-L power:GND1 #PWR0104
-U 1 1 61C3B5F7
-P 6250 6200
-F 0 "#PWR0104" H 6250 5950 50  0001 C CNN
-F 1 "GND1" H 6255 6027 50  0000 C CNN
-F 2 "" H 6250 6200 50  0001 C CNN
-F 3 "" H 6250 6200 50  0001 C CNN
-	1    6250 6200
-	1    0    0    -1  
-$EndComp
-Connection ~ 6250 6200
-$Comp
 L power:GND1 #PWR0105
 U 1 1 61C5F996
 P 5050 6100
@@ -1008,17 +962,6 @@ Wire Wire Line
 Wire Wire Line
 	3500 6250 1950 6250
 $Comp
-L Device:R R20
-U 1 1 61D15312
-P 3050 7000
-F 0 "R20" V 2850 7000 50  0000 C CNN
-F 1 "470" V 2934 7000 50  0000 C CNN
-F 2 "Resistors_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal" V 2980 7000 50  0001 C CNN
-F 3 "~" H 3050 7000 50  0001 C CNN
-	1    3050 7000
-	0    1    1    0   
-$EndComp
-$Comp
 L Device:LED D4
 U 1 1 61D16967
 P 3450 7200
@@ -1029,13 +972,10 @@ F 3 "~" H 3450 7200 50  0001 C CNN
 	1    3450 7200
 	0    -1   -1   0   
 $EndComp
-Connection ~ 2900 7000
-Wire Wire Line
-	3200 7000 3450 7000
 Wire Wire Line
 	3450 7000 3450 7050
 Wire Wire Line
-	3450 7350 2850 7350
+	3450 7350 2900 7350
 Connection ~ 2850 7350
 Wire Wire Line
 	2300 2250 2550 2250
@@ -1160,8 +1100,6 @@ Wire Wire Line
 	7100 5500 6150 5500
 Connection ~ 6150 5500
 Wire Wire Line
-	6250 5700 6250 6200
-Wire Wire Line
 	6150 5500 6150 6000
 Wire Wire Line
 	6250 4800 6250 5700
@@ -1179,34 +1117,6 @@ Wire Wire Line
 	5700 5600 7100 5600
 Wire Wire Line
 	5750 5400 7100 5400
-Wire Wire Line
-	4550 2900 4550 5500
-Wire Wire Line
-	4450 3000 4450 5400
-Wire Wire Line
-	3600 1550 3600 5300
-Wire Wire Line
-	3700 1650 3700 5200
-Wire Wire Line
-	4650 5200 3700 5200
-Connection ~ 3700 5200
-Wire Wire Line
-	3700 5200 3700 6750
-Wire Wire Line
-	4650 5300 3600 5300
-Connection ~ 3600 5300
-Wire Wire Line
-	3600 5300 3600 6650
-Wire Wire Line
-	4450 5400 4650 5400
-Connection ~ 4450 5400
-Wire Wire Line
-	4450 5400 4450 7450
-Wire Wire Line
-	4550 5500 4650 5500
-Connection ~ 4550 5500
-Wire Wire Line
-	4550 5500 4550 7550
 $Comp
 L Wago:250-1404 J1
 U 1 1 62056259
@@ -1215,6 +1125,8 @@ F 0 "J1" H 7628 3703 60  0000 L CNN
 F 1 "250-1404" H 7628 3597 60  0001 L CNN
 F 2 "Wago:CONN_250-1404_WAG" H 7500 3540 60  0001 C CNN
 F 3 "" H 7100 3800 60  0001 C CNN
+F 4 "0,71" H 7100 3800 50  0001 C CNN "Preis"
+F 5 "https://www.voelkner.de/products/55695/WAGO-250-1404-Federkraftklemmblock-0.50mm-Polzahl-num-4-Grau.html" H 7100 3800 50  0001 C CNN "Quelle"
 	1    7100 3800
 	1    0    0    1   
 $EndComp
@@ -1349,4 +1261,155 @@ Wire Wire Line
 	5500 6100 7100 6100
 Wire Wire Line
 	5500 5500 5500 6100
+$Comp
+L Transistor_Array:ULN2803A U4
+U 1 1 606E8064
+P 5050 5400
+F 0 "U4" H 5050 5950 50  0000 C CNN
+F 1 "ULN2803A" H 5100 5850 50  0000 C CNN
+F 2 "Package_DIP:DIP-18_W7.62mm" H 5100 4750 50  0001 L CNN
+F 3 "http://www.ti.com/lit/ds/symlink/uln2803a.pdf" H 5150 5200 50  0001 C CNN
+F 4 "https://www.reichelt.de/eight-darlington-arrays-dil-18-uln-2803a-p22085.html?search=ULN2803A" H 5050 5400 50  0001 C CNN "Quelle"
+F 5 "0,41" H 5050 5400 50  0001 C CNN "Preis"
+	1    5050 5400
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7100 6200 6250 6200
+Wire Wire Line
+	6250 5700 6250 6200
+Connection ~ 6250 6200
+$Comp
+L power:GND1 #PWR0104
+U 1 1 61C3B5F7
+P 6250 6200
+F 0 "#PWR0104" H 6250 5950 50  0001 C CNN
+F 1 "GND1" H 6255 6027 50  0000 C CNN
+F 2 "" H 6250 6200 50  0001 C CNN
+F 3 "" H 6250 6200 50  0001 C CNN
+	1    6250 6200
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4550 2900 4550 3800
+Wire Wire Line
+	4450 3000 4450 3900
+Wire Wire Line
+	4200 3100 4200 4100
+Wire Wire Line
+	4100 2050 4100 4200
+Wire Wire Line
+	4000 1950 4000 4300
+Wire Wire Line
+	3900 1850 3900 5200
+Wire Wire Line
+	3800 1750 3800 5300
+Wire Wire Line
+	3600 1550 3600 5500
+Wire Wire Line
+	4550 3800 4650 3800
+Connection ~ 4550 3800
+Wire Wire Line
+	4550 3800 4550 7550
+Wire Wire Line
+	4650 3900 4450 3900
+Connection ~ 4450 3900
+Wire Wire Line
+	4450 3900 4450 7450
+Wire Wire Line
+	4650 4000 4300 4000
+Wire Wire Line
+	4300 3200 4300 4000
+Connection ~ 4300 4000
+Wire Wire Line
+	4300 4000 4300 7350
+Wire Wire Line
+	4650 4100 4200 4100
+Connection ~ 4200 4100
+Wire Wire Line
+	4200 4100 4200 7250
+Wire Wire Line
+	4650 4200 4100 4200
+Connection ~ 4100 4200
+Wire Wire Line
+	4100 4200 4100 7150
+Wire Wire Line
+	4650 4300 4000 4300
+Connection ~ 4000 4300
+Wire Wire Line
+	4000 4300 4000 7050
+Wire Wire Line
+	4650 5200 3900 5200
+Connection ~ 3900 5200
+Wire Wire Line
+	3900 5200 3900 6950
+Wire Wire Line
+	4650 5300 3800 5300
+Connection ~ 3800 5300
+Wire Wire Line
+	3800 5300 3800 6850
+Wire Wire Line
+	4650 5400 3700 5400
+Wire Wire Line
+	3700 1650 3700 5400
+Connection ~ 3700 5400
+Wire Wire Line
+	3700 5400 3700 6750
+Wire Wire Line
+	4650 5500 3600 5500
+Connection ~ 3600 5500
+Wire Wire Line
+	3600 5500 3600 6650
+Wire Wire Line
+	3400 7000 3450 7000
+Connection ~ 3100 7000
+Wire Wire Line
+	3100 7000 3100 6800
+Wire Wire Line
+	2850 7000 2900 7000
+$Comp
+L Device:R R20
+U 1 1 61D15312
+P 3250 7000
+F 0 "R20" V 3050 7000 50  0000 C CNN
+F 1 "470" V 3134 7000 50  0000 C CNN
+F 2 "Resistors_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal" V 3180 7000 50  0001 C CNN
+F 3 "~" H 3250 7000 50  0001 C CNN
+	1    3250 7000
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:CP C1
+U 1 1 61B1A5CF
+P 2900 7150
+F 0 "C1" H 3018 7196 50  0000 L CNN
+F 1 "22µ/16V" H 3018 7105 50  0000 L CNN
+F 2 "Capacitors_THT:CP_Radial_D4.0mm_P1.50mm" H 2938 7000 50  0001 C CNN
+F 3 "~" H 2900 7150 50  0001 C CNN
+	1    2900 7150
+	1    0    0    -1  
+$EndComp
+Connection ~ 2900 7000
+Wire Wire Line
+	2900 7000 3100 7000
+Wire Wire Line
+	2900 7300 2900 7350
+Connection ~ 2900 7350
+Wire Wire Line
+	2900 7350 2850 7350
+Connection ~ 1300 1000
+Wire Wire Line
+	1350 1000 1300 1000
+NoConn ~ 4650 4400
+NoConn ~ 4650 4500
+NoConn ~ 5450 4400
+NoConn ~ 5450 4500
+NoConn ~ 4650 5600
+NoConn ~ 4650 5700
+NoConn ~ 4650 5800
+NoConn ~ 4600 5900
+NoConn ~ 5450 5600
+NoConn ~ 5450 5700
+NoConn ~ 5450 5800
+NoConn ~ 5450 5900
 $EndSCHEMATC

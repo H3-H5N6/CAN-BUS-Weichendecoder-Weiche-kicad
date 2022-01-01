@@ -5,18 +5,18 @@ Kernstück des Ganzen sind die Weichendecoder für motorische Antriebe mit Impul
 ![Drei Weichendecoder](img/3_Decoder-Prototypen.jpg)
 
 Geschaltet werden die Schaltausgänge 
-* via CAN-BUS (und eigennem Protokoll)
+* via CAN-BUS (und eigenem Protokoll)
 * DCC
 * oder für Testzwecke via USB-Console
 
-CAN-BUS, DCC und auch 12V für die Versorgung der eigentlichen Eletronik erfolgt via einem RJ45-Netzwerkkarbel.
+CAN-BUS, DCC und auch 12V für die Versorgung der eigentlichen Elektronik erfolgt via einem RJ45-Netzwerkkabel.
 
 Für Testzwecke gibt es auch eine kleine CAN-BUS-Zentrale  
 ![CAN-Bus-Zentrale](img/Testzentrale_CAN_BUS.jpg)
 
 Über die Eingabe von einer "Adresse" können die einzelnen Schaltausgänge geschaltet werden. Auch das Schalten von Weichenstraße ist möglich.
 
-Später soll das Ganze durch ein Stellpul mit Schaltern (und LEDs zur Anzeige) ersetzt werden.
+Später soll das Ganze durch ein Stellpult mit Schaltern (und LEDs zur Anzeige) ersetzt werden.
 
 Natürlich kann man die Ausgänge auch mit einer gewöhnlichen DCC-Zentrale geschaltet werden. Hier als Beispiel kommt eine ECOS von ESU zu Einsatz, die auch ein Stellpult kennt.
 

@@ -125,16 +125,16 @@ void initCanConfiguraion(byte configPin) {
 void initWeiche() {
   Serial.println(F("Init Weiche Beginn"));
 
-  control[0] = OutputControl(&configuration, can_configuration.config.id_weichen[0], LED_1);
-  control[1] = OutputControl(&configuration, can_configuration.config.id_weichen[1], LED_2);
-  control[2] = OutputControl(&configuration, can_configuration.config.id_weichen[2], LED_3);
-  control[3] = OutputControl(&configuration, can_configuration.config.id_weichen[3], LED_4);
-  control[4] = OutputControl(&configuration, can_configuration.config.id_weichen[4], LED_5);
-  control[5] = OutputControl(&configuration, can_configuration.config.id_weichen[5], LED_6);
-  control[6] = OutputControl(&configuration, can_configuration.config.id_weichen[6], LED_7);
-  control[7] = OutputControl(&configuration, can_configuration.config.id_weichen[7], LED_8);
-  control[8] = OutputControl(&configuration, can_configuration.config.id_weichen[8], LED_9);
-  control[9] = OutputControl(&configuration, can_configuration.config.id_weichen[9], LED_10);
+  control[0] = OutputControl(&configuration, can_configuration.config.id_weichen[1], LED_1);
+  control[1] = OutputControl(&configuration, can_configuration.config.id_weichen[0], LED_2);
+  control[2] = OutputControl(&configuration, can_configuration.config.id_weichen[3], LED_3);
+  control[3] = OutputControl(&configuration, can_configuration.config.id_weichen[2], LED_4);
+  control[4] = OutputControl(&configuration, can_configuration.config.id_weichen[5], LED_5);
+  control[5] = OutputControl(&configuration, can_configuration.config.id_weichen[4], LED_6);
+  control[6] = OutputControl(&configuration, can_configuration.config.id_weichen[7], LED_7);
+  control[7] = OutputControl(&configuration, can_configuration.config.id_weichen[6], LED_8);
+  control[8] = OutputControl(&configuration, can_configuration.config.id_weichen[9], LED_9);
+  control[9] = OutputControl(&configuration, can_configuration.config.id_weichen[8], LED_10);
 
   weiche[0] = Weiche(control[0], control[1]);
   weiche[1] = Weiche(control[2], control[3]);

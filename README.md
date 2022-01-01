@@ -46,3 +46,20 @@ Der Weichendecoder liefert regelmäßig seinen aktuellen Zustand
 * 100 Frames mit der Id 100 dient dem Verändern des Zustandes
 * 200 Sendet den aktuellen Zustand des Decoders, wenn die im ersten Datafeld (u_int16) angegebene Moduladresse mit der des Moduls übereinstimmt. Der Status selbst wird mit der Id 300 gesendet
 
+
+## CAN-Bus-RJ45-Steckerbelegung
+
+Quelle: https://www.opendcc.de/info/can/can_connector.html
+
+
+    CAN Pinbelegung auf RJ45
+    RJ45 	
+    Pin	Signal	    Beschreibung
+    1 	CAN_H       Dominant High
+    2 	CAN_L    	Dominant Low
+    3 	CAN_GND     Ground
+    4 	Reserved    Upgrade Path  // DCC A
+    5 	Reserved    Upgrade Path  // DCC B
+    6 	CAN_SHLD    CAN Shield, Optional
+    7 	CAN_GND     Ground
+    8 	CAN_V+ 	    Power, Optional 
