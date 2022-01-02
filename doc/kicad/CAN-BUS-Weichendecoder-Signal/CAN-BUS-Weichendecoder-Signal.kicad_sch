@@ -2686,7 +2686,7 @@
   (symbol (lib_id "power:+5V") (at 184.15 35.56 90) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-000061ac0e4c)
-    (property "Reference" "#PWR?" (id 0) (at 187.96 35.56 0)
+    (property "Reference" "#PWR0111" (id 0) (at 187.96 35.56 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "+5V" (id 1) (at 180.8988 35.179 90)
@@ -2727,7 +2727,7 @@
   (symbol (lib_id "power:+5V") (at 173.99 58.42 180) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-000061b23cc6)
-    (property "Reference" "#PWR?" (id 0) (at 173.99 54.61 0)
+    (property "Reference" "#PWR0112" (id 0) (at 173.99 54.61 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (property "Value" "+5V" (id 1) (at 173.609 61.6712 90)
@@ -2891,6 +2891,12 @@
     (path "/00000000-0000-0000-0000-0000617f10a9"
       (reference "#PWR0110") (unit 1) (value "+5V") (footprint "")
     )
+    (path "/00000000-0000-0000-0000-000061ac0e4c"
+      (reference "#PWR0111") (unit 1) (value "+5V") (footprint "")
+    )
+    (path "/00000000-0000-0000-0000-000061b23cc6"
+      (reference "#PWR0112") (unit 1) (value "+5V") (footprint "")
+    )
     (path "/00000000-0000-0000-0000-0000604af486"
       (reference "#PWR01022") (unit 1) (value "GND") (footprint "")
     )
@@ -2953,12 +2959,6 @@
     )
     (path "/00000000-0000-0000-0000-000060a3ba13"
       (reference "#PWR01043") (unit 1) (value "+5V") (footprint "")
-    )
-    (path "/00000000-0000-0000-0000-000061ac0e4c"
-      (reference "#PWR?") (unit 1) (value "+5V") (footprint "")
-    )
-    (path "/00000000-0000-0000-0000-000061b23cc6"
-      (reference "#PWR?") (unit 1) (value "+5V") (footprint "")
     )
     (path "/00000000-0000-0000-0000-0000608b32a0"
       (reference "C1") (unit 1) (value "100n") (footprint "Capacitors_THT:C_Disc_D7.0mm_W2.5mm_P5.00mm")

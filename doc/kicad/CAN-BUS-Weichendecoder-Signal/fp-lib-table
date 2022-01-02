@@ -1,7 +1,2 @@
 (fp_lib_table
-  (lib (name Package_DIP)(type KiCad)(uri /home/harald/Downloads/kicad-footprints-master-Package_DIP.pretty/Package_DIP.pretty)(options "")(descr ""))
-  (lib (name Package_SO)(type KiCad)(uri /home/harald/Downloads/kicad-footprints-master-Package_SO.pretty/Package_SO.pretty)(options "")(descr ""))
-  (lib (name Audio_Module)(type KiCad)(uri /home/harald/Downloads/kicad-footprints-master-Audio_Module.pretty/Audio_Module.pretty)(options "")(descr ""))
-  (lib (name HFD2_005-S-L2-D)(type Legacy)(uri /home/harald/Downloads/HFD2_005-S-L2-D/KiCad/HFD2_005-S-L2-D.mod)(options "")(descr "")(disabled))
-  (lib (name kicad-lib)(type KiCad)(uri /home/harald/project/arduino/vscode/CAN-BUS-Weichendecoder/doc/kicad-lib)(options "")(descr CAN-Bus-Module)(disabled))
 )
