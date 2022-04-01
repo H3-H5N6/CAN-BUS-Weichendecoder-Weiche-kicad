@@ -62,8 +62,8 @@
       35,
       36
     ],
-    "visible_layers": "000d070_80000000",
-    "zone_display_mode": 0
+    "visible_layers": "000d070_80000001",
+    "zone_display_mode": 1
   },
   "meta": {
     "filename": "Signalsimulator.kicad_prl",
