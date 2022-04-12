@@ -15,6 +15,8 @@ CAN_CONFIGURATION can_configuration;
 #include "Weiche.h"
 
 #include "I2C_Tools.h"
+uint8_t i2c_address[MAX_I2C_DEVICES];
+
 
 #define IMPULSE_LENGTH 2000
 
@@ -173,7 +175,16 @@ void setup() {
   Serial.println(F("= done"));
 
   Serial.println(F("> scan i2c ..."));
-  scan_i2c();
+  scan_i2c(i2c_address);
+  Serial.println(F("= done"));
+
+  Serial.println(F("> gefundene I2C-Adressen: "));
+
+  for (uint8_t i = 0; i < MAX_I2C_DEVICES; i++) {
+    Serial.print(i);
+    Serial.print(": ");
+    Serial.println(i2c_address[i]);
+  }
   Serial.println(F("= done"));
 }
 
