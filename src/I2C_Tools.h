@@ -5,6 +5,10 @@
 
 #include <Wire.h>
 
+/**
+ * Initialisert den i2c, muss vor der ersten Nutzung von i2c aufgeruft werden.
+ * 
+ */
 void init_i2c(){
 	Wire.begin();
 }
