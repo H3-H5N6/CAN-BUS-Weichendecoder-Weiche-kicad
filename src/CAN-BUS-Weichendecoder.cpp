@@ -14,6 +14,8 @@ CAN_CONFIGURATION can_configuration;
 #include "CanControl.h"
 #include "Weiche.h"
 
+#include "I2C_Tools.h"
+
 #define IMPULSE_LENGTH 2000
 
 uint8_t LED_1 = 4;
@@ -165,6 +167,14 @@ void setup() {
 
   init_DCC();
   initDccConfiguraion(configPin, can_configuration.config.id);
+
+  Serial.println(F("> init i2c ..."));
+  init_i2c();
+  Serial.println(F("= done"));
+
+  Serial.println(F("> scan i2c ..."));
+  scan_i2c();
+  Serial.println(F("= done"));
 }
 
 void processWeiche() {

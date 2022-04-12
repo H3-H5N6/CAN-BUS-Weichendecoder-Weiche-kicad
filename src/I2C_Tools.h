@@ -5,6 +5,10 @@
 
 #include <Wire.h>
 
+void init_i2c(){
+	Wire.begin();
+}
+
 /**
  * Scant den I2C-Bus und gibt die gefundenen Adressen als Hex-Zahl auf der Konsole aus.
  */
@@ -15,8 +19,6 @@ void scan_i2c() {
 
 	char addressAsString[6];
 
-	Serial.println("Scanning i2c...");
-
 	amountFoundedDevices = 0;
 	for (address = 1; address < 127; address++) {
 		sprintf(addressAsString, " 0x%02x", address);
@@ -26,7 +28,7 @@ void scan_i2c() {
 
 		switch (result) {
 		case 4:
-			Serial.print("Unknown error at address ");
+			Serial.print("E ");
 			/* no break */
 		case 0:
 			amountFoundedDevices++;
@@ -39,7 +41,7 @@ void scan_i2c() {
 	if (amountFoundedDevices == 0) {
 		Serial.println("No I2C devices found\n");
 	} else {
-		Serial.println("done\n");
+		Serial.println("done");
 	}
 }
 
