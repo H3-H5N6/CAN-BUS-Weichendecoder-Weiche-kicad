@@ -17,6 +17,8 @@ CAN_CONFIGURATION can_configuration;
 #include "I2C_Tools.h"
 uint8_t i2c_address[MAX_I2C_DEVICES];
 
+I2C_Tools i2c;
+
 
 #define IMPULSE_LENGTH 2000
 
@@ -171,11 +173,11 @@ void setup() {
   initDccConfiguraion(configPin, can_configuration.config.id);
 
   Serial.println(F("> init i2c ..."));
-  init_i2c();
+  i2c.init_i2c();
   Serial.println(F("= done"));
 
   Serial.println(F("> scan i2c ..."));
-  scan_i2c(i2c_address);
+  i2c.scan_i2c(i2c_address);
   Serial.println(F("= done"));
 
   Serial.println(F("> gefundene I2C-Adressen: "));
