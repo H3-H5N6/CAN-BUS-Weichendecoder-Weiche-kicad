@@ -11,6 +11,7 @@ static ACAN2515 can(MCP2515_CS, SPI, MCP2515_INT);
 static const uint32_t QUARTZ_FREQUENCY = 16UL * 1000UL * 1000UL;  // 16 MHz
 
 void init_can() {
+  
   SPI.begin();
   ACAN2515Settings settings(QUARTZ_FREQUENCY, 125UL * 1000UL);
   settings.mRequestedMode = ACAN2515Settings::NormalMode;

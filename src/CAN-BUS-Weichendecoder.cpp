@@ -64,6 +64,32 @@ void change(uint16_t address) {
 }
 
 
+void free_dump() {
+
+      uint8_t *heapptr;
+      uint8_t *stackptr;
+
+      stackptr = (uint8_t *)malloc(4);   // use stackptr temporarily
+      heapptr = stackptr;                // save value of heap pointer
+      free(stackptr);                    // free up the memory again (sets stackptr to 0)
+      stackptr =  (uint8_t *)(SP);       // save value of stack pointer
+
+
+      // print("HP: ");
+      Serial.println("Speicher");
+      Serial.print(F("HP: "));
+      Serial.println((int) heapptr);
+
+      // print("SP: ");
+      Serial.print(F("SP: "));
+      Serial.println((int) stackptr);
+
+      // print("Free: ");
+      Serial.print(F("Free: "));
+      Serial.println((int) stackptr - (int) heapptr);
+      Serial.println();
+}
+
 void initDccConfiguraion(byte configPin, byte canModulId) {
 
   Serial.print ("DCC-Address: [");
@@ -79,9 +105,9 @@ void initDccConfiguraion(byte configPin, byte canModulId) {
   if (configPin == 1 ) {
     uint16_t newDccAddr = ( (canModulId -1 ) * 5) + 1;
 
-    Serial.print ("Neue DCC-Addresse: [");
+    Serial.print (F("Neue DCC-Addresse: ["));
     Serial.print(newDccAddr);
-    Serial.println("]");
+    Serial.println(F("]"));
 
     Dcc.setCV(CV_ACCESSORY_DECODER_ADDRESS_LSB, newDccAddr & 0xFF);
     Dcc.setCV(CV_ACCESSORY_DECODER_ADDRESS_MSB, newDccAddr >> 8);
@@ -155,19 +181,25 @@ void initWeiche() {
 void setup() {
   Serial.begin(115200);
 
+  free_dump();
   
 
   byte configPin = readCongigPin();
-  Serial.print("Wert ConfigPin: [");
+  Serial.print(F("Wert ConfigPin: ["));
   Serial.print(configPin);
-  Serial.println("]");
+  Serial.println(F("]"));
 
   initCanConfiguraion(configPin);
   serialConfiguration.printConfiguration();
 
   initWeiche();
 
+  
+  free_dump();
   init_can();
+    free_dump();
+  
+
 
   init_DCC();
   initDccConfiguraion(configPin, can_configuration.config.id);
@@ -188,6 +220,8 @@ void setup() {
     Serial.println(i2c_address[i]);
   }
   Serial.println(F("= done"));
+
+  i2c.init_pcf8574();
 }
 
 void processWeiche() {
