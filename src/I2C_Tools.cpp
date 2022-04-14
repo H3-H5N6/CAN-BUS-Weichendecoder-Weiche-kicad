@@ -59,14 +59,7 @@ void I2C_Tools::scan_i2c() {
 void I2C_Tools::init_pcf8574() {
   for (byte i = 0; i < 4; i++) {
     for (byte j = 0; j < 8; j++) {
-      pcf8574[i].pinMode(P0, OUTPUT, LOW);
-      pcf8574[i].pinMode(P1, OUTPUT, LOW);
-      pcf8574[i].pinMode(P2, OUTPUT, LOW);
-      pcf8574[i].pinMode(P3, OUTPUT, HIGH);
-      pcf8574[i].pinMode(P4, OUTPUT, HIGH);
-      pcf8574[i].pinMode(P5, OUTPUT, HIGH);
-      pcf8574[i].pinMode(P6, OUTPUT, HIGH);
-      pcf8574[i].pinMode(P7, OUTPUT, HIGH);
+      pcf8574[i].pinMode(j, OUTPUT, HIGH);
     }
 
     // PCF 8574 starten
