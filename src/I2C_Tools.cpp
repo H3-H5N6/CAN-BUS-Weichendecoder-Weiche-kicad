@@ -11,7 +11,7 @@ void I2C_Tools::init_i2c() {
 /**
  * Scant den I2C-Bus und gibt die gefundenen Adressen als Hex-Zahl auf der Konsole aus.
  */
-void I2C_Tools::scan_i2c(uint8_t adr[4]) {
+void I2C_Tools::scan_i2c() {
   uint8_t result;
   uint8_t address;
   uint8_t amountFoundedDevices;
@@ -31,7 +31,7 @@ void I2C_Tools::scan_i2c(uint8_t adr[4]) {
         /* no break */
       case 0:
         if (amountFoundedDevices < MAX_I2C_DEVICES) {
-          adr[amountFoundedDevices] = address;
+          i2c_address[amountFoundedDevices] = address;
         }
         amountFoundedDevices++;
         Serial.print(addressAsString);
@@ -45,6 +45,18 @@ void I2C_Tools::scan_i2c(uint8_t adr[4]) {
   } else {
     Serial.println(F("done"));
   }
+
+  Serial.println(F("> gefundene I2C-Adressen: "));
+
+  for (uint8_t i = 0; i < MAX_I2C_DEVICES; i++) {
+    Serial.print(i);
+    Serial.print(": ");
+    Serial.println(i2c_address[i]);
+  }
+  Serial.println(F("= done"));
+
+
+
 }
 
 void I2C_Tools::init_pcf8574() {
@@ -65,9 +77,9 @@ void I2C_Tools::init_pcf8574() {
     Serial.print(i);
     Serial.print(F("]: "));
     if (pcf8574[i].begin()) {
-      Serial.println("OK");
+      Serial.println(F("OK"));
     } else {
-      Serial.println("KO");
+      Serial.println(F("KO"));
     }
   }
   delay(4000);
@@ -97,9 +109,9 @@ boolean I2C_Tools::writeState() {
     Serial.print(value);
     #endif
     if (pcf8574[i].digitalWriteAll(value)) {
-      Serial.println(" OK");
+      Serial.println(F(" OK"));
     } else {
-      Serial.println(" ERROR");
+      Serial.println(F(" ERROR"));
       result = false;
     }
   }

@@ -6,13 +6,14 @@
 #include <Wire.h>
 
 #define MAX_I2C_DEVICES 4
+
 #define DEBUG_I2C
 
 class I2C_Tools {
  public:
   I2C_Tools() {}
   void init_i2c();
-  void scan_i2c(uint8_t adr[4]);
+  void scan_i2c();
   void init_pcf8574();
   uint8_t getHP0();
   uint8_t getHP1();
@@ -26,5 +27,6 @@ class I2C_Tools {
   void setNewState(uint8_t value, uint8_t index);
   boolean writeState();
   uint32_t state = 0x00000000;
+  uint8_t i2c_address[MAX_I2C_DEVICES];
 };
 #endif
