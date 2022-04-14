@@ -54,9 +54,6 @@ void I2C_Tools::scan_i2c() {
     Serial.println(i2c_address[i]);
   }
   Serial.println(F("= done"));
-
-
-
 }
 
 void I2C_Tools::init_pcf8574() {
@@ -91,7 +88,6 @@ void I2C_Tools::init_pcf8574() {
     setNewState(getHP0(), index);
   }
   writeState();
-
 }
 
 void I2C_Tools::setNewState(uint8_t value, uint8_t index) {
@@ -102,12 +98,12 @@ boolean I2C_Tools::writeState() {
   boolean result = true;
   for (uint8_t i = 0; i < 4; i++) {
     uint8_t value = state >> ((i * 8)) & 0xff;
-    #ifdef DEBUG_I2C
+#ifdef DEBUG_I2C
     Serial.print(F("Schreibe "));
     Serial.print(i);
     Serial.print(": ");
     Serial.print(value);
-    #endif
+#endif
     if (pcf8574[i].digitalWriteAll(value)) {
       Serial.println(F(" OK"));
     } else {
@@ -117,7 +113,6 @@ boolean I2C_Tools::writeState() {
   }
   return result;
 }
-
 
 uint8_t I2C_Tools::getHP0() {
   return 0b00001100;
