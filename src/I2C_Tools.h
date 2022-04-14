@@ -22,11 +22,14 @@ class I2C_Tools {
 
  private:
   PCF8574 pcf8574[MAX_I2C_DEVICES] = {PCF8574(0x38), PCF8574(0x3a), PCF8574(0x39), PCF8574(0x3B)};
+  uint8_t i2c_address[MAX_I2C_DEVICES];
+
   // Bit-Maske für jedes Signal
   uint32_t mask[6] = {0xffffffe0, 0xfffffc1f, 0xFFFF83FF, 0xFFF07FFF, 0xFE0FFFFF, 0xC1FFFFFF};
   void setNewState(uint8_t value, uint8_t index);
   boolean writeState();
+
   uint32_t state = 0x00000000;
-  uint8_t i2c_address[MAX_I2C_DEVICES];
+  
 };
 #endif
