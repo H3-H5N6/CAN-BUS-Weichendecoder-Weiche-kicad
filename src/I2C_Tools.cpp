@@ -73,9 +73,7 @@ void I2C_Tools::init_pcf8574() {
     }
   }
   delay(4000);
-  Serial.println("HP0");
-  delay(1000);
-
+  Serial.println(F("Stelle alle Signale auf HP0"));
   // Alle Signale auf HP0 stellen
   for (uint8_t index = 0; index < 3; index++) {
     setNewState(getHP0(), index);
