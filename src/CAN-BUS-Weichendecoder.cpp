@@ -3,6 +3,8 @@
 #include "Dcc.h"
 #include "ConfigPin.h"
 
+ConfigPin configPin;
+
 #include "CanConfiguration.h"
 
 #define VERSION 4
@@ -185,12 +187,13 @@ void setup() {
   free_dump();
   
 
-  byte configPin = readCongigPin();
+  byte value = configPin.readCongigPin();
   Serial.print(F("Wert ConfigPin: ["));
-  Serial.print(configPin);
+  Serial.print(value);
   Serial.println(F("]"));
 
-  initCanConfiguraion(configPin);
+  initCanConfiguraion(value);
+
   serialConfiguration.printConfiguration();
 
   initWeiche();
@@ -203,7 +206,7 @@ void setup() {
 
 
   init_DCC();
-  initDccConfiguraion(configPin, can_configuration.config.id);
+  initDccConfiguraion(value, can_configuration.config.id);
 
   Serial.println(F("> init i2c ..."));
   i2c.init_i2c();
