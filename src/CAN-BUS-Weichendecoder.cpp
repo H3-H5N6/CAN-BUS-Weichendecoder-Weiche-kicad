@@ -95,14 +95,14 @@ void free_dump() {
 
 void initDccConfiguraion(byte configPin, byte canModulId) {
 
-  Serial.print ("DCC-Address: [");
+  Serial.print (F("DCC-Address: ["));
   uint16_t dccAddr = Dcc.getCV(CV_ACCESSORY_DECODER_ADDRESS_LSB) + (8 * Dcc.getCV(CV_ACCESSORY_DECODER_ADDRESS_MSB));
   Serial.print(dccAddr);
-  Serial.println("]");
+  Serial.println(F("]"));
 
-  Serial.print ("Config Pin: [");
+  Serial.print (F("Config Pin: ["));
   Serial.print(configPin);
-  Serial.println("]");
+  Serial.println(F("]"));
 
 
   if (configPin == 1 ) {
