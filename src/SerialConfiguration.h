@@ -4,13 +4,14 @@
 #define ZAHL_LENGTH 4
 
 #include "CanConfiguration.h"
+#include "NmraDcc.h"
 
 typedef void (*ChangeWeiche)(uint16_t);
 
 class SerialConfiguration {
  public:
   SerialConfiguration();
-  void init(CAN_CONFIGURATION &conf, ChangeWeiche cw);
+  void init(CAN_CONFIGURATION &conf, NmraDcc &dcc, ChangeWeiche cw);
   void printConfiguration();
   void reset_zahl();
   uint16_t calc_zahl();
@@ -18,6 +19,7 @@ class SerialConfiguration {
 
  private:
   CAN_CONFIGURATION can_configuration;
+  NmraDcc dcc;
   boolean change_id = false;
   boolean change_weiche = false;
   uint16_t last_weiche = -1;
@@ -25,6 +27,9 @@ class SerialConfiguration {
   uint8_t zahl_pos = 0;
   void setAndWriteNewId();
   ChangeWeiche changeWeicheCallback = {};
+  void printPrefix();
+  void printLine(byte index, const __FlashStringHelper *ifsh);
+  void printLineln(byte index, const __FlashStringHelper *ifsh);
 };
 
 #endif

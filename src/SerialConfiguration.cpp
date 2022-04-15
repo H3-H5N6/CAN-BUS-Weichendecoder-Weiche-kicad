@@ -3,14 +3,40 @@
 #include <Arduino.h>
 #include <EEPROM.h>
 
-
+#define HELP 1
+#define CONF 2
 
 SerialConfiguration::SerialConfiguration() {
 }
 
-void SerialConfiguration::init(CAN_CONFIGURATION &_conf, ChangeWeiche _cw ) {
+void SerialConfiguration::printLineln(byte index ,const __FlashStringHelper *ifsh){
+  printLine(index, ifsh);
+  Serial.println();
+}
+
+void SerialConfiguration::printLine(byte index ,const __FlashStringHelper *ifsh){
+
+  Serial.print(F("Config"));
+  switch (index) {
+    case HELP:
+      Serial.print(F(".help"));
+      break;
+    case CONF:
+      Serial.print(F(".conf"));
+      break;
+  }
+  Serial.print(F(": "));
+  Serial.print(ifsh);
+}
+
+void SerialConfiguration::printPrefix(){
+  Serial.print(F("Config: "));
+}
+
+void SerialConfiguration::init(CAN_CONFIGURATION &_conf, NmraDcc &_dcc, ChangeWeiche _cw ) {
   can_configuration = _conf;
   changeWeicheCallback = _cw;
+  dcc = _dcc;
 }
 
 void SerialConfiguration::setAndWriteNewId() {
@@ -61,12 +87,12 @@ void SerialConfiguration::process() {
         Serial.println(F(" Abbruch"));
         return;
       case 'h':
-        Serial.println(F("Hilfe"));
-        Serial.println(F("======================================="));
-        Serial.println(F("p           : Ausgabe der Konfiguartion"));
-        Serial.println(F("i <MODUL_ID>: Neue Modul Id setzen"));
-        Serial.println(F("q           : Abbruch der Eingabe"));
-        Serial.println(F("h           : Diese Hilfe"));
+        //                   =======================================
+        printLineln(HELP, F("=== Hilfe ============================="));
+        printLineln(HELP, F("p           : Ausgabe der Konfiguartion"));
+        printLineln(HELP, F("i <MODUL_ID>: Neue Modul Id setzen"));
+        printLineln(HELP, F("q           : Abbruch der Eingabe"));
+        printLineln(HELP, F("h           : Diese Hilfe"));
         return;
       case '+':
         if (last_weiche > 0){
@@ -129,17 +155,23 @@ void SerialConfiguration::process() {
 }
 
 void SerialConfiguration::printConfiguration() {
-  Serial.println(F("==== CAN-Konfiguration ===="));
-  //              CAN ID: [3] => 
-  Serial.print(F("SW-Version  => "));
+  //                   =======================================
+  printLineln(CONF, F("=== CAN-Konfiguration ================="));
+  
+  printLine(CONF, F("SW-Version  => "));
   Serial.println(can_configuration.config.version);
-  Serial.print(F("Modul Id    => "));
+  
+  printLine(CONF, F("Modul Id    => "));
   Serial.println(can_configuration.config.id);
+
+  printLine(CONF, F("DCC-Adresse => "));
+  Serial.println(dcc.getAddr());
+  
   for (int n = 0; n < 10; n++) {
-    Serial.print("CAN ID: [");
+    printLine(CONF, F("CAN ID: ["));
     Serial.print(n);
-    Serial.print("] => ");
+    Serial.print(F("] => "));
     Serial.println(can_configuration.config.id_weichen[n]);
   }
-  Serial.println(F("==========================="));
+  printLineln(CONF, F("======================================="));
 }

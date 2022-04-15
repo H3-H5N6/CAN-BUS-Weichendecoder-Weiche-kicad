@@ -154,7 +154,7 @@ void initCanConfiguraion(byte configPin) {
     Serial.print(F(". fertig"));
   }
 
-  serialConfiguration.init(can_configuration, *change);
+  serialConfiguration.init(can_configuration, Dcc, *change);
 }
 
 void initWeiche() {
