@@ -2,6 +2,7 @@
 #define SIGNAL_H
 
 #include <Arduino.h>
+#include "Socket.h"
 #include "I2C-Signal.h"
 
 namespace SIGNAL {
@@ -22,14 +23,9 @@ enum STATE: uint8_t {
 
 class Signal {
  public:
-  Signal(uint16_t address, uint8_t index , I2CSignal *i2c);
+  Signal(uint16_t address, uint8_t index , I2CSignal *i2c, SIGNAL::SOCKET socket);
   void process();
   boolean change(uint16_t address);
-  void hp0();
-  void hp1();
-  void hp2();
-  void sh1();
-
 
   boolean isHp0();
   boolean isHp1();
@@ -40,6 +36,7 @@ class Signal {
  private:
   SIGNAL::STATE state;
   SIGNAL::POSITION position;
+  SIGNAL::SOCKET socket;
   uint16_t firstAddress;
   uint16_t lastAddress;
   uint8_t index;

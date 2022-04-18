@@ -1,7 +1,8 @@
 #include <Arduino.h>
 #include <EEPROM.h>
-#include "Dcc.h"
+
 #include "ConfigPin.h"
+#include "Dcc.h"
 
 ConfigPin configPin;
 
@@ -14,14 +15,10 @@ ConfigPin configPin;
 CAN_CONFIGURATION can_configuration;
 
 #include "CanControl.h"
+#include "I2C_Tools.h"
 #include "Weiche.h"
 
-#include "I2C_Tools.h"
-
-
-
 I2C_Tools i2c;
-
 
 #define IMPULSE_LENGTH 2000
 
@@ -46,14 +43,11 @@ CANMessage frame;
 
 uint16_t send_mode = 0;
 
-OutputControl* control = (OutputControl*)malloc(sizeof(OutputControl) * 10);
-Weiche* weiche = (Weiche*)malloc(sizeof(Weiche) * 5);
+OutputControl *control = (OutputControl *)malloc(sizeof(OutputControl) * 10);
+Weiche *weiche = (Weiche *)malloc(sizeof(Weiche) * 5);
 
 #include "Signal.h"
-Signal* signal = (Signal*)malloc(sizeof(Signal) * 6); 
-
-
-
+Signal *signal = (Signal *)malloc(sizeof(Signal) * 6);
 
 #include "SerialConfiguration.h"
 
@@ -80,49 +74,44 @@ void change(uint16_t address) {
   }
 }
 
-
 void free_dump() {
+  uint8_t *heapptr;
+  uint8_t *stackptr;
 
-      uint8_t *heapptr;
-      uint8_t *stackptr;
+  stackptr = (uint8_t *)malloc(4);  // use stackptr temporarily
+  heapptr = stackptr;               // save value of heap pointer
+  free(stackptr);                   // free up the memory again (sets stackptr to 0)
+  stackptr = (uint8_t *)(SP);       // save value of stack pointer
 
-      stackptr = (uint8_t *)malloc(4);   // use stackptr temporarily
-      heapptr = stackptr;                // save value of heap pointer
-      free(stackptr);                    // free up the memory again (sets stackptr to 0)
-      stackptr =  (uint8_t *)(SP);       // save value of stack pointer
+  // print("HP: ");
+  Serial.println("Speicher");
+  Serial.print(F("HP: "));
+  Serial.println((int)heapptr);
 
+  // print("SP: ");
+  Serial.print(F("SP: "));
+  Serial.println((int)stackptr);
 
-      // print("HP: ");
-      Serial.println("Speicher");
-      Serial.print(F("HP: "));
-      Serial.println((int) heapptr);
-
-      // print("SP: ");
-      Serial.print(F("SP: "));
-      Serial.println((int) stackptr);
-
-      // print("Free: ");
-      Serial.print(F("Free: "));
-      Serial.println((int) stackptr - (int) heapptr);
-      Serial.println();
+  // print("Free: ");
+  Serial.print(F("Free: "));
+  Serial.println((int)stackptr - (int)heapptr);
+  Serial.println();
 }
 
 void initDccConfiguraion(byte configPin, byte canModulId) {
-
-  Serial.print (F("DCC-Address: ["));
+  Serial.print(F("DCC-Address: ["));
   uint16_t dccAddr = Dcc.getCV(CV_ACCESSORY_DECODER_ADDRESS_LSB) + (8 * Dcc.getCV(CV_ACCESSORY_DECODER_ADDRESS_MSB));
   Serial.print(dccAddr);
   Serial.println(F("]"));
 
-  Serial.print (F("Config Pin: ["));
+  Serial.print(F("Config Pin: ["));
   Serial.print(configPin);
   Serial.println(F("]"));
 
+  if (configPin == 1) {
+    uint16_t newDccAddr = ((canModulId - 1) * 5) + 1;
 
-  if (configPin == 1 ) {
-    uint16_t newDccAddr = ( (canModulId -1 ) * 5) + 1;
-
-    Serial.print (F("Neue DCC-Addresse: ["));
+    Serial.print(F("Neue DCC-Addresse: ["));
     Serial.print(newDccAddr);
     Serial.println(F("]"));
 
@@ -131,9 +120,7 @@ void initDccConfiguraion(byte configPin, byte canModulId) {
   }
 }
 
-
 void initCanConfiguraion(byte configPin) {
-
   EEPROM.get(CAN_BUS_OFFSET, can_configuration.data);
 
   boolean writeConfigToEEPROM = false;
@@ -145,12 +132,12 @@ void initCanConfiguraion(byte configPin) {
     Serial.println(F("]"));
 
     Serial.print(F("Setze CAN Adresse: ["));
-    Serial.print(START_WEICHEN_ID + (10 * (DEFAULT_MODUL_ID-1 )));
+    Serial.print(START_WEICHEN_ID + (10 * (DEFAULT_MODUL_ID - 1)));
     Serial.println(F("]"));
 
     can_configuration.config.id = DEFAULT_MODUL_ID;
     for (int n = 0; n < 10; n++) {
-      can_configuration.config.id_weichen[n] = START_WEICHEN_ID + (10 * (DEFAULT_MODUL_ID-1 )) + n;
+      can_configuration.config.id_weichen[n] = START_WEICHEN_ID + (10 * (DEFAULT_MODUL_ID - 1)) + n;
     }
   }
 
@@ -162,7 +149,7 @@ void initCanConfiguraion(byte configPin) {
     writeConfigToEEPROM = true;
   }
 
-  if (writeConfigToEEPROM){
+  if (writeConfigToEEPROM) {
     Serial.print(F("Schreibe initiale Konfig ..."));
     EEPROM.put(CAN_BUS_OFFSET, can_configuration);
     Serial.print(F(". fertig"));
@@ -172,19 +159,16 @@ void initCanConfiguraion(byte configPin) {
 }
 
 void initSignal() {
-  Serial.println(F("=== a ==="));
-  delay(1000);
   I2CSignal i2csignal;
-
   i2csignal.init_pcf8574();
 
-  Serial.println(F("=== b ==="));
-  signal[0] = Signal (900, 0, &i2csignal);
-  signal[1] = Signal (904, 1, &i2csignal);
-  signal[2] = Signal (908, 2, &i2csignal);
-  signal[3] = Signal (912, 3, &i2csignal);
-  signal[4] = Signal (916, 4, &i2csignal);
-  signal[5] = Signal (920, 5, &i2csignal);
+  for (uint8_t i = 0; i < 3; i++) {
+    signal[i] = Signal(900 + (i * 4), i, &i2csignal, SIGNAL::SOCKET::PIN);
+  }
+  for (uint8_t i = 3; i < 6; i++) {
+    signal[i] = Signal(900 + (i * 4), i, &i2csignal, SIGNAL::SOCKET::RJ12);
+  }
+
 }
 
 void initWeiche() {
@@ -209,13 +193,11 @@ void initWeiche() {
   Serial.println(F("Init Weiche End"));
 }
 
-
-
 void setup() {
   Serial.begin(115200);
 
   free_dump();
-  
+
   // Serial.println(F("=== 1 ==="));
   // delay(1000);
 
@@ -232,7 +214,6 @@ void setup() {
   i2c.scan_i2c();
   Serial.println(F("= done"));
 
-
   // Serial.println(F("=== 2 ==="));
   // delay(1000);
 
@@ -245,35 +226,26 @@ void setup() {
 
   initWeiche();
 
-
   // Serial.println(F("=== 4 ==="));
   // delay(1000);
   initSignal();
 
   // Serial.println(F("=== 5 ==="));
   // delay(1000);
-  
+
   free_dump();
 
   Serial.println(F("=== 6 ==="));
   delay(1000);
 
-
   init_can();
-  
 
   Serial.println(F("=== 7 ==="));
   delay(1000);
   free_dump();
-  
-
 
   init_DCC();
   initDccConfiguraion(value, can_configuration.config.id);
-
-  
-
-  
 }
 
 void processWeiche() {
@@ -290,8 +262,6 @@ void processSignal() {
 
 unsigned long lastChanged = millis();
 byte index = 0;
-
-
 
 void sendDetailWeichenStatus() {
   frame.id = 300;
@@ -328,7 +298,7 @@ void sendDetailWeichenStatus() {
   }
 }
 
-void processCanMessageGetStatus(CANMessage& frame) {
+void processCanMessageGetStatus(CANMessage &frame) {
   if (frame.data16[0] == can_configuration.config.id) {
     Serial.println();
     Serial.print("Status: ");
@@ -341,7 +311,7 @@ void processCanMessageGetStatus(CANMessage& frame) {
   }
 }
 
-void processCanMessageChangeState(CANMessage& frame) {
+void processCanMessageChangeState(CANMessage &frame) {
   for (byte i = 0; i < 4; i++) {
     uint16_t adr = frame.data16[i];
     if (adr != 0) {
@@ -351,7 +321,7 @@ void processCanMessageChangeState(CANMessage& frame) {
   Serial.println();
 }
 
-void processCanMessage(CANMessage& frame) {
+void processCanMessage(CANMessage &frame) {
   if (can.receive(frame)) {
     debugFrame(frame);
 
@@ -373,7 +343,7 @@ void processCanMessage(CANMessage& frame) {
 }
 
 #ifdef NOTIFY_DCC_MSG
-void notifyDccMsg(DCC_MSG* Msg) {
+void notifyDccMsg(DCC_MSG *Msg) {
   Serial.print("notifyDccMsg: ");
   for (uint8_t i = 0; i < Msg->Size; i++) {
     Serial.print(Msg->Data[i], HEX);
@@ -391,12 +361,11 @@ void loop() {
   processWeiche();
   processSignal();
 
-  
   Dcc.process();
 
   dccWriteFactotyDefaults();
 
-  for (byte i=0 ; i < 10; i++) {
+  for (byte i = 0; i < 10; i++) {
     if (can_addr_buffer[i][1] != 0) {
       Serial.println("call Change");
       change(can_addr_buffer[i][1]);
