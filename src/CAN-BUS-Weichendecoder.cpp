@@ -49,6 +49,12 @@ uint16_t send_mode = 0;
 OutputControl* control = (OutputControl*)malloc(sizeof(OutputControl) * 10);
 Weiche* weiche = (Weiche*)malloc(sizeof(Weiche) * 5);
 
+#include "Signal.h"
+Signal* signal = (Signal*)malloc(sizeof(Signal) * 6); 
+
+
+
+
 #include "SerialConfiguration.h"
 
 SerialConfiguration serialConfiguration;
@@ -59,7 +65,15 @@ void change(uint16_t address) {
   for (byte i = 0; i < 5; i++) {
     boolean changed = weiche[i].change(address);
     if (changed) {
-      Serial.print(F("DEBUG: Address ["));
+      Serial.print(F("DEBUG: Address Weiche["));
+      Serial.print(address);
+      Serial.println(F("] found"));
+    }
+  }
+  for (byte i = 0; i < 6; i++) {
+    boolean changed = signal[i].change(address);
+    if (changed) {
+      Serial.print(F("DEBUG: Address Signal ["));
       Serial.print(address);
       Serial.println(F("] found"));
     }
@@ -157,6 +171,22 @@ void initCanConfiguraion(byte configPin) {
   serialConfiguration.init(can_configuration, Dcc, *change);
 }
 
+void initSignal() {
+  Serial.println(F("=== a ==="));
+  delay(1000);
+  I2CSignal i2csignal;
+
+  i2csignal.init_pcf8574();
+
+  Serial.println(F("=== b ==="));
+  signal[0] = Signal (900, 0, &i2csignal);
+  signal[1] = Signal (904, 1, &i2csignal);
+  signal[2] = Signal (908, 2, &i2csignal);
+  signal[3] = Signal (912, 3, &i2csignal);
+  signal[4] = Signal (916, 4, &i2csignal);
+  signal[5] = Signal (920, 5, &i2csignal);
+}
+
 void initWeiche() {
   Serial.println(F("Init Weiche Beginn"));
 
@@ -186,27 +216,13 @@ void setup() {
 
   free_dump();
   
+  // Serial.println(F("=== 1 ==="));
+  // delay(1000);
 
   byte value = configPin.readCongigPin();
   Serial.print(F("Wert ConfigPin: ["));
   Serial.print(value);
   Serial.println(F("]"));
-
-  initCanConfiguraion(value);
-
-  serialConfiguration.printConfiguration();
-
-  initWeiche();
-
-  
-  free_dump();
-  init_can();
-    free_dump();
-  
-
-
-  init_DCC();
-  initDccConfiguraion(value, can_configuration.config.id);
 
   Serial.println(F("> init i2c ..."));
   i2c.init_i2c();
@@ -216,12 +232,59 @@ void setup() {
   i2c.scan_i2c();
   Serial.println(F("= done"));
 
-  i2c.init_pcf8574();
+
+  // Serial.println(F("=== 2 ==="));
+  // delay(1000);
+
+  initCanConfiguraion(value);
+
+  serialConfiguration.printConfiguration();
+
+  // Serial.println(F("=== 3 ==="));
+  // delay(1000);
+
+  initWeiche();
+
+
+  // Serial.println(F("=== 4 ==="));
+  // delay(1000);
+  initSignal();
+
+  // Serial.println(F("=== 5 ==="));
+  // delay(1000);
+  
+  free_dump();
+
+  Serial.println(F("=== 6 ==="));
+  delay(1000);
+
+
+  init_can();
+  
+
+  Serial.println(F("=== 7 ==="));
+  delay(1000);
+  free_dump();
+  
+
+
+  init_DCC();
+  initDccConfiguraion(value, can_configuration.config.id);
+
+  
+
+  
 }
 
 void processWeiche() {
   for (byte k = 0; k < 5; k++) {
     weiche[k].process();
+  }
+}
+
+void processSignal() {
+  for (byte k = 0; k < 6; k++) {
+    signal[k].process();
   }
 }
 
@@ -326,6 +389,7 @@ void loop() {
   processCanMessage(frame);
 
   processWeiche();
+  processSignal();
 
   
   Dcc.process();
