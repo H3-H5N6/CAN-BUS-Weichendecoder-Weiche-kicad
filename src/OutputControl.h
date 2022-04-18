@@ -44,20 +44,20 @@ class OutputControl {
  public:
   // OutputControl();
 
-  explicit OutputControl(OUTPUT_CONF *_configuration, uint16_t _address,  byte _pin);
+  explicit OutputControl(OUTPUT_CONF *_configuration, uint16_t _address, byte _pin);
 
   /**
-   * Schaltet den Ausgang ein. 
+   * Schaltet den Ausgang ein.
    */
   void on();
 
   /**
-   * Schaltet den Ausgang aus. 
+   * Schaltet den Ausgang aus.
    */
   void off();
 
   /**
-   * Schaltet den Ausgang um. War er EIN, ist er anschließend AUS. War 
+   * Schaltet den Ausgang um. War er EIN, ist er anschließend AUS. War
    * er AUS, ist er anschließend EIN
    */
   void toggle();
@@ -68,18 +68,18 @@ class OutputControl {
   void impulse();
 
   /**
-   * Liefert true, wenn Ausgang auf EIN steht. 
+   * Liefert true, wenn Ausgang auf EIN steht.
    */
   boolean isOn();
 
   /**
-   * Liefert true, wenn der Ausgang AUS ist und dies mindestens für die Dauer 
+   * Liefert true, wenn der Ausgang AUS ist und dies mindestens für die Dauer
    * von duration_2 ms.
-   */  
+   */
   boolean isImpulePosible();
 
   /**
-   * Muss regelmäßig aufgerufen werden, damit bei der Nutzung vom impulse 
+   * Muss regelmäßig aufgerufen werden, damit bei der Nutzung vom impulse
    * wieder ausgeschaltet werden
    */
   void process();
@@ -104,7 +104,7 @@ class OutputControl {
 
   /** aktueller Zustand des Ausgang */
   boolean state;
-  
+
   /** Pin des Ausgangs */
   byte pin;
 
@@ -112,7 +112,7 @@ class OutputControl {
   uint16_t address;
 
   /**
-   * Schaltet zweitverzögert den Ausgang via toggle() wieder um. Die 
+   * Schaltet zweitverzögert den Ausgang via toggle() wieder um. Die
    * Zeitverzögerung wird wird mit duration bei init() festgelegt.
    */
   void flash();

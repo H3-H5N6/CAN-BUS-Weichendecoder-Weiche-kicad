@@ -4,7 +4,7 @@ uint8_t I2CSignal::getHP0(SIGNAL::SOCKET socket) {
   switch (socket) {
     case SIGNAL::SOCKET::RJ12:
       return 0b00000101;  // _ge_ _we_ _r2_ _gr_ _r1_
-  } 
+  }
   return 0b00001100;
 }
 
@@ -32,7 +32,7 @@ uint8_t I2CSignal::getSH1(SIGNAL::SOCKET socket) {
 }
 
 void I2CSignal::setNewState(uint8_t value, uint8_t index) {
-  i2cstate = (i2cstate & mask[index]) | (  ((uint32_t) value) << index * 5 + (index / 3));
+  i2cstate = (i2cstate & mask[index]) | (((uint32_t)value) << index * 5 + (index / 3));
 }
 
 boolean I2CSignal::writeState() {

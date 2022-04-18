@@ -5,7 +5,7 @@
 #include "OutputControl.h"
 
 namespace WEICHE {
-enum POSITION: uint8_t {
+enum POSITION : uint8_t {
   UNKNOWN,
   RUNNING_ABZWEIG,
   RUNNING_GERADE,
@@ -13,7 +13,7 @@ enum POSITION: uint8_t {
   GERADE
 };
 
-enum STATE: uint8_t {
+enum STATE : uint8_t {
   OFF,
   ON,
   RUNNING,
@@ -21,7 +21,7 @@ enum STATE: uint8_t {
   UNKNOWN_STATE
 };
 
-}
+}  // namespace WEICHE
 
 class Weiche {
  public:
@@ -47,7 +47,7 @@ class Weiche {
 
   void process();
 
-  boolean change (uint16_t address); 
+  boolean change(uint16_t address);
 
   uint16_t nextAddress;
 

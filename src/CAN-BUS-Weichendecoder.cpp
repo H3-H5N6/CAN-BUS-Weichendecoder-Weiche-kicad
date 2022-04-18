@@ -168,7 +168,6 @@ void initSignal() {
   for (uint8_t i = 3; i < 6; i++) {
     signal[i] = Signal(900 + (i * 4), i, &i2csignal, SIGNAL::SOCKET::RJ12);
   }
-
 }
 
 void initWeiche() {

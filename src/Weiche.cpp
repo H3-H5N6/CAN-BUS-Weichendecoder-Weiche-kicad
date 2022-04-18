@@ -81,13 +81,12 @@ void Weiche::statusForCan(uint16_t (&data)[8]) {
   data[6] = current;
   data[7] = 0;
 
-  if (data[1] == WEICHE::STATE::RUNNING){
-    data[5] =  WEICHE::STATE::BLOCKED_STATE;
+  if (data[1] == WEICHE::STATE::RUNNING) {
+    data[5] = WEICHE::STATE::BLOCKED_STATE;
   }
-  if (data[5] == WEICHE::STATE::RUNNING){
-    data[1] =  WEICHE::STATE::BLOCKED_STATE;
+  if (data[5] == WEICHE::STATE::RUNNING) {
+    data[1] = WEICHE::STATE::BLOCKED_STATE;
   }
-
 }
 
 uint16_t Weiche::statusAsAddress() {
@@ -135,26 +134,26 @@ void Weiche::process() {
 }
 
 /**
- * Liefert true, wenn die Weiche unter der jeweiligen Adresse erreichbar ist 
+ * Liefert true, wenn die Weiche unter der jeweiligen Adresse erreichbar ist
  */
 boolean Weiche::change(uint16_t address) {
   if ((a.getAddress() != address) && (g.getAddress() != address)) {
     return false;
   }
   // Wenn die Stellung der Weiche nicht geändert werden kann, wird sich die Adresse gemerkt
-  if (status() == WEICHE::POSITION::RUNNING_GERADE || status() == WEICHE::POSITION::RUNNING_ABZWEIG ) {
+  if (status() == WEICHE::POSITION::RUNNING_GERADE || status() == WEICHE::POSITION::RUNNING_ABZWEIG) {
     this->nextAddress = address;
     return true;
-  } 
+  }
 
   // Weiche kann gestellt werden, nextAddress wird gelöscht
   this->nextAddress = 0;
-  
+
   // Weiche stellen
   if (a.getAddress() == address) {
     this->abzweig();
-  } 
-  
+  }
+
   if (g.getAddress() == address) {
     this->gerade();
   }

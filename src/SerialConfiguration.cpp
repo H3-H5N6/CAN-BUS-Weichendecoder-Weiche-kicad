@@ -9,13 +9,12 @@
 SerialConfiguration::SerialConfiguration() {
 }
 
-void SerialConfiguration::printLineln(byte index ,const __FlashStringHelper *ifsh){
+void SerialConfiguration::printLineln(byte index, const __FlashStringHelper *ifsh) {
   printLine(index, ifsh);
   Serial.println();
 }
 
-void SerialConfiguration::printLine(byte index ,const __FlashStringHelper *ifsh){
-
+void SerialConfiguration::printLine(byte index, const __FlashStringHelper *ifsh) {
   Serial.print(F("Config"));
   switch (index) {
     case HELP:
@@ -29,11 +28,11 @@ void SerialConfiguration::printLine(byte index ,const __FlashStringHelper *ifsh)
   Serial.print(ifsh);
 }
 
-void SerialConfiguration::printPrefix(){
+void SerialConfiguration::printPrefix() {
   Serial.print(F("Config: "));
 }
 
-void SerialConfiguration::init(CAN_CONFIGURATION &_conf, NmraDcc &_dcc, ChangeWeiche _cw ) {
+void SerialConfiguration::init(CAN_CONFIGURATION &_conf, NmraDcc &_dcc, ChangeWeiche _cw) {
   can_configuration = _conf;
   changeWeicheCallback = _cw;
   dcc = _dcc;
@@ -95,11 +94,11 @@ void SerialConfiguration::process() {
         printLineln(HELP, F("h           : Diese Hilfe"));
         return;
       case '+':
-        if (last_weiche > 0){
-          last_weiche=last_weiche+2;
+        if (last_weiche > 0) {
+          last_weiche = last_weiche + 2;
         }
       case '-':
-        if (last_weiche > 1){
+        if (last_weiche > 1) {
           last_weiche--;
         }
         Serial.print(F("Stelle Weiche: "));
@@ -117,7 +116,7 @@ void SerialConfiguration::process() {
       case '8':
       case '9':
         if (!change_id && !change_weiche) {
-            return;
+          return;
         }
         Serial.print(char(input));
         if (zahl_pos > 3) {
@@ -157,16 +156,16 @@ void SerialConfiguration::process() {
 void SerialConfiguration::printConfiguration() {
   //                   =======================================
   printLineln(CONF, F("=== CAN-Konfiguration ================="));
-  
+
   printLine(CONF, F("SW-Version  => "));
   Serial.println(can_configuration.config.version);
-  
+
   printLine(CONF, F("Modul Id    => "));
   Serial.println(can_configuration.config.id);
 
   printLine(CONF, F("DCC-Adresse => "));
   Serial.println(dcc.getAddr());
-  
+
   for (int n = 0; n < 10; n++) {
     printLine(CONF, F("CAN ID: ["));
     Serial.print(n);

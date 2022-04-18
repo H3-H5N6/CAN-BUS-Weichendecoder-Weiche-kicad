@@ -20,8 +20,7 @@ struct CVPair {
 CVPair FactoryDefaultCVs[] =
     {
         {CV_ACCESSORY_DECODER_ADDRESS_LSB, DEFAULT_ACCESSORY_DECODER_ADDRESS & 0xFF},
-        {CV_ACCESSORY_DECODER_ADDRESS_MSB, DEFAULT_ACCESSORY_DECODER_ADDRESS >> 8}
-    };
+        {CV_ACCESSORY_DECODER_ADDRESS_MSB, DEFAULT_ACCESSORY_DECODER_ADDRESS >> 8}};
 
 uint8_t FactoryDefaultCVIndex = 0;
 
@@ -55,10 +54,9 @@ void notifyDccAccTurnoutOutput(uint16_t Addr, uint8_t Direction, uint8_t OutputP
   if ((Addr >= Dcc.getAddr()) && (Addr < Dcc.getAddr() + 5)) {
     uint16_t can_addr = 801 + ((Addr - 1) * 2 + Direction);
 
-    
     //              (6 -1)     * 2 + 0               6 -1 *  * 2
-    //               10                                10        
-    byte index = ((Addr - 1) * 2 + Direction) - ((Dcc.getAddr() - 1 ) * 2);
+    //               10                                10
+    byte index = ((Addr - 1) * 2 + Direction) - ((Dcc.getAddr() - 1) * 2);
 
     if (can_addr_buffer[index][0] != can_addr) {
       if (OutputPower == 1) {

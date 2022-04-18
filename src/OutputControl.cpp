@@ -38,18 +38,18 @@ void OutputControl::writeState() {
   digitalWrite(pin, state);
 }
 
-boolean OutputControl::isImpulePosible(){
-  Serial.print(lastChanged/1000);
+boolean OutputControl::isImpulePosible() {
+  Serial.print(lastChanged / 1000);
   Serial.print("-");
-  Serial.print(this->configuration->duration/1000);
+  Serial.print(this->configuration->duration / 1000);
   Serial.print("-");
-  Serial.print(this->configuration->duration_2/1000);
+  Serial.print(this->configuration->duration_2 / 1000);
   Serial.print("-");
-  Serial.println(millis()/1000);
-  if (lastChanged == 0 ){
+  Serial.println(millis() / 1000);
+  if (lastChanged == 0) {
     return true;
   }
-  if (isOn()){  // Bei Impulse ist der Ausgang aktiv
+  if (isOn()) {  // Bei Impulse ist der Ausgang aktiv
     return false;
   }
   if (lastChanged + this->configuration->duration + this->configuration->duration_2 > millis()) {
@@ -57,7 +57,6 @@ boolean OutputControl::isImpulePosible(){
     return false;
   }
   return true;
-
 }
 
 void OutputControl::on() {
@@ -121,13 +120,13 @@ boolean OutputControl::isOn() {
   return result;
 }
 
-void OutputControl::offFlash(){
+void OutputControl::offFlash() {
   if (this->configuration->outputMode == OUTPUT_CONTROL::OUTPUT_MODE::FLASH_ON) {
     this->configuration->outputMode = OUTPUT_CONTROL::OUTPUT_MODE::FLASH_OFF;
   }
 }
 
-void OutputControl::onFlash(){
+void OutputControl::onFlash() {
   if (this->configuration->outputMode == OUTPUT_CONTROL::OUTPUT_MODE::FLASH_OFF) {
     this->configuration->outputMode = OUTPUT_CONTROL::OUTPUT_MODE::FLASH_ON;
   }
@@ -143,7 +142,6 @@ void OutputControl::process() {
       this->flash();
     }
   }
-
 
   if (this->configuration->outputMode == OUTPUT_CONTROL::OUTPUT_MODE::IMPULSE) {
     if (isOn()) {
@@ -169,7 +167,6 @@ void OutputControl::flash() {
   this->toggle();
 }
 
-
-uint16_t OutputControl::getAddress(){
+uint16_t OutputControl::getAddress() {
   return address;
 }
