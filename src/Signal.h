@@ -13,7 +13,7 @@ enum POSITION: uint8_t {
   HP0SH1 // 4
 };
 
-enum STATE {
+enum STATE: uint8_t {
   SET,               // Postion wurde intern gesetzt
   POSITION_REACHED,  // Postion wurde auch extern gesetzt
   UNKNOWN_STATE

@@ -5,7 +5,7 @@
 #include "OutputControl.h"
 
 namespace WEICHE {
-enum POSITION {
+enum POSITION: uint8_t {
   UNKNOWN,
   RUNNING_ABZWEIG,
   RUNNING_GERADE,
@@ -13,7 +13,7 @@ enum POSITION {
   GERADE
 };
 
-enum STATE {
+enum STATE: uint8_t {
   OFF,
   ON,
   RUNNING,
