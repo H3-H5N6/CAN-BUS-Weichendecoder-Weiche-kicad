@@ -767,7 +767,7 @@
     (property "Reference" "R2" (id 0) (at 121.158 64.8716 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Value" "3k3" (id 1) (at 121.158 67.183 0)
+    (property "Value" "" (id 1) (at 121.158 67.183 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Footprint" "Resistors_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P7.62mm_Horizontal" (id 2) (at 117.602 66.04 90)
@@ -802,7 +802,7 @@
   (symbol (lib_id "Device:R") (at 129.54 66.04 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid 00000000-0000-0000-0000-0000607a4631)
-    (property "Reference" "3k3" (id 0) (at 131.445 67.31 0)
+    (property "Reference" "1k" (id 0) (at 131.445 67.31 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "R3" (id 1) (at 131.445 64.77 0)
@@ -843,7 +843,7 @@
     (property "Reference" "R4" (id 0) (at 140.208 64.8716 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
-    (property "Value" "2k2" (id 1) (at 140.208 67.183 0)
+    (property "Value" "" (id 1) (at 140.208 67.183 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Footprint" "Resistors_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P7.62mm_Horizontal" (id 2) (at 136.652 66.04 90)
@@ -1025,7 +1025,7 @@
       (reference "#PWR0102") (unit 1) (value "+5P") (footprint "")
     )
     (path "/00000000-0000-0000-0000-0000607a4631"
-      (reference "3k3") (unit 1) (value "R3") (footprint "Resistors_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P7.62mm_Horizontal")
+      (reference "1k") (unit 1) (value "R3") (footprint "Resistors_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P7.62mm_Horizontal")
     )
     (path "/00000000-0000-0000-0000-0000607a062e"
       (reference "D1") (unit 1) (value "Rot 2") (footprint "LEDs:LED_D3.0mm")
@@ -1061,10 +1061,10 @@
       (reference "R1") (unit 1) (value "3k3") (footprint "Resistors_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P7.62mm_Horizontal")
     )
     (path "/00000000-0000-0000-0000-0000607a3a5b"
-      (reference "R2") (unit 1) (value "3k3") (footprint "Resistors_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P7.62mm_Horizontal")
+      (reference "R2") (unit 1) (value "1k") (footprint "Resistors_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P7.62mm_Horizontal")
     )
     (path "/00000000-0000-0000-0000-0000607a4eab"
-      (reference "R4") (unit 1) (value "2k2") (footprint "Resistors_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P7.62mm_Horizontal")
+      (reference "R4") (unit 1) (value "10k") (footprint "Resistors_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P7.62mm_Horizontal")
     )
     (path "/00000000-0000-0000-0000-0000607b3367"
       (reference "R5") (unit 1) (value "3k3") (footprint "Resistors_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P7.62mm_Horizontal")
