@@ -32,7 +32,7 @@ uint8_t I2CSignal::getSH1(SIGNAL::SOCKET socket) {
 }
 
 void I2CSignal::setNewState(uint8_t value, uint8_t index) {
-  i2cstate = (i2cstate & mask[index]) | (((uint32_t)value) << index * 5 + (index / 3));
+  i2cstate = (i2cstate & mask[index]) | (((uint32_t)value) << ((index * 5) + (index / 3)));
 }
 
 boolean I2CSignal::writeState() {
