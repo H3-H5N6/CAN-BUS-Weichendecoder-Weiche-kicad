@@ -162,10 +162,10 @@ void initSignal() {
   I2CSignal i2csignal;
   i2csignal.init_pcf8574();
 
-  for (uint8_t i = 0; i < 3; i++) {
+  for (uint8_t i = 0; i < 5; i++) {
     signal[i] = Signal(900 + (i * 4), i, &i2csignal, SIGNAL::SOCKET::PIN);
   }
-  for (uint8_t i = 3; i < 6; i++) {
+  for (uint8_t i = 5; i < 6; i++) {
     signal[i] = Signal(900 + (i * 4), i, &i2csignal, SIGNAL::SOCKET::RJ12);
   }
 }
