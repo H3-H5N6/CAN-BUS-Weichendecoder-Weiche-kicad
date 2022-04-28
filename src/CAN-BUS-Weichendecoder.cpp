@@ -78,7 +78,7 @@ void change(uint16_t address) {
 
 #include "CanCommunicator.h"
 CanComm canComm = CanComm(can_configuration, weiche, signal, *change );
-#include "CanControl.h"
+// #include "CanControl.h"
 
 
 void free_dump() {
@@ -227,7 +227,7 @@ void setup() {
 
   serialConfiguration.printConfiguration();
 
-  // Serial.println(F("=== 3 ==="));
+  Serial.println(F("=== 3 ==="));
   // delay(1000);
 
   initWeiche();
@@ -244,7 +244,7 @@ void setup() {
   Serial.println(F("=== 6 ==="));
   delay(1000);
 
-  init_can();
+  canComm.init();
 
   Serial.println(F("=== 7 ==="));
   delay(1000);

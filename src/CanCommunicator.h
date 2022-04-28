@@ -16,6 +16,7 @@ class CanComm {
         void processCanMessageGetStatus();
         void processCanMessageChangeState();
         void processCanMessage(); 
+        void init();
     private:
         CAN_CONFIGURATION can_configuration;
         CANMessage frame;
@@ -23,6 +24,7 @@ class CanComm {
         Signal *signal;
         boolean send_mode = 0;
         ChangeWeiche changeWeicheCallback = {};
+        
 
 
 };
