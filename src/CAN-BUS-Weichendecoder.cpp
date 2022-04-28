@@ -23,16 +23,16 @@ ConfigPin configPin;
 CAN_CONFIGURATION can_configuration;
 I2C_Tools i2c;
 
-uint8_t LED_1 = 4;
-uint8_t LED_2 = 5;
-uint8_t LED_3 = 6;
-uint8_t LED_4 = 7;
-uint8_t LED_5 = 8;
-uint8_t LED_6 = 9;
-uint8_t LED_7 = A1;
-uint8_t LED_8 = A0;
-uint8_t LED_9 = A2;
-uint8_t LED_10 = A3;
+#define LED_1 4
+#define LED_2 5
+#define LED_3 6
+#define LED_4 7
+#define LED_5 8
+#define LED_6 9
+#define LED_7 A1
+#define LED_8 A0
+#define LED_9 A2
+#define LED_10 A3
 
 OUTPUT_CONF configuration = {
     OUTPUT_CONTROL::OUTPUT_MODE::IMPULSE,
@@ -45,8 +45,6 @@ Weiche *weiche = (Weiche *)malloc(sizeof(Weiche) * 5);
 Signal *signal = (Signal *)malloc(sizeof(Signal) * 6);
 SerialConfiguration serialConfiguration;
 CanComm canComm = CanComm(&can_configuration, weiche, signal, *change);
-
-int inputVal = 0;
 
 void change(uint16_t address) {
   for (byte i = 0; i < 5; i++) {
