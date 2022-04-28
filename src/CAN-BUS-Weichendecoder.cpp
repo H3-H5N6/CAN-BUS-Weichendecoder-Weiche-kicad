@@ -14,7 +14,7 @@ ConfigPin configPin;
 
 CAN_CONFIGURATION can_configuration;
 
-#include "CanControl.h"
+
 #include "I2C_Tools.h"
 #include "Weiche.h"
 
@@ -39,15 +39,17 @@ OUTPUT_CONF configuration = {
     IMPULSE_LENGTH,
     IMPULSE_LENGTH};
 
-CANMessage frame;
 
-uint16_t send_mode = 0;
+
+
 
 OutputControl *control = (OutputControl *)malloc(sizeof(OutputControl) * 10);
 Weiche *weiche = (Weiche *)malloc(sizeof(Weiche) * 5);
 
 #include "Signal.h"
 Signal *signal = (Signal *)malloc(sizeof(Signal) * 6);
+
+
 
 #include "SerialConfiguration.h"
 
@@ -73,6 +75,11 @@ void change(uint16_t address) {
     }
   }
 }
+
+#include "CanCommunicator.h"
+CanComm canComm = CanComm(can_configuration, weiche, signal, *change );
+#include "CanControl.h"
+
 
 void free_dump() {
   uint8_t *heapptr;
@@ -262,84 +269,7 @@ void processSignal() {
 unsigned long lastChanged = millis();
 byte index = 0;
 
-void sendDetailWeichenStatus() {
-  frame.id = 300;
 
-  frame.ext = false;
-  frame.rtr = false;
-  frame.len = 8;
-
-  uint16_t data[8];
-
-  for (byte i = 0; i < 5; i++) {
-    weiche[i].statusForCan(data);
-    Serial.print("Frame ID: ");
-    Serial.print(frame.id);
-    Serial.print(" Data: ");
-    for (byte z = 0; z < 8; z++) {
-      Serial.print(data[z]);
-      Serial.print(" ");
-    }
-    Serial.println("");
-
-    for (byte n = 0; n < 2; n++) {
-      for (byte k = 0; k < 4; k++) {
-        frame.data16[k] = data[n * 4 + k];
-      }
-      bool ok = can.tryToSend(frame);
-      if (ok) {
-        Serial.print("Sent ok");
-      } else {
-        Serial.println("Send failure");
-      }
-      // frame.id = frame.id + 1;
-    }
-  }
-}
-
-void processCanMessageGetStatus(CANMessage &frame) {
-  if (frame.data16[0] == can_configuration.config.id) {
-    Serial.println();
-    Serial.print("Status: ");
-    for (byte i = 0; i < 5; i++) {
-      Serial.print(weiche[i].statusAsAddress());
-      Serial.print(" ");
-    }
-    Serial.println();
-    send_mode = 1;
-  }
-}
-
-void processCanMessageChangeState(CANMessage &frame) {
-  for (byte i = 0; i < 4; i++) {
-    uint16_t adr = frame.data16[i];
-    if (adr != 0) {
-      change(adr);
-    }
-  }
-  Serial.println();
-}
-
-void processCanMessage(CANMessage &frame) {
-  if (can.receive(frame)) {
-    debugFrame(frame);
-
-    switch (frame.id) {
-      case 100:
-        processCanMessageChangeState(frame);
-        break;
-      case 200:
-        processCanMessageGetStatus(frame);
-        break;
-    }
-  }
-
-  if (send_mode == 1) {
-    Serial.println("sendDetailWeichenStatus");
-    sendDetailWeichenStatus();
-    send_mode = 0;
-  }
-}
 
 #ifdef NOTIFY_DCC_MSG
 void notifyDccMsg(DCC_MSG *Msg) {
@@ -355,7 +285,7 @@ void notifyDccMsg(DCC_MSG *Msg) {
 void loop() {
   serialConfiguration.process();
 
-  processCanMessage(frame);
+  canComm.processCanMessage();
 
   processWeiche();
   processSignal();

@@ -47,6 +47,7 @@ void init_can() {
   }
 }
 
+/*
 void debugFrame(CANMessage& frame){
   Serial.println();
   Serial.print(F("DEBUG: Id ["));
@@ -59,5 +60,5 @@ void debugFrame(CANMessage& frame){
   }
   Serial.println(F("]"));
 }
-
+*/
 #endif
