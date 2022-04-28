@@ -1,6 +1,5 @@
 #include "CanCommunicator.h"
 
-
 static const byte MCP2515_CS = 10;  // CS input of MCP2515
 static const byte MCP2515_INT = 3;  // INT output of MCP2515
 
@@ -8,11 +7,10 @@ static ACAN2515 can(MCP2515_CS, SPI, MCP2515_INT);
 
 static const uint32_t QUARTZ_FREQUENCY = 16UL * 1000UL * 1000UL;  // 16 MHz
 
-CanComm::CanComm(CAN_CONFIGURATION &_conf, Weiche *_weiche, Signal *_signal, ChangeWeiche _cw) : weiche(_weiche), signal(_signal) {
-    changeWeicheCallback = _cw;
-    can_configuration = _conf;
+CanComm::CanComm(CAN_CONFIGURATION *_conf, Weiche *_weiche, Signal *_signal, ChangeWeiche _cw) : weiche(_weiche), signal(_signal) {
+  changeWeicheCallback = _cw;
+  can_configuration = _conf;
 }
-
 
 void CanComm::print(const __FlashStringHelper *ifsh) {
   Serial.print(F("DEBUG CAN "));
@@ -27,13 +25,12 @@ void CanComm::init() {
   SPI.begin();
   ACAN2515Settings settings(QUARTZ_FREQUENCY, 125UL * 1000UL);
   settings.mRequestedMode = ACAN2515Settings::NormalMode;
-  /** Buffer verkleinert, da wenig RAM verfügbar ist. Siehe auch 
+  /** Buffer verkleinert, da wenig RAM verfügbar ist. Siehe auch
    * https://github.com/pierremolinaro/acan2515/issues/2 */
-  settings.mReceiveBufferSize = 12 ;
-  settings.mTransmitBuffer0Size = 12 ;
+  settings.mReceiveBufferSize = 12;
+  settings.mTransmitBuffer0Size = 12;
   const uint16_t errorCode = can.begin(settings, [] { can.isr(); });
   if (errorCode == 0) {
-
     print(F("Receive Buffer Size"));
     Serial.println(settings.mReceiveBufferSize);
 
@@ -42,7 +39,7 @@ void CanComm::init() {
 
     print(F("Bit Rate prescaler"));
     Serial.println(settings.mBitRatePrescaler);
-    
+
     print(F("Propagation Segment"));
     Serial.println(settings.mPropagationSegment);
 
@@ -57,7 +54,7 @@ void CanComm::init() {
 
     print(F("Triple Sampling"));
     Serial.println(settings.mTripleSampling ? "yes" : "no");
-    
+
     print(F("Actual bit rate"));
     Serial.print(settings.actualBitRate());
     Serial.println(F(" bit/s"));
@@ -72,7 +69,7 @@ void CanComm::init() {
     print(F("Configuration error 0x"));
     Serial.println(errorCode, HEX);
   }
-  
+
   print(F(" == init CAN Ende == "));
   Serial.println();
 }
@@ -113,7 +110,13 @@ void CanComm::sendDetailWeichenStatus() {
 }
 
 void CanComm::processCanMessageGetStatus() {
-  if (frame.data16[0] == can_configuration.config.id) {
+  print(F("Modul-ID"));
+  Serial.println(can_configuration->config.id);
+
+  print(F("Data 0"));
+  Serial.println(frame.data16[0]);
+
+  if (frame.data16[0] == can_configuration->config.id) {
     Serial.println();
     Serial.print("Status: ");
     for (byte i = 0; i < 5; i++) {
@@ -138,6 +141,8 @@ void CanComm::processCanMessageChangeState() {
 void CanComm::processCanMessage() {
   if (can.receive(frame)) {
     // debugFrame(frame);
+    print(F("CAN ID"));
+    Serial.println(frame.id);
 
     switch (frame.id) {
       case 100:

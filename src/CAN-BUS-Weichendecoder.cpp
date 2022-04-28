@@ -1,17 +1,15 @@
 #include <Arduino.h>
 #include <EEPROM.h>
 
-#include "Debug.h"
-
+#include "CanCommunicator.h"
+#include "CanConfiguration.h"
 #include "ConfigPin.h"
 #include "Dcc.h"
-
+#include "Debug.h"
 #include "I2C_Tools.h"
-#include "Weiche.h"
-#include "Signal.h"
 #include "SerialConfiguration.h"
-#include "CanConfiguration.h"
-#include "CanCommunicator.h"
+#include "Signal.h"
+#include "Weiche.h"
 
 void change(uint16_t address);
 
@@ -46,7 +44,7 @@ OutputControl *control = (OutputControl *)malloc(sizeof(OutputControl) * 10);
 Weiche *weiche = (Weiche *)malloc(sizeof(Weiche) * 5);
 Signal *signal = (Signal *)malloc(sizeof(Signal) * 6);
 SerialConfiguration serialConfiguration;
-CanComm canComm = CanComm(can_configuration, weiche, signal, *change );
+CanComm canComm = CanComm(&can_configuration, weiche, signal, *change);
 
 int inputVal = 0;
 
@@ -68,7 +66,6 @@ void change(uint16_t address) {
     }
   }
 }
-
 
 void initDccConfiguraion(byte configPin, byte canModulId) {
   Serial.print(F("DCC-Address: ["));
@@ -201,7 +198,6 @@ void setup() {
   // delay(1000);
   initSignal();
 
-
   free_dump();
 
   canComm.init();
@@ -227,8 +223,6 @@ void processSignal() {
 
 unsigned long lastChanged = millis();
 byte index = 0;
-
-
 
 #ifdef NOTIFY_DCC_MSG
 void notifyDccMsg(DCC_MSG *Msg) {

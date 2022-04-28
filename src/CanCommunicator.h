@@ -12,7 +12,7 @@ typedef void (*ChangeWeiche)(uint16_t);
 
 class CanComm {
  public:
-  CanComm(CAN_CONFIGURATION &_conf, Weiche *weiche, Signal *signal, ChangeWeiche _cw);
+  CanComm(CAN_CONFIGURATION *_conf, Weiche *weiche, Signal *signal, ChangeWeiche _cw);
   void sendDetailWeichenStatus();
   void processCanMessageGetStatus();
   void processCanMessageChangeState();
@@ -20,7 +20,7 @@ class CanComm {
   void init();
 
  private:
-  CAN_CONFIGURATION can_configuration;
+  CAN_CONFIGURATION *can_configuration;
   CANMessage frame;
   Weiche *weiche;
   Signal *signal;
