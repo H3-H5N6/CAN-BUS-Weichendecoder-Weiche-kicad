@@ -13,41 +13,68 @@ CanComm::CanComm(CAN_CONFIGURATION &_conf, Weiche *_weiche, Signal *_signal, Cha
     can_configuration = _conf;
 }
 
+
+void CanComm::print(const __FlashStringHelper *ifsh) {
+  Serial.print(F("DEBUG CAN "));
+  Serial.print(ifsh);
+  Serial.print(F(": "));
+}
+
 void CanComm::init() {
-  
+  print(F(" == init CAN Start == "));
+  Serial.println();
+
   SPI.begin();
   ACAN2515Settings settings(QUARTZ_FREQUENCY, 125UL * 1000UL);
   settings.mRequestedMode = ACAN2515Settings::NormalMode;
   /** Buffer verkleinert, da wenig RAM verfügbar ist. Siehe auch 
    * https://github.com/pierremolinaro/acan2515/issues/2 */
-  settings.mReceiveBufferSize = 4 ;
-  settings.mTransmitBuffer0Size = 4 ;
+  settings.mReceiveBufferSize = 12 ;
+  settings.mTransmitBuffer0Size = 12 ;
   const uint16_t errorCode = can.begin(settings, [] { can.isr(); });
   if (errorCode == 0) {
-    Serial.print(F("Bit Rate prescaler: "));
+
+    print(F("Receive Buffer Size"));
+    Serial.println(settings.mReceiveBufferSize);
+
+    print(F("Transmit Buffer Size"));
+    Serial.println(settings.mTransmitBuffer0Size);
+
+    print(F("Bit Rate prescaler"));
     Serial.println(settings.mBitRatePrescaler);
-    Serial.print(F("Propagation Segment: "));
+    
+    print(F("Propagation Segment"));
     Serial.println(settings.mPropagationSegment);
-    Serial.print(F("Phase segment 1: "));
+
+    print(F("Phase segment 1"));
     Serial.println(settings.mPhaseSegment1);
-    Serial.print(F("Phase segment 2: "));
+
+    print(F("Phase segment 2"));
     Serial.println(settings.mPhaseSegment2);
-    Serial.print(F("SJW: "));
+
+    print(F("SJW: "));
     Serial.println(settings.mSJW);
-    Serial.print(F("Triple Sampling: "));
+
+    print(F("Triple Sampling"));
     Serial.println(settings.mTripleSampling ? "yes" : "no");
-    Serial.print(F("Actual bit rate: "));
+    
+    print(F("Actual bit rate"));
     Serial.print(settings.actualBitRate());
     Serial.println(F(" bit/s"));
-    Serial.print(F("Exact bit rate ? "));
+
+    print(F("Exact bit rate ?"));
     Serial.println(settings.exactBitRate() ? "yes" : "no");
-    Serial.print(F("Sample point: "));
+
+    print(F("Sample point"));
     Serial.print(settings.samplePointFromBitStart());
     Serial.println(F("%"));
   } else {
-    Serial.print(F("Configuration error 0x"));
+    print(F("Configuration error 0x"));
     Serial.println(errorCode, HEX);
   }
+  
+  print(F(" == init CAN Ende == "));
+  Serial.println();
 }
 
 void CanComm::sendDetailWeichenStatus() {

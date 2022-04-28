@@ -1,26 +1,29 @@
 #include <Arduino.h>
 #include <EEPROM.h>
 
+#include "Debug.h"
+
 #include "ConfigPin.h"
 #include "Dcc.h"
 
-ConfigPin configPin;
-
+#include "I2C_Tools.h"
+#include "Weiche.h"
+#include "Signal.h"
+#include "SerialConfiguration.h"
 #include "CanConfiguration.h"
+#include "CanCommunicator.h"
+
+void change(uint16_t address);
 
 #define VERSION 4
 #define DEFAULT_MODUL_ID 1
 #define START_WEICHEN_ID 801
 
-CAN_CONFIGURATION can_configuration;
-
-
-#include "I2C_Tools.h"
-#include "Weiche.h"
-
-I2C_Tools i2c;
-
 #define IMPULSE_LENGTH 2000
+
+ConfigPin configPin;
+CAN_CONFIGURATION can_configuration;
+I2C_Tools i2c;
 
 uint8_t LED_1 = 4;
 uint8_t LED_2 = 5;
@@ -39,21 +42,11 @@ OUTPUT_CONF configuration = {
     IMPULSE_LENGTH,
     IMPULSE_LENGTH};
 
-
-
-
-
 OutputControl *control = (OutputControl *)malloc(sizeof(OutputControl) * 10);
 Weiche *weiche = (Weiche *)malloc(sizeof(Weiche) * 5);
-
-#include "Signal.h"
 Signal *signal = (Signal *)malloc(sizeof(Signal) * 6);
-
-
-
-#include "SerialConfiguration.h"
-
 SerialConfiguration serialConfiguration;
+CanComm canComm = CanComm(can_configuration, weiche, signal, *change );
 
 int inputVal = 0;
 
@@ -76,34 +69,6 @@ void change(uint16_t address) {
   }
 }
 
-#include "CanCommunicator.h"
-CanComm canComm = CanComm(can_configuration, weiche, signal, *change );
-// #include "CanControl.h"
-
-
-void free_dump() {
-  uint8_t *heapptr;
-  uint8_t *stackptr;
-
-  stackptr = (uint8_t *)malloc(4);  // use stackptr temporarily
-  heapptr = stackptr;               // save value of heap pointer
-  free(stackptr);                   // free up the memory again (sets stackptr to 0)
-  stackptr = (uint8_t *)(SP);       // save value of stack pointer
-
-  // print("HP: ");
-  Serial.println("Speicher");
-  Serial.print(F("HP: "));
-  Serial.println((int)heapptr);
-
-  // print("SP: ");
-  Serial.print(F("SP: "));
-  Serial.println((int)stackptr);
-
-  // print("Free: ");
-  Serial.print(F("Free: "));
-  Serial.println((int)stackptr - (int)heapptr);
-  Serial.println();
-}
 
 void initDccConfiguraion(byte configPin, byte canModulId) {
   Serial.print(F("DCC-Address: ["));
@@ -236,17 +201,11 @@ void setup() {
   // delay(1000);
   initSignal();
 
-  // Serial.println(F("=== 5 ==="));
-  // delay(1000);
 
   free_dump();
 
-  Serial.println(F("=== 6 ==="));
-  delay(1000);
-
   canComm.init();
 
-  Serial.println(F("=== 7 ==="));
   delay(1000);
   free_dump();
 
