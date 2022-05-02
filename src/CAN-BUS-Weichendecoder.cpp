@@ -233,6 +233,16 @@ void notifyDccMsg(DCC_MSG *Msg) {
 }
 #endif
 
+void processDccToCan() {
+  for (byte i = 0; i < 10; i++) {
+    if (can_addr_buffer[i][1] != 0) {
+      Serial.println("call Change");
+      change(can_addr_buffer[i][1]);
+      can_addr_buffer[i][1] = 0;
+    }
+  }
+}
+
 void loop() {
   serialConfiguration.process();
 
@@ -245,13 +255,7 @@ void loop() {
 
   dccWriteFactotyDefaults();
 
-  for (byte i = 0; i < 10; i++) {
-    if (can_addr_buffer[i][1] != 0) {
-      Serial.println("call Change");
-      change(can_addr_buffer[i][1]);
-      can_addr_buffer[i][1] = 0;
-    }
-  }
+  processDccToCan();
 
   delay(5);
 }

@@ -54,9 +54,15 @@ void notifyDccAccTurnoutOutput(uint16_t Addr, uint8_t Direction, uint8_t OutputP
   if ((Addr >= Dcc.getAddr()) && (Addr < Dcc.getAddr() + 5)) {
     uint16_t can_addr = 801 + ((Addr - 1) * 2 + Direction);
 
-    //              (6 -1)     * 2 + 0               6 -1 *  * 2
-    //               10                                10
+    //              (6 - 1)     * 2 + 0       -       6 -1           * 2
+    //              (6 - 1)     * 2 + 1       -       6 -1           * 2
+    //               10                       -        10                 = 0
+    //               11                       -        10                 = 1
     byte index = ((Addr - 1) * 2 + Direction) - ((Dcc.getAddr() - 1) * 2);
+
+
+    // [0] erfasst dem Wechsel 0 - > 1
+    // [1] zu verabeitende can-Adresse, wird nach der Verabeitung zurückgesetzt
 
     if (can_addr_buffer[index][0] != can_addr) {
       if (OutputPower == 1) {
