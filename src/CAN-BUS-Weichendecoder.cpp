@@ -165,11 +165,11 @@ void initWeiche() {
   control[8] = OutputControl(&configuration, can_configuration.config.id_weichen[9], LED_9);
   control[9] = OutputControl(&configuration, can_configuration.config.id_weichen[8], LED_10);
 
-  weiche[0] = Weiche(control[0], control[1]);
-  weiche[1] = Weiche(control[2], control[3]);
-  weiche[2] = Weiche(control[4], control[5]);
-  weiche[3] = Weiche(control[6], control[7]);
-  weiche[4] = Weiche(control[8], control[9]);
+  weiche[0] = Weiche(control[0], control[1], 801,41);
+  weiche[1] = Weiche(control[2], control[3], 803,43);
+  weiche[2] = Weiche(control[4], control[5], 805,45);
+  weiche[3] = Weiche(control[6], control[7], 807,47);
+  weiche[4] = Weiche(control[8], control[9], 809,49);
   Serial.println(F("Init Weiche End"));
 }
 

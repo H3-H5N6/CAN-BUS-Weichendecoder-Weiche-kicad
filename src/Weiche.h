@@ -25,7 +25,7 @@ enum STATE : uint8_t {
 
 class Weiche {
  public:
-  explicit Weiche(OutputControl &g, OutputControl &a);
+  explicit Weiche(OutputControl &g, OutputControl &a, uint16_t canAddr, uint16_t dccAddr);
 
   WEICHE::POSITION gerade();
 
@@ -52,9 +52,13 @@ class Weiche {
   uint16_t nextAddress;
 
  private:
+  uint16_t canAddr;
+  uint16_t dccAddr;
   OutputControl g;
   OutputControl a;
   WEICHE::POSITION postion = WEICHE::POSITION::UNKNOWN;
+  uint16_t canAddrGerade();
+  uint16_t canAddrAbzweig();
 };
 
 #endif

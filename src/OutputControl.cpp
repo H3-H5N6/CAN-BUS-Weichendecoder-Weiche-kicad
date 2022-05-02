@@ -167,6 +167,3 @@ void OutputControl::flash() {
   this->toggle();
 }
 
-uint16_t OutputControl::getAddress() {
-  return address;
-}

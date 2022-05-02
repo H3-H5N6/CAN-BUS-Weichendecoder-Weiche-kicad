@@ -94,8 +94,6 @@ class OutputControl {
    */
   void offFlash();
 
-  uint16_t getAddress();
-
  private:
   OUTPUT_CONF *configuration;
 

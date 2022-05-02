@@ -1,8 +1,16 @@
 #include "Weiche.h"
 
-Weiche::Weiche(OutputControl &_g, OutputControl &_a) : g(_g), a(_a) {
+Weiche::Weiche(OutputControl &_g, OutputControl &_a, uint16_t _canAddr, uint16_t _dccAddr) : g(_g), a(_a), canAddr(_canAddr), dccAddr(_dccAddr) {
   this->gerade();
 };
+
+uint16_t Weiche::canAddrGerade() {
+  return canAddr + 1;
+}
+
+uint16_t Weiche::canAddrAbzweig() {
+  return canAddr;
+}
 
 WEICHE::POSITION Weiche::gerade() {
   if (a.isOn()) {
@@ -37,16 +45,16 @@ void Weiche::statusForCan(uint16_t (&data)[8]) {
   switch (this->status()) {
     case WEICHE::POSITION::ABZWEIG:
     case WEICHE::POSITION::RUNNING_ABZWEIG:
-      current = a.getAddress();
+      current = canAddrAbzweig();
       break;
     case WEICHE::POSITION::GERADE:
     case WEICHE::POSITION::RUNNING_GERADE:
-      current = g.getAddress();
+      current = canAddrGerade();
       break;
   }
 
   // Gerade
-  data[0] = g.getAddress();
+  data[0] = canAddrGerade();
   switch (this->status()) {
     case WEICHE::POSITION::GERADE:
       data[1] = WEICHE::STATE::ON;
@@ -64,7 +72,7 @@ void Weiche::statusForCan(uint16_t (&data)[8]) {
   data[3] = 0;
 
   // Abzweig
-  data[4] = a.getAddress();
+  data[4] = canAddrAbzweig();
   switch (this->status()) {
     case WEICHE::POSITION::ABZWEIG:
       data[5] = WEICHE::STATE::ON;
@@ -92,9 +100,9 @@ void Weiche::statusForCan(uint16_t (&data)[8]) {
 uint16_t Weiche::statusAsAddress() {
   switch (this->status()) {
     case WEICHE::POSITION::ABZWEIG:
-      return a.getAddress();
+      return canAddrAbzweig();
     case WEICHE::POSITION::GERADE:
-      return g.getAddress();
+      return canAddrGerade();
     default:
       return 0;
   }
@@ -137,7 +145,7 @@ void Weiche::process() {
  * Liefert true, wenn die Weiche unter der jeweiligen Adresse erreichbar ist
  */
 boolean Weiche::change(uint16_t address) {
-  if ((a.getAddress() != address) && (g.getAddress() != address)) {
+  if ((canAddrAbzweig() != address) && (canAddrGerade() != address)) {
     return false;
   }
   // Wenn die Stellung der Weiche nicht geändert werden kann, wird sich die Adresse gemerkt
@@ -150,11 +158,11 @@ boolean Weiche::change(uint16_t address) {
   this->nextAddress = 0;
 
   // Weiche stellen
-  if (a.getAddress() == address) {
+  if (canAddrAbzweig() == address) {
     this->abzweig();
   }
 
-  if (g.getAddress() == address) {
+  if (canAddrGerade() == address) {
     this->gerade();
   }
   return true;
