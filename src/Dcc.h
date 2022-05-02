@@ -37,6 +37,21 @@ void notifyCVChange(uint16_t Addr, uint8_t Value) {
   Serial.println(Value, DEC);
 }
 
+
+/*
+* Variante 2
+* HP 0         41 + 0
+* HP 1         41 + 1
+* HP 2         42 + 1   
+* HP 0Sh1      42 + 0
+
+* Variante 2
+ * HP 0         42 + 0 | 41 + 0
+ * HP 1         42 + 0 | 41 + 1 
+ * HP 2         41 + 1 | 42 + 1
+ * HP 0+SH1     41 + 0 | 42 + 1
+ */
+
 uint16_t can_addr_buffer[10][2];
 #define DEBUG_DCC
 void notifyDccAccTurnoutOutput(uint16_t Addr, uint8_t Direction, uint8_t OutputPower) {

@@ -87,39 +87,53 @@ void initDccConfiguraion(byte configPin, byte canModulId) {
   }
 }
 
+void initCanIds() {
+  Serial.print(F("Setze Mudul ID: ["));
+  Serial.print(DEFAULT_MODUL_ID);
+  Serial.println(F("]"));
+
+  Serial.print(F("Setze CAN Adresse: ["));
+  Serial.print(START_WEICHEN_ID + (10 * (DEFAULT_MODUL_ID - 1)));
+  Serial.println(F("]"));
+
+  can_configuration.config.id = DEFAULT_MODUL_ID;
+  for (int n = 0; n < 10; n++) {
+    can_configuration.config.id_weichen[n] = START_WEICHEN_ID + (10 * (DEFAULT_MODUL_ID - 1)) + n;
+  }
+}
+
+void initVersion() {
+  Serial.print(F("Setze neue Version: ["));
+  Serial.print(VERSION);
+  Serial.println(F("]"));
+  can_configuration.config.version = VERSION;
+}
+
+void writeCanConfigToEEPROM() {
+  Serial.print(F("Schreibe initiale Konfig ..."));
+  EEPROM.put(CAN_BUS_OFFSET, can_configuration);
+  Serial.print(F(". fertig"));
+}
+
 void initCanConfiguraion(byte configPin) {
+  // Config aus EEPROM Lesen
   EEPROM.get(CAN_BUS_OFFSET, can_configuration.data);
 
   boolean writeConfigToEEPROM = false;
 
-  // Modul ID und CAN-Bus-Adresse initialisieren
+  // Modul ID und CAN-Bus-Adresse ggf. initialisieren
   if (configPin == 3 || can_configuration.config.version == 0) {
-    Serial.print(F("Setze Mudul ID: ["));
-    Serial.print(DEFAULT_MODUL_ID);
-    Serial.println(F("]"));
-
-    Serial.print(F("Setze CAN Adresse: ["));
-    Serial.print(START_WEICHEN_ID + (10 * (DEFAULT_MODUL_ID - 1)));
-    Serial.println(F("]"));
-
-    can_configuration.config.id = DEFAULT_MODUL_ID;
-    for (int n = 0; n < 10; n++) {
-      can_configuration.config.id_weichen[n] = START_WEICHEN_ID + (10 * (DEFAULT_MODUL_ID - 1)) + n;
-    }
+    initCanIds();
+    writeConfigToEEPROM = true;
   }
 
   if (can_configuration.config.version != VERSION) {
-    Serial.print(F("Setze neue Version: ["));
-    Serial.print(VERSION);
-    Serial.println(F("]"));
-    can_configuration.config.version = VERSION;
+    initVersion();
     writeConfigToEEPROM = true;
   }
 
   if (writeConfigToEEPROM) {
-    Serial.print(F("Schreibe initiale Konfig ..."));
-    EEPROM.put(CAN_BUS_OFFSET, can_configuration);
-    Serial.print(F(". fertig"));
+    writeCanConfigToEEPROM();
   }
 
   serialConfiguration.init(can_configuration, Dcc, *change);
