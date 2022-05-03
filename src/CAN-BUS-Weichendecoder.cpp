@@ -13,9 +13,7 @@
 
 void change(uint16_t address);
 
-#define VERSION 4
-#define DEFAULT_MODUL_ID 1
-#define START_WEICHEN_ID 801
+
 
 #define IMPULSE_LENGTH 2000
 
@@ -87,89 +85,38 @@ void initDccConfiguraion(byte configPin, byte canModulId) {
   }
 }
 
-void initCanIds() {
-  Serial.print(F("Setze Mudul ID: ["));
-  Serial.print(DEFAULT_MODUL_ID);
-  Serial.println(F("]"));
 
-  Serial.print(F("Setze CAN Adresse: ["));
-  Serial.print(START_WEICHEN_ID + (10 * (DEFAULT_MODUL_ID - 1)));
-  Serial.println(F("]"));
-
-  can_configuration.config.id = DEFAULT_MODUL_ID;
-  for (int n = 0; n < 10; n++) {
-    can_configuration.config.id_weichen[n] = START_WEICHEN_ID + (10 * (DEFAULT_MODUL_ID - 1)) + n;
-  }
-}
-
-void initVersion() {
-  Serial.print(F("Setze neue Version: ["));
-  Serial.print(VERSION);
-  Serial.println(F("]"));
-  can_configuration.config.version = VERSION;
-}
-
-void writeCanConfigToEEPROM() {
-  Serial.print(F("Schreibe initiale Konfig ..."));
-  EEPROM.put(CAN_BUS_OFFSET, can_configuration);
-  Serial.print(F(". fertig"));
-}
-
-void initCanConfiguraion(byte configPin) {
-  // Config aus EEPROM Lesen
-  EEPROM.get(CAN_BUS_OFFSET, can_configuration.data);
-
-  boolean writeConfigToEEPROM = false;
-
-  // Modul ID und CAN-Bus-Adresse ggf. initialisieren
-  if (configPin == 3 || can_configuration.config.version == 0) {
-    initCanIds();
-    writeConfigToEEPROM = true;
-  }
-
-  if (can_configuration.config.version != VERSION) {
-    initVersion();
-    writeConfigToEEPROM = true;
-  }
-
-  if (writeConfigToEEPROM) {
-    writeCanConfigToEEPROM();
-  }
-
-  serialConfiguration.init(can_configuration, Dcc, *change);
-}
 
 void initSignal() {
   I2CSignal i2csignal;
   i2csignal.init_pcf8574();
 
   for (uint8_t i = 0; i < 5; i++) {
-    signal[i] = Signal(900 + (i * 4), i, &i2csignal, SIGNAL::SOCKET::PIN);
+    signal[i] = Signal(can_configuration.config.firstIdSignal + (i * 4), i, &i2csignal, SIGNAL::SOCKET::PIN);
   }
   for (uint8_t i = 5; i < 6; i++) {
-    signal[i] = Signal(900 + (i * 4), i, &i2csignal, SIGNAL::SOCKET::RJ12);
+    signal[i] = Signal(can_configuration.config.firstIdSignal + (i * 4), i, &i2csignal, SIGNAL::SOCKET::RJ12);
   }
 }
 
 void initWeiche() {
   Serial.println(F("Init Weiche Beginn"));
 
-  control[0] = OutputControl(&configuration, can_configuration.config.id_weichen[1], LED_1);
-  control[1] = OutputControl(&configuration, can_configuration.config.id_weichen[0], LED_2);
-  control[2] = OutputControl(&configuration, can_configuration.config.id_weichen[3], LED_3);
-  control[3] = OutputControl(&configuration, can_configuration.config.id_weichen[2], LED_4);
-  control[4] = OutputControl(&configuration, can_configuration.config.id_weichen[5], LED_5);
-  control[5] = OutputControl(&configuration, can_configuration.config.id_weichen[4], LED_6);
-  control[6] = OutputControl(&configuration, can_configuration.config.id_weichen[7], LED_7);
-  control[7] = OutputControl(&configuration, can_configuration.config.id_weichen[6], LED_8);
-  control[8] = OutputControl(&configuration, can_configuration.config.id_weichen[9], LED_9);
-  control[9] = OutputControl(&configuration, can_configuration.config.id_weichen[8], LED_10);
+  control[0] = OutputControl(&configuration, LED_1);
+  control[1] = OutputControl(&configuration, LED_2);
+  control[2] = OutputControl(&configuration, LED_3);
+  control[3] = OutputControl(&configuration, LED_4);
+  control[4] = OutputControl(&configuration, LED_5);
+  control[5] = OutputControl(&configuration, LED_6);
+  control[6] = OutputControl(&configuration, LED_7);
+  control[7] = OutputControl(&configuration, LED_8);
+  control[8] = OutputControl(&configuration, LED_9);
+  control[9] = OutputControl(&configuration, LED_10);
 
-  weiche[0] = Weiche(control[0], control[1], 801,41);
-  weiche[1] = Weiche(control[2], control[3], 803,43);
-  weiche[2] = Weiche(control[4], control[5], 805,45);
-  weiche[3] = Weiche(control[6], control[7], 807,47);
-  weiche[4] = Weiche(control[8], control[9], 809,49);
+  // uint8_t id =  can_configuration.config.id ;
+  for (uint8_t i = 0; i < 5; i++) {
+    weiche[i] = Weiche(control[i * 2], control[(i * 2) + 1], can_configuration.config.firstIdWeiche + i * 2, 41 + i);
+  }
   Serial.println(F("Init Weiche End"));
 }
 
@@ -197,7 +144,9 @@ void setup() {
   // Serial.println(F("=== 2 ==="));
   // delay(1000);
 
-  initCanConfiguraion(value);
+  canComm.initCanConfiguraion(value);
+
+  serialConfiguration.init(can_configuration, Dcc, *change);
 
   serialConfiguration.printConfiguration();
 
@@ -218,7 +167,7 @@ void setup() {
   free_dump();
 
   init_DCC();
-  initDccConfiguraion(value, can_configuration.config.id);
+  initDccConfiguraion(value, can_configuration.config.modulId);
 }
 
 void processWeiche() {

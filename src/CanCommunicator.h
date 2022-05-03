@@ -3,6 +3,7 @@
 
 #include <ACAN2515.h>
 #include <Arduino.h>
+#include <EEPROM.h>
 
 #include "CanConfiguration.h"
 #include "Signal.h"
@@ -18,15 +19,20 @@ class CanComm {
   void processCanMessageChangeState();
   void processCanMessage();
   void init();
+  void initCanConfiguraion(byte configPin);
 
  private:
-  CAN_CONFIGURATION *can_configuration;
+  CAN_CONFIGURATION *conf;
   CANMessage frame;
   Weiche *weiche;
   Signal *signal;
   boolean send_mode = 0;
   ChangeWeiche changeWeicheCallback = {};
+
   void print(const __FlashStringHelper *ifsh);
+  void initCanIds();
+  void initVersion();
+  void writeCanConfigToEEPROM();
 };
 
 #endif

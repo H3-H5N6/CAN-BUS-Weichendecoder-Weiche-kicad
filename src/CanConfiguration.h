@@ -7,13 +7,14 @@
 
 typedef struct {
   uint16_t version;
-  uint16_t id;
-  uint16_t id_weichen[10];
+  uint16_t modulId;
+  uint16_t firstIdWeiche;
+  uint16_t firstIdSignal;
 } CONFIGURATION;
 
 typedef union {
   CONFIGURATION config;
-  uint16_t data[12];
+  uint16_t data[4];
 } CAN_CONFIGURATION;
 
 #endif

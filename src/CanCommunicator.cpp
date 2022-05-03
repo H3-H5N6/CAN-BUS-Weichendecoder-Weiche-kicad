@@ -1,5 +1,10 @@
 #include "CanCommunicator.h"
 
+#define VERSION 5
+#define DEFAULT_MODUL_ID 1
+#define FIRST_WEICHEN_ID 801
+#define FIRST_SIGNAL_ID 901
+
 static const byte MCP2515_CS = 10;  // CS input of MCP2515
 static const byte MCP2515_INT = 3;  // INT output of MCP2515
 
@@ -9,13 +14,73 @@ static const uint32_t QUARTZ_FREQUENCY = 16UL * 1000UL * 1000UL;  // 16 MHz
 
 CanComm::CanComm(CAN_CONFIGURATION *_conf, Weiche *_weiche, Signal *_signal, ChangeWeiche _cw) : weiche(_weiche), signal(_signal) {
   changeWeicheCallback = _cw;
-  can_configuration = _conf;
+  conf = _conf;
 }
 
 void CanComm::print(const __FlashStringHelper *ifsh) {
   Serial.print(F("DEBUG CAN "));
   Serial.print(ifsh);
   Serial.print(F(": "));
+}
+
+
+void CanComm::initCanIds() {
+  
+  conf->config.modulId = DEFAULT_MODUL_ID;
+  conf->config.firstIdWeiche = FIRST_WEICHEN_ID + (DEFAULT_MODUL_ID - 1) * 10;
+  conf->config.firstIdSignal = FIRST_SIGNAL_ID + (DEFAULT_MODUL_ID - 1) * 10;
+
+  Serial.print(F("Modul ID: ["));
+  Serial.print(conf->config.modulId);
+  Serial.println(F("]"));
+
+  Serial.print(F("Erste Can ID Weiche: ["));
+  Serial.print(conf->config.firstIdWeiche);
+  Serial.println(F("]"));
+
+  Serial.print(F("Erste Can ID Signal: ["));
+  Serial.print(conf->config.firstIdSignal);
+  Serial.println(F("]"));
+}
+
+void CanComm::initVersion() {
+  conf->config.version = VERSION;
+
+  Serial.print(F("Version: ["));
+  Serial.print(VERSION);
+  Serial.println(F("]"));
+}
+
+void CanComm::writeCanConfigToEEPROM() {
+  Serial.print(F("Schreibe initiale Konfig ..."));
+  EEPROM.put(CAN_BUS_OFFSET, conf);
+  Serial.print(F(". fertig"));
+}
+
+
+
+void CanComm::initCanConfiguraion(byte configPin) {
+  
+  EEPROM.get(CAN_BUS_OFFSET, conf->data);
+
+  boolean writeConfigToEEPROM = false;
+
+  // Modul ID und CAN-Bus-Adresse ggf. initialisieren
+  if (configPin == 3 || conf->config.version == 0) {
+    initCanIds();
+    writeConfigToEEPROM = true;
+  }
+
+  if (conf->config.version != VERSION) {
+    initVersion();
+    writeConfigToEEPROM = true;
+  }
+
+  if (writeConfigToEEPROM) {
+    writeCanConfigToEEPROM();
+  }
+
+  
 }
 
 void CanComm::init() {
@@ -111,12 +176,12 @@ void CanComm::sendDetailWeichenStatus() {
 
 void CanComm::processCanMessageGetStatus() {
   print(F("Modul-ID"));
-  Serial.println(can_configuration->config.id);
+  Serial.println(conf->config.modulId);
 
   print(F("Data 0"));
   Serial.println(frame.data16[0]);
 
-  if (frame.data16[0] == can_configuration->config.id) {
+  if (frame.data16[0] == conf->config.modulId) {
     Serial.println();
     Serial.print("Status: ");
     for (byte i = 0; i < 5; i++) {

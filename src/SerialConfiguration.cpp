@@ -39,7 +39,7 @@ void SerialConfiguration::init(CAN_CONFIGURATION &_conf, NmraDcc &_dcc, ChangeWe
 }
 
 void SerialConfiguration::setAndWriteNewId() {
-  can_configuration.config.id = calc_zahl();
+  can_configuration.config.modulId = calc_zahl();
   EEPROM.put(CAN_BUS_OFFSET, can_configuration);
 }
 
@@ -161,16 +161,16 @@ void SerialConfiguration::printConfiguration() {
   Serial.println(can_configuration.config.version);
 
   printLine(CONF, F("Modul Id    => "));
-  Serial.println(can_configuration.config.id);
+  Serial.println(can_configuration.config.modulId);
 
   printLine(CONF, F("DCC-Adresse => "));
   Serial.println(dcc.getAddr());
 
-  for (int n = 0; n < 10; n++) {
-    printLine(CONF, F("CAN ID: ["));
-    Serial.print(n);
-    Serial.print(F("] => "));
-    Serial.println(can_configuration.config.id_weichen[n]);
-  }
+  printLine(CONF, F("Erste CAN ID Weiche => "));
+  Serial.println(can_configuration.config.firstIdWeiche);
+
+  printLine(CONF, F("Erste CAN ID Signal => "));
+  Serial.println(can_configuration.config.firstIdSignal);
+  
   printLineln(CONF, F("======================================="));
 }
