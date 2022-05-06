@@ -29,11 +29,12 @@ OutputControl::OutputControl(OUTPUT_CONF *_configuration, byte _pin) {
 }
 
 void OutputControl::writeState() {
-  Serial.print("Pin: ");
+  Serial.print(F("DEBUG OC "));
+  Serial.print(F("Pin: "));
   Serial.print(pin);
-  Serial.print(" State [");
+  Serial.print(F(" State ["));
   Serial.print(state);
-  Serial.println("]");
+  Serial.println(F("]"));
   digitalWrite(pin, state);
 }
 

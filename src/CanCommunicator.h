@@ -34,6 +34,9 @@ class CanComm {
   void printlnCanDebug(const __FlashStringHelper *key);
   void printCanDebug(const __FlashStringHelper *key);
   void printCanDebug(const __FlashStringHelper *key, const uint32_t value);
+  void printDebug(const __FlashStringHelper *key);
+  void printDebug(const uint32_t value);
+
   void printlnCanInfo(const __FlashStringHelper *key, const uint32_t value);
   void printlnCanInfo(const __FlashStringHelper *key);
   void initCanIds();

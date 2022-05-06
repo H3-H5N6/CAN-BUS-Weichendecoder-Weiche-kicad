@@ -56,7 +56,7 @@ void CanComm::initCanConfiguraion(byte configPin) {
   }
 }
 
-void CanComm::printlnCanDebug(const __FlashStringHelper *key, const uint32_t value ) {
+void CanComm::printlnCanDebug(const __FlashStringHelper *key, const uint32_t value) {
 #ifdef CAN_DEBUG
   printCanDebug(key, value);
   Serial.println();
@@ -77,7 +77,19 @@ void CanComm::printCanDebug(const __FlashStringHelper *key) {
 #endif
 }
 
-void CanComm::printCanDebug(const __FlashStringHelper *key, const uint32_t value ) {
+void CanComm::printDebug(const __FlashStringHelper *key) {
+#ifdef CAN_DEBUG
+  Serial.print(key);
+#endif
+}
+
+void CanComm::printDebug(const uint32_t value) {
+#ifdef CAN_DEBUG
+  Serial.print(value);
+#endif
+}
+
+void CanComm::printCanDebug(const __FlashStringHelper *key, const uint32_t value) {
 #ifdef CAN_DEBUG
   printCanDebug(key);
   Serial.print(F(": "));
@@ -90,7 +102,7 @@ void CanComm::printlnCanInfo(const __FlashStringHelper *key) {
   Serial.print(key);
 }
 
-void CanComm::printlnCanInfo(const __FlashStringHelper *key, const uint32_t value ) {
+void CanComm::printlnCanInfo(const __FlashStringHelper *key, const uint32_t value) {
   Serial.print(F("INFO CAN "));
   Serial.print(key);
   Serial.print(F(": "));
@@ -112,15 +124,15 @@ void CanComm::init() {
   if (errorCode == 0) {
     printlnCanInfo(F("Receive Buffer Size"), settings.mReceiveBufferSize);
     printlnCanInfo(F("Transmit Buffer Size"), settings.mTransmitBuffer0Size);
-    printlnCanInfo(F("Bit Rate prescaler"),settings.mBitRatePrescaler);
+    printlnCanInfo(F("Bit Rate prescaler"), settings.mBitRatePrescaler);
     printlnCanInfo(F("Propagation Segment"), settings.mPropagationSegment);
-    printlnCanInfo(F("Phase segment 1"),settings.mPhaseSegment1);
+    printlnCanInfo(F("Phase segment 1"), settings.mPhaseSegment1);
     printlnCanInfo(F("Phase segment 2"), settings.mPhaseSegment2);
     printlnCanInfo(F("SJW: "), settings.mSJW);
-    printlnCanInfo(F("Triple Sampling"), settings.mTripleSampling) ; // ? "yes" : "no"
-    printlnCanInfo(F("Actual bit rate"), settings.actualBitRate()); // Serial.println(F(" bit/s"));
-    printlnCanInfo(F("Exact bit rate ?"), settings.exactBitRate()); // ? "yes" : "no");
-    printlnCanInfo(F("Sample point"), settings.samplePointFromBitStart()); // "%"));
+    printlnCanInfo(F("Triple Sampling"), settings.mTripleSampling);         // ? "yes" : "no"
+    printlnCanInfo(F("Actual bit rate"), settings.actualBitRate());         // Serial.println(F(" bit/s"));
+    printlnCanInfo(F("Exact bit rate ?"), settings.exactBitRate());         // ? "yes" : "no");
+    printlnCanInfo(F("Sample point"), settings.samplePointFromBitStart());  // "%"));
   } else {
     printlnCanInfo(F("Configuration error 0x"));
     Serial.println(errorCode, HEX);
@@ -143,28 +155,28 @@ void CanComm::sendDetailWeichenStatus() {
     weiche[i].statusForCan(data);
 
     printCanDebug(F("Frame ID"), frame.id);
-    Serial.print(F(" Data: "));
+    printDebug(F(" Data: "));
 
     for (byte n = 0; n < 2; n++) {
       for (byte k = 0; k < 4; k++) {
-        Serial.print(data[n][k]);
-        Serial.print(F(" "));
+        printDebug(data[n][k]);
+        printDebug(F(" "));
         frame.data16[k] = data[n][k];
       }
 
       bool ok = can.tryToSend(frame);
       if (ok) {
-        Serial.print(F("ok "));
+        printDebug(F("ok "));
       } else {
-        Serial.print(F("err "));
+        printDebug(F("err "));
       }
     }
-    Serial.println();
+    printDebug(F("\n"));
   }
 }
 
 void CanComm::processCanMessageGetStatus() {
-  printlnCanDebug(F("Modul-ID"),conf->config.modulId);
+  printlnCanDebug(F("Modul-ID"), conf->config.modulId);
   printlnCanDebug(F("Data 0"), frame.data16[0]);
 
   if (frame.data16[0] == conf->config.modulId) {
@@ -185,14 +197,13 @@ void CanComm::processCanMessageChangeState() {
       changeWeicheCallback(adr);
     }
   }
-  Serial.println();
 }
 
 void CanComm::processCanMessage() {
   if (can.receive(frame)) {
     // debugFrame(frame);
     printlnCanDebug(F(""));
-    printlnCanDebug(F("Receive frame ID"),frame.id);
+    printlnCanDebug(F("Receive frame ID"), frame.id);
 
     switch (frame.id) {
       case 100:
