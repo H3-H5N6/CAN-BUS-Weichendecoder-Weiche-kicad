@@ -177,8 +177,14 @@ boolean Weiche::change(uint16_t address) {
     return false;
   }
   // Wenn die Stellung der Weiche nicht geändert werden kann, wird sich die Adresse gemerkt
-  if (status() == WEICHE::POSITION::RUNNING_GERADE || status() == WEICHE::POSITION::RUNNING_ABZWEIG) {
-    this->nextAddress = address;
+  // Dies wird aber unterdrückt, wenn die gewüschte Stellung "in Arbeit ist"
+  if (
+      (status() == WEICHE::POSITION::RUNNING_GERADE && (address != canAddrGerade())) ||
+      (status() == WEICHE::POSITION::RUNNING_ABZWEIG && (address != canAddrAbzweig()))) {
+    if (this->nextAddress != address) {
+      Serial.println("DEBUG WEICHE Set Nächste Adresse");
+      this->nextAddress = address;
+    }
     return true;
   }
 
