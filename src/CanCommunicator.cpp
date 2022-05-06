@@ -1,5 +1,7 @@
 #include "CanCommunicator.h"
 
+#define CAN_DEBUG
+
 #define VERSION 5
 #define DEFAULT_MODUL_ID 1
 #define FIRST_WEICHEN_ID 801
@@ -17,38 +19,14 @@ CanComm::CanComm(CAN_CONFIGURATION *_conf, Weiche *_weiche, Signal *_signal, Cha
   conf = _conf;
 }
 
-void CanComm::print(const __FlashStringHelper *ifsh) {
-  Serial.print(F("DEBUG CAN "));
-  Serial.print(ifsh);
-  Serial.print(F(": "));
-}
-
-
 void CanComm::initCanIds() {
-  
   conf->config.modulId = DEFAULT_MODUL_ID;
   conf->config.firstIdWeiche = FIRST_WEICHEN_ID + (DEFAULT_MODUL_ID - 1) * 10;
   conf->config.firstIdSignal = FIRST_SIGNAL_ID + (DEFAULT_MODUL_ID - 1) * 10;
-
-  Serial.print(F("Modul ID: ["));
-  Serial.print(conf->config.modulId);
-  Serial.println(F("]"));
-
-  Serial.print(F("Erste Can ID Weiche: ["));
-  Serial.print(conf->config.firstIdWeiche);
-  Serial.println(F("]"));
-
-  Serial.print(F("Erste Can ID Signal: ["));
-  Serial.print(conf->config.firstIdSignal);
-  Serial.println(F("]"));
 }
 
 void CanComm::initVersion() {
   conf->config.version = VERSION;
-
-  Serial.print(F("Version: ["));
-  Serial.print(VERSION);
-  Serial.println(F("]"));
 }
 
 void CanComm::writeCanConfigToEEPROM() {
@@ -57,10 +35,7 @@ void CanComm::writeCanConfigToEEPROM() {
   Serial.print(F(". fertig"));
 }
 
-
-
 void CanComm::initCanConfiguraion(byte configPin) {
-  
   EEPROM.get(CAN_BUS_OFFSET, conf->data);
 
   boolean writeConfigToEEPROM = false;
@@ -79,12 +54,51 @@ void CanComm::initCanConfiguraion(byte configPin) {
   if (writeConfigToEEPROM) {
     writeCanConfigToEEPROM();
   }
+}
 
-  
+void CanComm::printlnCanDebug(const __FlashStringHelper *key, const uint32_t value ) {
+#ifdef CAN_DEBUG
+  printCanDebug(key, value);
+  Serial.println();
+#endif
+}
+
+void CanComm::printlnCanDebug(const __FlashStringHelper *key) {
+#ifdef CAN_DEBUG
+  printCanDebug(key);
+  Serial.println();
+#endif
+}
+
+void CanComm::printCanDebug(const __FlashStringHelper *key) {
+#ifdef CAN_DEBUG
+  Serial.print(F("DEBUG CAN "));
+  Serial.print(key);
+#endif
+}
+
+void CanComm::printCanDebug(const __FlashStringHelper *key, const uint32_t value ) {
+#ifdef CAN_DEBUG
+  printCanDebug(key);
+  Serial.print(F(": "));
+  Serial.print(value);
+#endif
+}
+
+void CanComm::printlnCanInfo(const __FlashStringHelper *key) {
+  Serial.print(F("INFO CAN "));
+  Serial.print(key);
+}
+
+void CanComm::printlnCanInfo(const __FlashStringHelper *key, const uint32_t value ) {
+  Serial.print(F("INFO CAN "));
+  Serial.print(key);
+  Serial.print(F(": "));
+  Serial.println(value);
 }
 
 void CanComm::init() {
-  print(F(" == init CAN Start == "));
+  printlnCanInfo(F(" == init CAN Start == "));
   Serial.println();
 
   SPI.begin();
@@ -96,46 +110,23 @@ void CanComm::init() {
   settings.mTransmitBuffer0Size = 12;
   const uint16_t errorCode = can.begin(settings, [] { can.isr(); });
   if (errorCode == 0) {
-    print(F("Receive Buffer Size"));
-    Serial.println(settings.mReceiveBufferSize);
-
-    print(F("Transmit Buffer Size"));
-    Serial.println(settings.mTransmitBuffer0Size);
-
-    print(F("Bit Rate prescaler"));
-    Serial.println(settings.mBitRatePrescaler);
-
-    print(F("Propagation Segment"));
-    Serial.println(settings.mPropagationSegment);
-
-    print(F("Phase segment 1"));
-    Serial.println(settings.mPhaseSegment1);
-
-    print(F("Phase segment 2"));
-    Serial.println(settings.mPhaseSegment2);
-
-    print(F("SJW: "));
-    Serial.println(settings.mSJW);
-
-    print(F("Triple Sampling"));
-    Serial.println(settings.mTripleSampling ? "yes" : "no");
-
-    print(F("Actual bit rate"));
-    Serial.print(settings.actualBitRate());
-    Serial.println(F(" bit/s"));
-
-    print(F("Exact bit rate ?"));
-    Serial.println(settings.exactBitRate() ? "yes" : "no");
-
-    print(F("Sample point"));
-    Serial.print(settings.samplePointFromBitStart());
-    Serial.println(F("%"));
+    printlnCanInfo(F("Receive Buffer Size"), settings.mReceiveBufferSize);
+    printlnCanInfo(F("Transmit Buffer Size"), settings.mTransmitBuffer0Size);
+    printlnCanInfo(F("Bit Rate prescaler"),settings.mBitRatePrescaler);
+    printlnCanInfo(F("Propagation Segment"), settings.mPropagationSegment);
+    printlnCanInfo(F("Phase segment 1"),settings.mPhaseSegment1);
+    printlnCanInfo(F("Phase segment 2"), settings.mPhaseSegment2);
+    printlnCanInfo(F("SJW: "), settings.mSJW);
+    printlnCanInfo(F("Triple Sampling"), settings.mTripleSampling) ; // ? "yes" : "no"
+    printlnCanInfo(F("Actual bit rate"), settings.actualBitRate()); // Serial.println(F(" bit/s"));
+    printlnCanInfo(F("Exact bit rate ?"), settings.exactBitRate()); // ? "yes" : "no");
+    printlnCanInfo(F("Sample point"), settings.samplePointFromBitStart()); // "%"));
   } else {
-    print(F("Configuration error 0x"));
+    printlnCanInfo(F("Configuration error 0x"));
     Serial.println(errorCode, HEX);
   }
 
-  print(F(" == init CAN Ende == "));
+  printlnCanInfo(F(" == init CAN Ende == "));
   Serial.println();
 }
 
@@ -150,40 +141,36 @@ void CanComm::sendDetailWeichenStatus() {
 
   for (byte i = 0; i < 5; i++) {
     weiche[i].statusForCan(data);
-    Serial.print(F("Frame ID: "));
-    Serial.print(frame.id);
+
+    printCanDebug(F("Frame ID"), frame.id);
     Serial.print(F(" Data: "));
     for (byte z = 0; z < 8; z++) {
       Serial.print(data[z]);
       Serial.print(F(" "));
     }
-    Serial.println();
 
     for (byte n = 0; n < 2; n++) {
       for (byte k = 0; k < 4; k++) {
         frame.data16[k] = data[n * 4 + k];
       }
+
       bool ok = can.tryToSend(frame);
       if (ok) {
-        Serial.print(F("Sent ok"));
+        Serial.print(F("ok "));
       } else {
-        Serial.println(F("Send failure"));
+        Serial.print(F("err "));
       }
-      // frame.id = frame.id + 1;
     }
+    Serial.println();
   }
 }
 
 void CanComm::processCanMessageGetStatus() {
-  print(F("Modul-ID"));
-  Serial.println(conf->config.modulId);
-
-  print(F("Data 0"));
-  Serial.println(frame.data16[0]);
+  printlnCanDebug(F("Modul-ID"),conf->config.modulId);
+  printlnCanDebug(F("Data 0"), frame.data16[0]);
 
   if (frame.data16[0] == conf->config.modulId) {
-    Serial.println();
-    Serial.print("Status: ");
+    printCanDebug(F("Status Weichen: "));
     for (byte i = 0; i < 5; i++) {
       Serial.print(weiche[i].statusAsAddress());
       Serial.print(" ");
@@ -206,8 +193,8 @@ void CanComm::processCanMessageChangeState() {
 void CanComm::processCanMessage() {
   if (can.receive(frame)) {
     // debugFrame(frame);
-    print(F("CAN ID"));
-    Serial.println(frame.id);
+    printlnCanDebug(F(""));
+    printlnCanDebug(F("Receive frame ID"),frame.id);
 
     switch (frame.id) {
       case 100:
@@ -220,8 +207,22 @@ void CanComm::processCanMessage() {
   }
 
   if (send_mode == 1) {
-    Serial.println("sendDetailWeichenStatus");
+    printlnCanDebug(F("sendDetailWeichenStatus"));
     sendDetailWeichenStatus();
     send_mode = 0;
   }
+}
+
+void CanComm::printConfig() {
+  Serial.print(F("Modul ID:  => "));
+  Serial.println(conf->config.modulId);
+
+  Serial.print(F("Version => "));
+  Serial.println(VERSION);
+
+  Serial.print(F("Erste Can ID Weiche  => "));
+  Serial.println(conf->config.firstIdWeiche);
+
+  Serial.print(F("Erste Can ID Signal => "));
+  Serial.println(conf->config.firstIdSignal);
 }

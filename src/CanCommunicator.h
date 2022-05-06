@@ -20,6 +20,7 @@ class CanComm {
   void processCanMessage();
   void init();
   void initCanConfiguraion(byte configPin);
+  void printConfig();
 
  private:
   CAN_CONFIGURATION *conf;
@@ -29,7 +30,12 @@ class CanComm {
   boolean send_mode = 0;
   ChangeWeiche changeWeicheCallback = {};
 
-  void print(const __FlashStringHelper *ifsh);
+  void printlnCanDebug(const __FlashStringHelper *key, const uint32_t value);
+  void printlnCanDebug(const __FlashStringHelper *key);
+  void printCanDebug(const __FlashStringHelper *key);
+  void printCanDebug(const __FlashStringHelper *key, const uint32_t value);
+  void printlnCanInfo(const __FlashStringHelper *key, const uint32_t value);
+  void printlnCanInfo(const __FlashStringHelper *key);
   void initCanIds();
   void initVersion();
   void writeCanConfigToEEPROM();

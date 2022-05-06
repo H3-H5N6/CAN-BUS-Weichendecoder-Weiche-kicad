@@ -40,6 +40,20 @@ WEICHE::POSITION Weiche::abzweig() {
   return WEICHE::POSITION::RUNNING_ABZWEIG;
 }
 
+/**
+ * @brief Weichenstatus als zwei CAN-Message
+ * [0] ID für Gerade
+ * [1] Status Gerade (0: nicht gerade, 1: Gerade, 2: running zu Gerade, 4 unbekannt)
+ * [2] ID der aktuellen Position, identsich mit [6]
+ * [3] 0
+ * ---
+ * [4] ID für Abzweig
+ * [5] Status Abzweig (0: nicht abzweig, 1: Abzweig, 2: running zu Abzweig, 4 unbekannt)
+ * [6] ID der aktuellen Position, identisch mit [2]
+ * [7] 0
+ *
+ * @param Array für die Aufnahme des Weichenstatus
+ */
 void Weiche::statusForCan(uint16_t (&data)[8]) {
   uint16_t current;
   switch (this->status()) {
@@ -97,6 +111,11 @@ void Weiche::statusForCan(uint16_t (&data)[8]) {
   }
 }
 
+/**
+ * @brief Liefert die ID der aktuellen Poistion.
+ *
+ * @return uint16_t ID der Position oder 0, wenn die Position unbekannt oder die Weiche sich noch bewegt.
+ */
 uint16_t Weiche::statusAsAddress() {
   switch (this->status()) {
     case WEICHE::POSITION::ABZWEIG:
