@@ -48,6 +48,7 @@ class Weiche {
   void process();
 
   boolean change(uint16_t address);
+  boolean find(uint16_t address);
 
   uint16_t nextAddress;
 

@@ -160,7 +160,16 @@ void Weiche::process() {
   }
 }
 
+boolean Weiche::find(uint16_t address) {
+  if ((canAddrAbzweig() == address) || (canAddrGerade() == address)) {
+    return true;
+  }
+  return false;
+}
+
 /**
+ * Ändert die Weichnstellung, falls der Weiche address zugeordnet ist.
+ *
  * Liefert true, wenn die Weiche unter der jeweiligen Adresse erreichbar ist
  */
 boolean Weiche::change(uint16_t address) {

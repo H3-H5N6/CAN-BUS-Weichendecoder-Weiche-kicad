@@ -46,11 +46,12 @@ CanComm canComm = CanComm(&can_configuration, weiche, signal, *change);
 
 void change(uint16_t address) {
   for (byte i = 0; i < 5; i++) {
-    boolean changed = weiche[i].change(address);
-    if (changed) {
-      Serial.print(F("DEBUG: Address Weiche["));
+    if (weiche[i].find(address)){
+      Serial.print(F("DEBUG Address Weiche["));
       Serial.print(address);
-      Serial.println(F("] found"));
+      Serial.println(F("] gefunden"));
+
+      weiche[i].change(address);
     }
   }
   for (byte i = 0; i < 6; i++) {
