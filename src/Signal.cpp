@@ -5,6 +5,14 @@ Signal::Signal(uint16_t _firstAddress, uint8_t _index, I2CSignal *_i2csignal, SI
   state = SIGNAL::STATE::SET;
 }
 
+
+boolean Signal::find(uint16_t _address) {
+  if ((_address < firstAddress) || (_address > lastAddress)) {
+    return false;
+  }
+  return true;
+}
+
 boolean Signal::change(uint16_t _address) {
   if ((_address < firstAddress) || (_address > lastAddress)) {
     return false;

@@ -13,8 +13,6 @@
 
 void change(uint16_t address);
 
-
-
 #define IMPULSE_LENGTH 2000
 
 ConfigPin configPin;
@@ -46,7 +44,7 @@ CanComm canComm = CanComm(&can_configuration, weiche, signal, *change);
 
 void change(uint16_t address) {
   for (byte i = 0; i < 5; i++) {
-    if (weiche[i].find(address)){
+    if (weiche[i].find(address)) {
       Serial.print(F("DEBUG Address Weiche["));
       Serial.print(address);
       Serial.println(F("] gefunden"));
@@ -55,11 +53,12 @@ void change(uint16_t address) {
     }
   }
   for (byte i = 0; i < 6; i++) {
-    boolean changed = signal[i].change(address);
-    if (changed) {
+    if (signal[i].find(address)) {
       Serial.print(F("DEBUG: Address Signal ["));
       Serial.print(address);
       Serial.println(F("] found"));
+
+      signal[i].change(address);
     }
   }
 }
@@ -85,8 +84,6 @@ void initDccConfiguraion(byte configPin, byte canModulId) {
     Dcc.setCV(CV_ACCESSORY_DECODER_ADDRESS_MSB, newDccAddr >> 8);
   }
 }
-
-
 
 void initSignal() {
   I2CSignal i2csignal;

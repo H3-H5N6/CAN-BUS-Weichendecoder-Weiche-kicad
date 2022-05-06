@@ -26,6 +26,7 @@ class Signal {
  public:
   Signal(uint16_t address, uint8_t index, I2CSignal *i2c, SIGNAL::SOCKET socket);
   void process();
+  boolean find(uint16_t address);
   boolean change(uint16_t address);
 
   boolean isHp0();
