@@ -160,6 +160,12 @@ void Weiche::process() {
   }
 }
 
+/**
+ * @brief Liefert true, wenn der Weiche die address zugeordnet ist, sonst false.
+ * 
+ * @param address Weichenadresse
+ * @return boolean true, wenn der Weiche die Adresse zugeordnet ist.
+ */
 boolean Weiche::find(uint16_t address) {
   if ((canAddrAbzweig() == address) || (canAddrGerade() == address)) {
     return true;
@@ -176,7 +182,7 @@ boolean Weiche::change(uint16_t address) {
   if ((canAddrAbzweig() != address) && (canAddrGerade() != address)) {
     return false;
   }
-  // Wenn die Stellung der Weiche nicht geändert werden kann, wird sich die Adresse gemerkt
+  // Wenn die Stellung der Weiche nicht geändert werden kann, wird sich die Adresse gemerkt und die Methode beendet.
   // Dies wird aber unterdrückt, wenn die gewüschte Stellung "in Arbeit ist"
   if (
       (status() == WEICHE::POSITION::RUNNING_GERADE && (address != canAddrGerade())) ||
