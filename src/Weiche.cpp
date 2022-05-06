@@ -54,7 +54,7 @@ WEICHE::POSITION Weiche::abzweig() {
  *
  * @param Array für die Aufnahme des Weichenstatus
  */
-void Weiche::statusForCan(uint16_t (&data)[8]) {
+void Weiche::statusForCan(uint16_t (&data)[2][4]) {
   uint16_t current;
   switch (this->status()) {
     case WEICHE::POSITION::ABZWEIG:
@@ -68,46 +68,46 @@ void Weiche::statusForCan(uint16_t (&data)[8]) {
   }
 
   // Gerade
-  data[0] = canAddrGerade();
+  data[0][0] = canAddrGerade();
   switch (this->status()) {
     case WEICHE::POSITION::GERADE:
-      data[1] = WEICHE::STATE::ON;
+      data[0][1] = WEICHE::STATE::ON;
       break;
     case WEICHE::POSITION::RUNNING_GERADE:
-      data[1] = WEICHE::STATE::RUNNING;
+      data[0][1] = WEICHE::STATE::RUNNING;
       break;
     case WEICHE::POSITION::UNKNOWN:
-      data[1] = WEICHE::STATE::UNKNOWN_STATE;
+      data[0][1] = WEICHE::STATE::UNKNOWN_STATE;
       break;
     default:
-      data[1] = WEICHE::STATE::OFF;
+      data[0][1] = WEICHE::STATE::OFF;
   }
-  data[2] = current;
-  data[3] = 0;
+  data[0][2] = current;
+  data[0][3] = 0;
 
   // Abzweig
-  data[4] = canAddrAbzweig();
+  data[1][0] = canAddrAbzweig();
   switch (this->status()) {
     case WEICHE::POSITION::ABZWEIG:
-      data[5] = WEICHE::STATE::ON;
+      data[1][1] = WEICHE::STATE::ON;
       break;
     case WEICHE::POSITION::RUNNING_ABZWEIG:
-      data[5] = WEICHE::STATE::RUNNING;
+      data[1][1] = WEICHE::STATE::RUNNING;
       break;
     case WEICHE::POSITION::UNKNOWN:
-      data[5] = WEICHE::STATE::UNKNOWN_STATE;
+      data[1][1] = WEICHE::STATE::UNKNOWN_STATE;
       break;
     default:
-      data[5] = WEICHE::STATE::OFF;
+      data[1][1] = WEICHE::STATE::OFF;
   }
-  data[6] = current;
-  data[7] = 0;
+  data[1][2] = current;
+  data[1][3] = 0;
 
-  if (data[1] == WEICHE::STATE::RUNNING) {
-    data[5] = WEICHE::STATE::BLOCKED_STATE;
+  if (data[0][1] == WEICHE::STATE::RUNNING) {
+    data[1][1] = WEICHE::STATE::BLOCKED_STATE;
   }
-  if (data[5] == WEICHE::STATE::RUNNING) {
-    data[1] = WEICHE::STATE::BLOCKED_STATE;
+  if (data[1][1] == WEICHE::STATE::RUNNING) {
+    data[0][1] = WEICHE::STATE::BLOCKED_STATE;
   }
 }
 

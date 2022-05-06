@@ -137,21 +137,19 @@ void CanComm::sendDetailWeichenStatus() {
   frame.rtr = false;
   frame.len = 8;
 
-  uint16_t data[8];
+  uint16_t data[2][4];
 
   for (byte i = 0; i < 5; i++) {
     weiche[i].statusForCan(data);
 
     printCanDebug(F("Frame ID"), frame.id);
     Serial.print(F(" Data: "));
-    for (byte z = 0; z < 8; z++) {
-      Serial.print(data[z]);
-      Serial.print(F(" "));
-    }
 
     for (byte n = 0; n < 2; n++) {
       for (byte k = 0; k < 4; k++) {
-        frame.data16[k] = data[n * 4 + k];
+        Serial.print(data[n][k]);
+        Serial.print(F(" "));
+        frame.data16[k] = data[n][k];
       }
 
       bool ok = can.tryToSend(frame);

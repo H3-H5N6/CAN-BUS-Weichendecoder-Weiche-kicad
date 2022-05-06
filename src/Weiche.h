@@ -41,7 +41,7 @@ class Weiche {
 
   uint16_t statusAsAddress();
 
-  void statusForCan(uint16_t (&data)[8]);
+  void statusForCan(uint16_t (&data)[2][4]);
 
   boolean changeIsPosible();
 
