@@ -89,6 +89,7 @@ void SerialConfiguration::process() {
         //                   =======================================
         printLineln(HELP, F("=== Hilfe ============================="));
         printLineln(HELP, F("p           : Ausgabe der Konfiguartion"));
+        printLineln(HELP, F("w           : Stelle Weiche oder Signal"));
         printLineln(HELP, F("i <MODUL_ID>: Neue Modul Id setzen"));
         printLineln(HELP, F("q           : Abbruch der Eingabe"));
         printLineln(HELP, F("h           : Diese Hilfe"));
