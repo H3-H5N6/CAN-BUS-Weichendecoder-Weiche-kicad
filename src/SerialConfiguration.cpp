@@ -32,9 +32,9 @@ void SerialConfiguration::printPrefix() {
   Serial.print(F("Config: "));
 }
 
-void SerialConfiguration::init(CAN_CONFIGURATION &_conf, NmraDcc &_dcc, ChangeWeiche _cw) {
+void SerialConfiguration::init(CAN_CONFIGURATION &_conf, NmraDcc &_dcc, ChangeWeicheOrSignal _cWorS) {
   can_configuration = _conf;
-  changeWeicheCallback = _cw;
+  changeWeicheOrSignalCallback = _cWorS;
   dcc = _dcc;
 }
 
@@ -103,7 +103,7 @@ void SerialConfiguration::process() {
         }
         Serial.print(F("Stelle Weiche: "));
         Serial.println(last_weiche);
-        changeWeicheCallback(last_weiche);
+        changeWeicheOrSignalCallback(last_weiche);
         return;
       case '0':
       case '1':
@@ -139,7 +139,7 @@ void SerialConfiguration::process() {
         if (change_weiche) {
           Serial.print(F("Stelle Weiche: "));
           Serial.println(calc_zahl());
-          changeWeicheCallback(calc_zahl());
+          changeWeicheOrSignalCallback(calc_zahl());
           last_weiche = calc_zahl();
           change_weiche = false;
         }
@@ -171,6 +171,6 @@ void SerialConfiguration::printConfiguration() {
 
   printLine(CONF, F("Erste CAN ID Signal => "));
   Serial.println(can_configuration.config.firstIdSignal);
-  
+
   printLineln(CONF, F("======================================="));
 }
