@@ -32,9 +32,10 @@ void SerialConfiguration::printPrefix() {
   Serial.print(F("Config: "));
 }
 
-void SerialConfiguration::init(CAN_CONFIGURATION &_conf, NmraDcc &_dcc, ChangeWeicheOrSignal _cWorS) {
+void SerialConfiguration::init(CAN_CONFIGURATION &_conf, NmraDcc &_dcc, ChangeWeiche _changeWeiche, ChangeSignal _changeSignal) {
   can_configuration = _conf;
-  changeWeicheOrSignalCallback = _cWorS;
+  changeWeicheCallback = _changeWeiche;
+  changeSignalCallback = _changeSignal;
   dcc = _dcc;
 }
 
@@ -77,6 +78,13 @@ void SerialConfiguration::process() {
         return;
       case 'w':
         change_weiche = true;
+        last_signal = 0;
+        reset_zahl();
+        Serial.print(F("Output: "));
+        return;
+      case 's':
+        change_signal = true;
+        last_weiche = 0;
         reset_zahl();
         Serial.print(F("Output: "));
         return;
@@ -89,7 +97,8 @@ void SerialConfiguration::process() {
         //                   =======================================
         printLineln(HELP, F("=== Hilfe ============================="));
         printLineln(HELP, F("p           : Ausgabe der Konfiguartion"));
-        printLineln(HELP, F("w           : Stelle Weiche oder Signal"));
+        printLineln(HELP, F("w           : Stelle Weiche"));
+        printLineln(HELP, F("s           : Stelle Signal"));
         printLineln(HELP, F("i <MODUL_ID>: Neue Modul Id setzen"));
         printLineln(HELP, F("q           : Abbruch der Eingabe"));
         printLineln(HELP, F("h           : Diese Hilfe"));
@@ -98,13 +107,26 @@ void SerialConfiguration::process() {
         if (last_weiche > 0) {
           last_weiche = last_weiche + 2;
         }
+        if (last_signal > 0) {
+          last_signal = last_signal + 2;
+        }
       case '-':
         if (last_weiche > 1) {
           last_weiche--;
         }
-        Serial.print(F("Stelle Weiche: "));
-        Serial.println(last_weiche);
-        changeWeicheOrSignalCallback(last_weiche);
+        if (last_signal > 1) {
+          last_signal--;
+        }
+        if (last_weiche > 0) {
+          Serial.print(F("Stelle Weiche: "));
+          Serial.println(last_weiche);
+          changeWeicheCallback(last_weiche);
+        }
+        if (last_signal > 0) {
+          Serial.print(F("Stelle Signal: "));
+          Serial.println(last_signal);
+          changeSignalCallback(last_signal);
+        }
         return;
       case '0':
       case '1':
@@ -116,7 +138,7 @@ void SerialConfiguration::process() {
       case '7':
       case '8':
       case '9':
-        if (!change_id && !change_weiche) {
+        if (!change_id && !change_weiche && !change_signal) {
           return;
         }
         Serial.print(char(input));
@@ -140,9 +162,17 @@ void SerialConfiguration::process() {
         if (change_weiche) {
           Serial.print(F("Stelle Weiche: "));
           Serial.println(calc_zahl());
-          changeWeicheOrSignalCallback(calc_zahl());
+          changeWeicheCallback(calc_zahl());
           last_weiche = calc_zahl();
           change_weiche = false;
+        }
+
+        if (change_signal) {
+          Serial.print(F("Stelle Signal: "));
+          Serial.println(calc_zahl());
+          changeSignalCallback(calc_zahl());
+          last_signal = calc_zahl();
+          change_signal = false;
         }
 
         reset_zahl();

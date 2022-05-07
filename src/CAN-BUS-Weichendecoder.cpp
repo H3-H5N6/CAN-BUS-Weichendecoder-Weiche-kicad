@@ -12,6 +12,10 @@
 #include "Weiche.h"
 
 void change(uint16_t address);
+void changeWeiche(uint16_t address);
+void changeSignal(uint16_t address);
+
+
 
 #define IMPULSE_LENGTH 2000
 
@@ -42,7 +46,8 @@ Signal *signal = (Signal *)malloc(sizeof(Signal) * 6);
 SerialConfiguration serialConfiguration;
 CanComm canComm = CanComm(&can_configuration, weiche, signal, *change);
 
-void change(uint16_t address) {
+
+void changeWeiche(uint16_t address) {
   for (byte i = 0; i < 5; i++) {
     if (weiche[i].find(address)) {
       Serial.print(F("DEBUG Address Weiche["));
@@ -52,6 +57,9 @@ void change(uint16_t address) {
       weiche[i].change(address);
     }
   }
+}
+
+void changeSignal(uint16_t address){
   for (byte i = 0; i < 6; i++) {
     if (signal[i].find(address)) {
       Serial.print(F("DEBUG: Address Signal ["));
@@ -61,6 +69,12 @@ void change(uint16_t address) {
       signal[i].change(address);
     }
   }
+}
+
+
+void change(uint16_t address) {
+  changeWeiche(address);
+  changeSignal(address);
 }
 
 void initDccConfiguraion(byte configPin, byte canModulId) {
@@ -139,29 +153,19 @@ void setup() {
   i2c.scan_i2c();
   Serial.println(F("= done"));
 
-  // Serial.println(F("=== 2 ==="));
-  // delay(1000);
-
   canComm.initCanConfiguraion(value);
 
-  serialConfiguration.init(can_configuration, Dcc, *change);
+  serialConfiguration.init(can_configuration, Dcc, *changeWeiche, *changeSignal);
 
   serialConfiguration.printConfiguration();
 
-  Serial.println(F("=== 3 ==="));
-  // delay(1000);
-
   initWeiche();
-
-  // Serial.println(F("=== 4 ==="));
-  // delay(1000);
   initSignal();
 
   free_dump();
 
   canComm.init();
 
-  delay(1000);
   free_dump();
 
   init_DCC();
