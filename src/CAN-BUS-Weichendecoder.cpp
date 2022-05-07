@@ -15,8 +15,6 @@ void change(uint16_t address);
 void changeWeiche(uint16_t address);
 void changeSignal(uint16_t address);
 
-
-
 #define IMPULSE_LENGTH 2000
 
 ConfigPin configPin;
@@ -46,7 +44,6 @@ Signal *signal = (Signal *)malloc(sizeof(Signal) * 6);
 SerialConfiguration serialConfiguration;
 CanComm canComm = CanComm(&can_configuration, weiche, signal, *change);
 
-
 void changeWeiche(uint16_t address) {
   for (byte i = 0; i < 5; i++) {
     if (weiche[i].find(address)) {
@@ -59,7 +56,7 @@ void changeWeiche(uint16_t address) {
   }
 }
 
-void changeSignal(uint16_t address){
+void changeSignal(uint16_t address) {
   for (byte i = 0; i < 6; i++) {
     if (signal[i].find(address)) {
       Serial.print(F("DEBUG: Address Signal ["));
@@ -70,7 +67,6 @@ void changeSignal(uint16_t address){
     }
   }
 }
-
 
 void change(uint16_t address) {
   changeWeiche(address);
