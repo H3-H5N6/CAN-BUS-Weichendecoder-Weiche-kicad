@@ -51,7 +51,8 @@ void notifyCVChange(uint16_t Addr, uint8_t Value) {
  * HP 0+SH1     41 + 0 | 42 + 1
  */
 
-uint16_t can_addr_buffer[10][2];
+// uint16_t can_addr_buffer[10][2];
+uint8_t addrDebounce[10];
 #define DEBUG_DCC
 void notifyDccAccTurnoutOutput(uint16_t Addr, uint8_t Direction, uint8_t OutputPower) {
 #ifdef DEBUG_DCC
@@ -64,6 +65,9 @@ void notifyDccAccTurnoutOutput(uint16_t Addr, uint8_t Direction, uint8_t OutputP
   Serial.print(',');
   Serial.println(OutputPower, HEX);
 #endif
+
+  
+
   for (int i = 0; i < 5; i++) {
     if (weiche[i].findDccAddr(Addr)) {
       Serial.print(F("Find DCC-Address ["));
@@ -71,7 +75,20 @@ void notifyDccAccTurnoutOutput(uint16_t Addr, uint8_t Direction, uint8_t OutputP
       Serial.print(F("] in Weiche ["));
       Serial.print(i);
       Serial.println(F("]"));
-      weiche[i].changeDcc(Addr, Direction);
+      uint8_t index = i*2 + Direction;
+      if (OutputPower == 1 ){
+        if (addrDebounce[index] == 0 ) {
+          addrDebounce[index] = 1;
+          weiche[i].changeDcc(Addr, Direction);
+        } else {
+          Serial.println("Ignore DCC Packet");
+        }
+      }
+      if (OutputPower == 0 ){
+           addrDebounce[index] = 0;
+           Serial.println("Ignore DCC Packet");
+      } 
+
     }
   }
   for (int i = 0; i < 6; i++) {
@@ -84,10 +101,6 @@ void notifyDccAccTurnoutOutput(uint16_t Addr, uint8_t Direction, uint8_t OutputP
       signal[i].changeDcc(Addr, Direction);
     }
   }
-
-
-
-
 
   /*
 
