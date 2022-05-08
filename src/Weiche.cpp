@@ -1,6 +1,6 @@
 #include "Weiche.h"
 
-Weiche::Weiche(OutputControl &_g, OutputControl &_a, uint16_t _canAddr, uint16_t _dccAddr) : g(_g), a(_a), canAddr(_canAddr), dccAddr(_dccAddr) {
+Weiche::Weiche(OutputControl &_g, OutputControl &_a, uint16_t _canAddr, uint16_t _dccAddr) : Debounce(), g(_g), a(_a), canAddr(_canAddr), dccAddr(_dccAddr) {
   this->gerade();
 };
 
@@ -180,39 +180,12 @@ boolean Weiche::findDccAddr(uint16_t _dccAddr) {
 boolean Weiche::changeDcc(uint16_t _dccAddr, uint8_t direction) {
   if (findDccAddr(_dccAddr)) {
     if (direction == 0) {
-      change(canAddrGerade());
+      return change(canAddrGerade());
     } else {
-      change(canAddrAbzweig());
-    }
-  }
-}
-
-uint8_t Weiche::getDebounceMaske(uint16_t dccAddr, uint8_t direction) {
-  uint8_t mask = 0;
-  if (dccAddr == dccAddr) {
-    mask = 0b001;
-  }
-  if (direction > 0) {
-    mask = mask << 1;
-  }
-  return mask;
-}
-
-boolean Weiche::isDebounceSet(uint16_t dccAddr, uint8_t direction) {
-  if (findDccAddr(dccAddr)) {
-    if ((debounceBits & getDebounceMaske(dccAddr, direction)) > 0) {
-      return true;
+      return change(canAddrAbzweig());
     }
   }
   return false;
-}
-
-void Weiche::setDebounceBit(uint16_t dccAddr, uint8_t direction) {
-  debounceBits = debounceBits | getDebounceMaske(dccAddr, direction);
-}
-
-void Weiche::clearDebounceBit(uint16_t dccAddr, uint8_t direction) {
-  debounceBits = debounceBits & ~getDebounceMaske(dccAddr, direction);
 }
 
 /**
