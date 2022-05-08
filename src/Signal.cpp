@@ -1,6 +1,6 @@
 #include "Signal.h"
 
-Signal::Signal(uint16_t _firstAddress, uint16_t _firstDccAddress, uint8_t _i2cIndex, I2CSignal *_i2csignal, SIGNAL::SOCKET _socket) : firstAddress(_firstAddress), lastAddress(_firstAddress + 3), firstDccAddress(_firstDccAddress), lastDccAddress(_firstDccAddress + 1), i2cIndex(_i2cIndex), i2csignal(_i2csignal), socket(_socket) {
+Signal::Signal(uint16_t _firstAddress, uint16_t _firstDccAddress, uint8_t _i2cIndex, I2CSignal *_i2csignal, SIGNAL::SOCKET _socket) : Debounce(), firstAddress(_firstAddress), lastAddress(_firstAddress + 3), firstDccAddress(_firstDccAddress), lastDccAddress(_firstDccAddress + 1), i2cIndex(_i2cIndex), i2csignal(_i2csignal), socket(_socket) {
   position = SIGNAL::POSITION::HP0;
   state = SIGNAL::STATE::SET;
 }
@@ -53,23 +53,6 @@ uint8_t Signal::getDebounceMaske(uint16_t dccAddr, uint8_t direction) {
     mask = mask << 1;
   }
   return mask;
-}
-
-boolean Signal::isDebounceSet(uint16_t dccAddr, uint8_t direction) {
-  if (findDccAddr(dccAddr)) {
-    if ((debounceBits & getDebounceMaske(dccAddr, direction)) > 0) {
-      return true;
-    }
-  }
-  return false;
-}
-
-void Signal::setDebounceBit(uint16_t dccAddr, uint8_t direction) {
-  debounceBits = debounceBits | getDebounceMaske(dccAddr, direction);
-}
-
-void Signal::clearDebounceBit(uint16_t dccAddr, uint8_t direction) {
-  debounceBits = debounceBits & ~getDebounceMaske(dccAddr, direction);
 }
 
 boolean Signal::change(uint16_t _address) {

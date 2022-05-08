@@ -3,6 +3,7 @@
 
 #include <Arduino.h>
 
+#include "Debounce.h"
 #include "I2C-Signal.h"
 #include "Socket.h"
 
@@ -22,7 +23,7 @@ enum STATE : uint8_t {
 };
 }  // namespace SIGNAL
 
-class Signal {
+class Signal : public Debounce {
  public:
   Signal(uint16_t address, uint16_t dccAddress, uint8_t i2cIndex, I2CSignal *i2c, SIGNAL::SOCKET socket);
   void process();
@@ -36,10 +37,6 @@ class Signal {
   boolean isHp2();
   boolean isSh1();
 
-  boolean isDebounceSet(uint16_t dccAddr, uint8_t direction);
-  void setDebounceBit(uint16_t dccAddr, uint8_t direction);
-  void clearDebounceBit(uint16_t dccAddr, uint8_t direction);
-
  private:
   SIGNAL::STATE state;
   SIGNAL::POSITION position;
@@ -50,7 +47,6 @@ class Signal {
   uint8_t i2cIndex;
   I2CSignal *i2csignal;
   SIGNAL::SOCKET socket;
-  uint8_t debounceBits;
   uint8_t getDebounceMaske(uint16_t dccAddr, uint8_t direction);
 };
 
