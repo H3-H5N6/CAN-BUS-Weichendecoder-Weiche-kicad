@@ -179,15 +179,41 @@ boolean Weiche::findDccAddr(uint16_t _dccAddr) {
 
 boolean Weiche::changeDcc(uint16_t _dccAddr, uint8_t direction) {
   if (findDccAddr(_dccAddr)) {
-    if (direction == 0){
+    if (direction == 0) {
       change(canAddrGerade());
     } else {
       change(canAddrAbzweig());
     }
-
   }
 }
 
+uint8_t Weiche::getDebounceMaske(uint16_t dccAddr, uint8_t direction) {
+  uint8_t mask = 0;
+  if (dccAddr == dccAddr) {
+    mask = 0b001;
+  }
+  if (direction > 0) {
+    mask = mask << 1;
+  }
+  return mask;
+}
+
+boolean Weiche::isDebounceSet(uint16_t dccAddr, uint8_t direction) {
+  if (findDccAddr(dccAddr)) {
+    if ((debounceBits & getDebounceMaske(dccAddr, direction)) > 0) {
+      return true;
+    }
+  }
+  return false;
+}
+
+void Weiche::setDebounceBit(uint16_t dccAddr, uint8_t direction) {
+  debounceBits = debounceBits | getDebounceMaske(dccAddr, direction);
+}
+
+void Weiche::clearDebounceBit(uint16_t dccAddr, uint8_t direction) {
+  debounceBits = debounceBits & ~getDebounceMaske(dccAddr, direction);
+}
 
 /**
  * Ändert die Weichnstellung, falls der Weiche address zugeordnet ist.

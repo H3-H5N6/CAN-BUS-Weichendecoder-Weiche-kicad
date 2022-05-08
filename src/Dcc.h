@@ -51,8 +51,6 @@ void notifyCVChange(uint16_t Addr, uint8_t Value) {
  * HP 0+SH1     41 + 0 | 42 + 1
  */
 
-// uint16_t can_addr_buffer[10][2];
-uint8_t addrDebounce[10];
 #define DEBUG_DCC
 void notifyDccAccTurnoutOutput(uint16_t Addr, uint8_t Direction, uint8_t OutputPower) {
 #ifdef DEBUG_DCC
@@ -66,7 +64,17 @@ void notifyDccAccTurnoutOutput(uint16_t Addr, uint8_t Direction, uint8_t OutputP
   Serial.println(OutputPower, HEX);
 #endif
 
-  
+  // Power == 1 und bit auf 0? -> Bit auf 1 setzen und change aufrufen
+  // Power == 0 -> bit auf 0 setzen
+  /*
+  if power == 1
+    if (isFirst(dccAdr, direction)
+      setFirst()
+      change
+
+  if power == 0
+    resetFirst
+  */
 
   for (int i = 0; i < 5; i++) {
     if (weiche[i].findDccAddr(Addr)) {
@@ -75,20 +83,19 @@ void notifyDccAccTurnoutOutput(uint16_t Addr, uint8_t Direction, uint8_t OutputP
       Serial.print(F("] in Weiche ["));
       Serial.print(i);
       Serial.println(F("]"));
-      uint8_t index = i*2 + Direction;
-      if (OutputPower == 1 ){
-        if (addrDebounce[index] == 0 ) {
-          addrDebounce[index] = 1;
+
+      if (OutputPower == 1) {
+        if (!weiche[i].isDebounceSet(Addr, Direction)) {
+          weiche[i].setDebounceBit(Addr, Direction);
           weiche[i].changeDcc(Addr, Direction);
         } else {
           Serial.println("Ignore DCC Packet");
         }
       }
-      if (OutputPower == 0 ){
-           addrDebounce[index] = 0;
-           Serial.println("Ignore DCC Packet");
-      } 
-
+      if (OutputPower == 0) {
+        weiche[i].clearDebounceBit(Addr, Direction);
+        Serial.println("Ignore DCC Packet");
+      }
     }
   }
   for (int i = 0; i < 6; i++) {
@@ -98,7 +105,19 @@ void notifyDccAccTurnoutOutput(uint16_t Addr, uint8_t Direction, uint8_t OutputP
       Serial.print(F("] in Signal ["));
       Serial.print(i);
       Serial.println(F("]"));
-      signal[i].changeDcc(Addr, Direction);
+
+      if (OutputPower == 1) {
+        if (!signal[i].isDebounceSet(Addr, Direction)) {
+          signal[i].setDebounceBit(Addr, Direction);
+          signal[i].changeDcc(Addr, Direction);
+        } else {
+          Serial.println("Ignore DCC Packet");
+        }
+      }
+      if (OutputPower == 0) {
+        signal[i].clearDebounceBit(Addr, Direction);
+        Serial.println("Ignore DCC Packet");
+      }
     }
   }
 

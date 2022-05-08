@@ -10,8 +10,6 @@
 #include "Signal.h"
 #include "Weiche.h"
 
-
-
 #define IMPULSE_LENGTH 2000
 
 ConfigPin configPin;
@@ -43,12 +41,10 @@ void changeSignal(uint16_t address);
 OutputControl *control = (OutputControl *)malloc(sizeof(OutputControl) * 10);
 Weiche *weiche = (Weiche *)malloc(sizeof(Weiche) * 5);
 Signal *signal = (Signal *)malloc(sizeof(Signal) * 6);
-SerialConfiguration serialConfiguration = SerialConfiguration( *changeWeiche, *changeSignal);
+SerialConfiguration serialConfiguration = SerialConfiguration(*changeWeiche, *changeSignal);
 CanComm canComm = CanComm(&can_configuration, weiche, signal, *change);
 
-
 #include "Dcc.h"
-
 
 void changeWeiche(uint16_t address) {
   for (byte i = 0; i < 5; i++) {
@@ -106,10 +102,10 @@ void initSignal() {
   i2csignal.init_pcf8574();
 
   for (uint8_t i = 0; i < 5; i++) {
-    signal[i] = Signal(can_configuration.config.firstIdSignal + (i * 4), 51 +(i*2),  i, &i2csignal, SIGNAL::SOCKET::PIN);
+    signal[i] = Signal(can_configuration.config.firstIdSignal + (i * 4), 51 + (i * 2), i, &i2csignal, SIGNAL::SOCKET::PIN);
   }
   for (uint8_t i = 5; i < 6; i++) {
-    signal[i] = Signal(can_configuration.config.firstIdSignal + (i * 4), 51 +(i*2), i, &i2csignal, SIGNAL::SOCKET::RJ12);
+    signal[i] = Signal(can_configuration.config.firstIdSignal + (i * 4), 51 + (i * 2), i, &i2csignal, SIGNAL::SOCKET::RJ12);
   }
 }
 

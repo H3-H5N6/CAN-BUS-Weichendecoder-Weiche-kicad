@@ -1,6 +1,6 @@
 #include "Signal.h"
 
-Signal::Signal(uint16_t _firstAddress, uint16_t _firstDccAddress, uint8_t _index, I2CSignal *_i2csignal, SIGNAL::SOCKET _socket) : firstAddress(_firstAddress), lastAddress(_firstAddress + 3), firstDccAddress(_firstDccAddress), lastDccAddress(_firstDccAddress + 1), index(_index), i2csignal(_i2csignal), socket(_socket) {
+Signal::Signal(uint16_t _firstAddress, uint16_t _firstDccAddress, uint8_t _i2cIndex, I2CSignal *_i2csignal, SIGNAL::SOCKET _socket) : firstAddress(_firstAddress), lastAddress(_firstAddress + 3), firstDccAddress(_firstDccAddress), lastDccAddress(_firstDccAddress + 1), i2cIndex(_i2cIndex), i2csignal(_i2csignal), socket(_socket) {
   position = SIGNAL::POSITION::HP0;
   state = SIGNAL::STATE::SET;
 }
@@ -39,6 +39,37 @@ boolean Signal::changeDcc(uint16_t _address, uint8_t direction) {
     return change(firstAddress + offset);
   }
   return false;
+}
+
+uint8_t Signal::getDebounceMaske(uint16_t dccAddr, uint8_t direction) {
+  uint8_t mask = 0;
+  if (dccAddr == firstDccAddress) {
+    mask = 0b001;
+  }
+  if (dccAddr == lastDccAddress) {
+    mask = 0b0100;
+  }
+  if (direction > 0) {
+    mask = mask << 1;
+  }
+  return mask;
+}
+
+boolean Signal::isDebounceSet(uint16_t dccAddr, uint8_t direction) {
+  if (findDccAddr(dccAddr)) {
+    if ((debounceBits & getDebounceMaske(dccAddr, direction)) > 0) {
+      return true;
+    }
+  }
+  return false;
+}
+
+void Signal::setDebounceBit(uint16_t dccAddr, uint8_t direction) {
+  debounceBits = debounceBits | getDebounceMaske(dccAddr, direction);
+}
+
+void Signal::clearDebounceBit(uint16_t dccAddr, uint8_t direction) {
+  debounceBits = debounceBits & ~getDebounceMaske(dccAddr, direction);
 }
 
 boolean Signal::change(uint16_t _address) {
@@ -128,11 +159,11 @@ void Signal::process() {
         break;
     }
     Serial.print(F("DEBUG I2C : i"));
-    Serial.print(index);
+    Serial.print(i2cIndex);
     Serial.print(F(" v: 0x"));
     Serial.println(value, HEX);
 
-    i2csignal->setNewState(value, index);
+    i2csignal->setNewState(value, i2cIndex);
     i2csignal->writeState();
     state = SIGNAL::STATE::POSITION_REACHED;
   }
