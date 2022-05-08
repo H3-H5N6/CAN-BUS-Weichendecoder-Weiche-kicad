@@ -24,10 +24,12 @@ enum STATE : uint8_t {
 
 class Signal {
  public:
-  Signal(uint16_t address, uint8_t index, I2CSignal *i2c, SIGNAL::SOCKET socket);
+  Signal(uint16_t address, uint16_t dccAddress, uint8_t index, I2CSignal *i2c, SIGNAL::SOCKET socket);
   void process();
   boolean find(uint16_t address);
+  boolean findDccAddr(uint16_t address);
   boolean change(uint16_t address);
+  boolean changeDcc(uint16_t _address, uint8_t direkction);
 
   boolean isHp0();
   boolean isHp1();
@@ -37,11 +39,13 @@ class Signal {
  private:
   SIGNAL::STATE state;
   SIGNAL::POSITION position;
-  SIGNAL::SOCKET socket;
   uint16_t firstAddress;
   uint16_t lastAddress;
+  uint16_t firstDccAddress;
+  uint16_t lastDccAddress;
   uint8_t index;
   I2CSignal *i2csignal;
+  SIGNAL::SOCKET socket;
 };
 
 #endif

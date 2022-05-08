@@ -37,17 +37,16 @@ void notifyCVChange(uint16_t Addr, uint8_t Value) {
   Serial.println(Value, DEC);
 }
 
-
 /*
 * Variante 2
 * HP 0         41 + 0
 * HP 1         41 + 1
-* HP 2         42 + 1   
+* HP 2         42 + 1
 * HP 0Sh1      42 + 0
 
 * Variante 2
  * HP 0         42 + 0 | 41 + 0
- * HP 1         42 + 0 | 41 + 1 
+ * HP 1         42 + 0 | 41 + 1
  * HP 2         41 + 1 | 42 + 1
  * HP 0+SH1     41 + 0 | 42 + 1
  */
@@ -65,39 +64,65 @@ void notifyDccAccTurnoutOutput(uint16_t Addr, uint8_t Direction, uint8_t OutputP
   Serial.print(',');
   Serial.println(OutputPower, HEX);
 #endif
-
-  if ((Addr >= Dcc.getAddr()) && (Addr < Dcc.getAddr() + 5)) {
-    uint16_t can_addr = 801 + ((Addr - 1) * 2 + Direction);
-
-    //              (6 - 1)     * 2 + 0       -       6 -1           * 2
-    //              (6 - 1)     * 2 + 1       -       6 -1           * 2
-    //               10                       -        10                 = 0
-    //               11                       -        10                 = 1
-    byte index = ((Addr - 1) * 2 + Direction) - ((Dcc.getAddr() - 1) * 2);
-
-
-    // [0] erfasst dem Wechsel 0 - > 1
-    // [1] zu verabeitende can-Adresse, wird nach der Verabeitung zurückgesetzt
-
-    if (can_addr_buffer[index][0] != can_addr) {
-      if (OutputPower == 1) {
-        can_addr_buffer[index][0] = can_addr;
-        can_addr_buffer[index][1] = can_addr;
-
-        Serial.print("Can-Addr: ");
-        Serial.println(can_addr);
-      }
-    } else {
-      if (OutputPower == 0) {
-        can_addr_buffer[index][0] = 0;
-      }
+  for (int i = 0; i < 5; i++) {
+    if (weiche[i].findDccAddr(Addr)) {
+      Serial.print(F("Find DCC-Address ["));
+      Serial.print(Addr);
+      Serial.print(F("] in Weiche ["));
+      Serial.print(i);
+      Serial.println(F("]"));
+      weiche[i].changeDcc(Addr, Direction);
     }
-
-    // Addr 1,0 -> 821
-    // Addr 1,1 -> 822
-  } else {
-    Serial.println("Ignore");
   }
+  for (int i = 0; i < 6; i++) {
+    if (signal[i].findDccAddr(Addr)) {
+      Serial.print(F("Find DCC-Address ["));
+      Serial.print(Addr);
+      Serial.print(F("] in Signal ["));
+      Serial.print(i);
+      Serial.println(F("]"));
+      signal[i].changeDcc(Addr, Direction);
+    }
+  }
+
+
+
+
+
+  /*
+
+    if ((Addr >= Dcc.getAddr()) && (Addr < Dcc.getAddr() + 5)) {
+      uint16_t can_addr = 801 + ((Addr - 1) * 2 + Direction);
+
+      //              (6 - 1)     * 2 + 0       -       6 -1           * 2
+      //              (6 - 1)     * 2 + 1       -       6 -1           * 2
+      //               10                       -        10                 = 0
+      //               11                       -        10                 = 1
+      byte index = ((Addr - 1) * 2 + Direction) - ((Dcc.getAddr() - 1) * 2);
+
+
+      // [0] erfasst dem Wechsel 0 - > 1
+      // [1] zu verabeitende can-Adresse, wird nach der Verabeitung zurückgesetzt
+
+      if (can_addr_buffer[index][0] != can_addr) {
+        if (OutputPower == 1) {
+          can_addr_buffer[index][0] = can_addr;
+          can_addr_buffer[index][1] = can_addr;
+
+          Serial.print("Can-Addr: ");
+          Serial.println(can_addr);
+        }
+      } else {
+        if (OutputPower == 0) {
+          can_addr_buffer[index][0] = 0;
+        }
+      }
+
+      // Addr 1,0 -> 821
+      // Addr 1,1 -> 822
+    } else {
+      Serial.println("Ignore");
+    }*/
 }
 
 void init_DCC() {

@@ -162,7 +162,7 @@ void Weiche::process() {
 
 /**
  * @brief Liefert true, wenn der Weiche die address zugeordnet ist, sonst false.
- * 
+ *
  * @param address Weichenadresse
  * @return boolean true, wenn der Weiche die Adresse zugeordnet ist.
  */
@@ -172,6 +172,22 @@ boolean Weiche::find(uint16_t address) {
   }
   return false;
 }
+
+boolean Weiche::findDccAddr(uint16_t _dccAddr) {
+  return (dccAddr == _dccAddr);
+}
+
+boolean Weiche::changeDcc(uint16_t _dccAddr, uint8_t direction) {
+  if (findDccAddr(_dccAddr)) {
+    if (direction == 0){
+      change(canAddrGerade());
+    } else {
+      change(canAddrAbzweig());
+    }
+
+  }
+}
+
 
 /**
  * Ändert die Weichnstellung, falls der Weiche address zugeordnet ist.

@@ -4,7 +4,6 @@
 #include "CanCommunicator.h"
 #include "CanConfiguration.h"
 #include "ConfigPin.h"
-#include "Dcc.h"
 #include "Debug.h"
 #include "I2C_Tools.h"
 #include "SerialConfiguration.h"
@@ -43,6 +42,10 @@ Weiche *weiche = (Weiche *)malloc(sizeof(Weiche) * 5);
 Signal *signal = (Signal *)malloc(sizeof(Signal) * 6);
 SerialConfiguration serialConfiguration;
 CanComm canComm = CanComm(&can_configuration, weiche, signal, *change);
+
+
+#include "Dcc.h"
+
 
 void changeWeiche(uint16_t address) {
   for (byte i = 0; i < 5; i++) {
@@ -100,10 +103,10 @@ void initSignal() {
   i2csignal.init_pcf8574();
 
   for (uint8_t i = 0; i < 5; i++) {
-    signal[i] = Signal(can_configuration.config.firstIdSignal + (i * 4), i, &i2csignal, SIGNAL::SOCKET::PIN);
+    signal[i] = Signal(can_configuration.config.firstIdSignal + (i * 4), 51 +(i*2),  i, &i2csignal, SIGNAL::SOCKET::PIN);
   }
   for (uint8_t i = 5; i < 6; i++) {
-    signal[i] = Signal(can_configuration.config.firstIdSignal + (i * 4), i, &i2csignal, SIGNAL::SOCKET::RJ12);
+    signal[i] = Signal(can_configuration.config.firstIdSignal + (i * 4), 51 +(i*2), i, &i2csignal, SIGNAL::SOCKET::RJ12);
   }
 }
 

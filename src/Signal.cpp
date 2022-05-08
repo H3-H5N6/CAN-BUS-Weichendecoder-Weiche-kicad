@@ -1,16 +1,44 @@
 #include "Signal.h"
 
-Signal::Signal(uint16_t _firstAddress, uint8_t _index, I2CSignal *_i2csignal, SIGNAL::SOCKET _socket) : firstAddress(_firstAddress), lastAddress(_firstAddress + 3), index(_index), i2csignal(_i2csignal), socket(_socket) {
+Signal::Signal(uint16_t _firstAddress, uint16_t _firstDccAddress, uint8_t _index, I2CSignal *_i2csignal, SIGNAL::SOCKET _socket) : firstAddress(_firstAddress), lastAddress(_firstAddress + 3), firstDccAddress(_firstDccAddress), lastDccAddress(_firstDccAddress + 1), index(_index), i2csignal(_i2csignal), socket(_socket) {
   position = SIGNAL::POSITION::HP0;
   state = SIGNAL::STATE::SET;
 }
-
 
 boolean Signal::find(uint16_t _address) {
   if ((_address < firstAddress) || (_address > lastAddress)) {
     return false;
   }
   return true;
+}
+
+boolean Signal::findDccAddr(uint16_t _address) {
+  if ((_address < firstDccAddress) || (_address > lastDccAddress)) {
+    return false;
+  }
+  return true;
+}
+
+boolean Signal::changeDcc(uint16_t _address, uint8_t direction) {
+  if (findDccAddr(_address)) {
+    uint8_t offset = 0;
+    switch ((_address - firstDccAddress) * 2 + direction) {
+      case 0:
+        offset = 0;
+        break;
+      case 1:
+        offset = 1;
+        break;
+      case 2:
+        offset = 3;
+        break;
+      case 3:
+        offset = 2;
+        break;
+    }
+    return change(firstAddress + offset);
+  }
+  return false;
 }
 
 boolean Signal::change(uint16_t _address) {
