@@ -10,9 +10,7 @@
 #include "Signal.h"
 #include "Weiche.h"
 
-void change(uint16_t address);
-void changeWeiche(uint16_t address);
-void changeSignal(uint16_t address);
+
 
 #define IMPULSE_LENGTH 2000
 
@@ -37,10 +35,15 @@ OUTPUT_CONF configuration = {
     IMPULSE_LENGTH,
     IMPULSE_LENGTH};
 
+/** Callback-Funktionen */
+void change(uint16_t address);
+void changeWeiche(uint16_t address);
+void changeSignal(uint16_t address);
+
 OutputControl *control = (OutputControl *)malloc(sizeof(OutputControl) * 10);
 Weiche *weiche = (Weiche *)malloc(sizeof(Weiche) * 5);
 Signal *signal = (Signal *)malloc(sizeof(Signal) * 6);
-SerialConfiguration serialConfiguration;
+SerialConfiguration serialConfiguration = SerialConfiguration( *changeWeiche, *changeSignal);
 CanComm canComm = CanComm(&can_configuration, weiche, signal, *change);
 
 
@@ -154,7 +157,7 @@ void setup() {
 
   canComm.initCanConfiguraion(value);
 
-  serialConfiguration.init(can_configuration, Dcc, *changeWeiche, *changeSignal);
+  serialConfiguration.init(can_configuration, Dcc);
 
   serialConfiguration.printConfiguration();
 
@@ -197,17 +200,6 @@ void notifyDccMsg(DCC_MSG *Msg) {
 }
 #endif
 
-void processDccToCan() {
-  /*
-  for (byte i = 0; i < 10; i++) {
-    if (can_addr_buffer[i][1] != 0) {
-      Serial.println("call Change");
-      change(can_addr_buffer[i][1]);
-      can_addr_buffer[i][1] = 0;
-    }
-  }*/
-}
-
 void loop() {
   serialConfiguration.process();
 
@@ -219,8 +211,6 @@ void loop() {
   Dcc.process();
 
   dccWriteFactotyDefaults();
-
-  processDccToCan();
 
   delay(5);
 }

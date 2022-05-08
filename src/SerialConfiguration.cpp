@@ -6,7 +6,9 @@
 #define HELP 1
 #define CONF 2
 
-SerialConfiguration::SerialConfiguration() {
+SerialConfiguration::SerialConfiguration(ChangeWeiche _changeWeiche, ChangeSignal _changeSignal) {
+  changeWeicheCallback = _changeWeiche;
+  changeSignalCallback = _changeSignal;
 }
 
 void SerialConfiguration::printLineln(byte index, const __FlashStringHelper *ifsh) {
@@ -32,10 +34,8 @@ void SerialConfiguration::printPrefix() {
   Serial.print(F("Config: "));
 }
 
-void SerialConfiguration::init(CAN_CONFIGURATION &_conf, NmraDcc &_dcc, ChangeWeiche _changeWeiche, ChangeSignal _changeSignal) {
+void SerialConfiguration::init(CAN_CONFIGURATION &_conf, NmraDcc &_dcc) {
   can_configuration = _conf;
-  changeWeicheCallback = _changeWeiche;
-  changeSignalCallback = _changeSignal;
   dcc = _dcc;
 }
 
