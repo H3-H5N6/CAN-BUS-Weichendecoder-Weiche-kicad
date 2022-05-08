@@ -127,7 +127,6 @@ void initWeiche() {
   control[8] = OutputControl(&configuration, LED_9);
   control[9] = OutputControl(&configuration, LED_10);
 
-  // uint8_t id =  can_configuration.config.id ;
   for (uint8_t i = 0; i < 5; i++) {
     weiche[i] = Weiche(control[i * 2], control[(i * 2) + 1], can_configuration.config.firstIdWeiche + i * 2, 41 + i);
   }
@@ -138,9 +137,6 @@ void setup() {
   Serial.begin(115200);
 
   free_dump();
-
-  // Serial.println(F("=== 1 ==="));
-  // delay(1000);
 
   byte value = configPin.readCongigPin();
   Serial.print(F("Wert ConfigPin: ["));
@@ -185,20 +181,6 @@ void processSignal() {
     signal[k].process();
   }
 }
-
-unsigned long lastChanged = millis();
-byte index = 0;
-
-#ifdef NOTIFY_DCC_MSG
-void notifyDccMsg(DCC_MSG *Msg) {
-  Serial.print("notifyDccMsg: ");
-  for (uint8_t i = 0; i < Msg->Size; i++) {
-    Serial.print(Msg->Data[i], HEX);
-    Serial.write(' ');
-  }
-  Serial.println();
-}
-#endif
 
 void loop() {
   serialConfiguration.process();
