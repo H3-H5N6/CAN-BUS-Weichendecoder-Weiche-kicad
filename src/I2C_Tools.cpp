@@ -1,5 +1,8 @@
 #include "I2C_Tools.h"
 
+I2C_Tools::I2C_Tools() {
+}
+
 /**
  * Initialisert den i2c, muss vor der ersten Nutzung von i2c aufgeruft werden.
  *
