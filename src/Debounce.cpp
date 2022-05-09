@@ -1,17 +1,7 @@
 #include "Debounce.h"
 
 Debounce::Debounce() {
-}
-
-uint8_t Debounce::getDebounceMaske(uint16_t dccAddr, uint8_t direction) {
-  uint8_t mask = 0;
-  // if (dccAddr == dccAddr) {
-  mask = 0b001;
-  //}
-  if (direction > 0) {
-    mask = mask << 1;
-  }
-  return mask;
+  debounceBits = 0;
 }
 
 boolean Debounce::isDebounceSet(uint16_t dccAddr, uint8_t direction) {

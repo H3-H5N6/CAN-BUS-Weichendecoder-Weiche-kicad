@@ -11,7 +11,7 @@ class Debounce {
 
  protected:
   Debounce();
-  uint8_t getDebounceMaske(uint16_t dccAddr, uint8_t direction);
+  virtual uint8_t getDebounceMaske(uint16_t dccAddr, uint8_t direction) = 0;
 
  private:
   uint8_t debounceBits;
