@@ -42,7 +42,7 @@ typedef struct {
 
 class OutputControl {
  public:
-  // OutputControl();
+  OutputControl();
 
   explicit OutputControl(OUTPUT_CONF *_configuration, byte _pin);
 

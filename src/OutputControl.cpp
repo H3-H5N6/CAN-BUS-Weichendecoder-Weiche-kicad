@@ -1,6 +1,6 @@
 #include "OutputControl.h"
 
-// OutputControl::OutputControl() {}
+OutputControl::OutputControl() {}
 
 OutputControl::OutputControl(OUTPUT_CONF *_configuration, byte _pin) {
   this->configuration = _configuration;
