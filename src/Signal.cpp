@@ -24,14 +24,9 @@ boolean Signal::findDccAddr(uint16_t _address) {
 
 boolean Signal::changeDcc(uint16_t _address, uint8_t direction) {
   if (findDccAddr(_address)) {
-    uint8_t offset = 0;
-    switch ((_address - firstDccAddress) * 2 + direction) {
-      case 0:
-        offset = 0;
-        break;
-      case 1:
-        offset = 1;
-        break;
+    // Etwas Magie: DCC-Adresse und direction auf die CAN-Adresse mappen
+    uint8_t offset = (_address - firstDccAddress) * 2 + direction;
+    switch (offset) {
       case 2:
         offset = 3;
         break;
@@ -45,6 +40,7 @@ boolean Signal::changeDcc(uint16_t _address, uint8_t direction) {
 }
 
 uint8_t Signal::getDebounceMaske(uint16_t dccAddr, uint8_t direction) {
+  Serial.println(F("DEBUG: Signal.getDebounceMaske"));
   uint8_t mask = 0;
   if (dccAddr == firstDccAddress) {
     mask = 0b001;
