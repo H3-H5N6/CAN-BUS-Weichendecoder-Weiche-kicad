@@ -2,8 +2,8 @@
 
 #define WEICHE_H
 
-#include "OutputControl.h"
 #include "Debounce.h"
+#include "OutputControl.h"
 
 namespace WEICHE {
 enum POSITION : uint8_t {
@@ -26,7 +26,8 @@ enum STATE : uint8_t {
 
 class Weiche : public Debounce {
  public:
-  explicit Weiche(OutputControl &g, OutputControl &a, uint16_t canAddr, uint16_t dccAddr);
+  Weiche();
+  Weiche(OutputControl &g, OutputControl &a, uint16_t canAddr, uint16_t dccAddr);
 
   WEICHE::POSITION gerade();
 
@@ -55,11 +56,14 @@ class Weiche : public Debounce {
 
   uint16_t nextAddress;
 
+ protected:
+  uint8_t getDebounceMaske(uint16_t dccAddr, uint8_t direction) override;
+
  private:
   OutputControl g;
   OutputControl a;
   uint16_t canAddr;
-  uint16_t dccAddr;
+  uint16_t dccAddress;
   WEICHE::POSITION postion = WEICHE::POSITION::UNKNOWN;
   uint16_t canAddrGerade();
   uint16_t canAddrAbzweig();

@@ -1,6 +1,10 @@
 #include "Weiche.h"
 
-Weiche::Weiche(OutputControl &_g, OutputControl &_a, uint16_t _canAddr, uint16_t _dccAddr) : Debounce(), g(_g), a(_a), canAddr(_canAddr), dccAddr(_dccAddr) {
+Weiche::Weiche() {
+}
+
+Weiche::Weiche(OutputControl &_g, OutputControl &_a, uint16_t _canAddr, uint16_t _dccAddr) : Debounce(), g(_g), a(_a), canAddr(_canAddr), dccAddress(_dccAddr) {
+  nextAddress = 0;
   this->gerade();
 };
 
@@ -174,7 +178,7 @@ boolean Weiche::find(uint16_t address) {
 }
 
 boolean Weiche::findDccAddr(uint16_t _dccAddr) {
-  return (dccAddr == _dccAddr);
+  return (dccAddress == _dccAddr);
 }
 
 boolean Weiche::changeDcc(uint16_t _dccAddr, uint8_t direction) {
@@ -186,6 +190,18 @@ boolean Weiche::changeDcc(uint16_t _dccAddr, uint8_t direction) {
     }
   }
   return false;
+}
+
+uint8_t Weiche::getDebounceMaske(uint16_t dccAddr, uint8_t direction) {
+  return 0b01;
+  uint8_t mask = 0;
+  if (dccAddress == dccAddr) {
+    mask = 0b001;
+  }
+  if (direction > 0) {
+    mask = mask << 1;
+  }
+  return mask;
 }
 
 /**

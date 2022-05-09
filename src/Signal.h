@@ -25,6 +25,7 @@ enum STATE : uint8_t {
 
 class Signal : public Debounce {
  public:
+  Signal();
   Signal(uint16_t address, uint16_t dccAddress, uint8_t i2cIndex, I2CSignal *i2c, SIGNAL::SOCKET socket);
   void process();
   boolean find(uint16_t address);
@@ -37,6 +38,9 @@ class Signal : public Debounce {
   boolean isHp2();
   boolean isSh1();
 
+ protected:
+  uint8_t getDebounceMaske(uint16_t dccAddr, uint8_t direction) override;
+
  private:
   SIGNAL::STATE state;
   SIGNAL::POSITION position;
@@ -47,7 +51,6 @@ class Signal : public Debounce {
   uint8_t i2cIndex;
   I2CSignal *i2csignal;
   SIGNAL::SOCKET socket;
-  uint8_t getDebounceMaske(uint16_t dccAddr, uint8_t direction);
 };
 
 #endif

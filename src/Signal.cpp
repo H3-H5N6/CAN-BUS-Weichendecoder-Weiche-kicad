@@ -1,5 +1,8 @@
 #include "Signal.h"
 
+Signal::Signal() {
+}
+
 Signal::Signal(uint16_t _firstAddress, uint16_t _firstDccAddress, uint8_t _i2cIndex, I2CSignal *_i2csignal, SIGNAL::SOCKET _socket) : Debounce(), firstAddress(_firstAddress), lastAddress(_firstAddress + 3), firstDccAddress(_firstDccAddress), lastDccAddress(_firstDccAddress + 1), i2cIndex(_i2cIndex), i2csignal(_i2csignal), socket(_socket) {
   position = SIGNAL::POSITION::HP0;
   state = SIGNAL::STATE::SET;
