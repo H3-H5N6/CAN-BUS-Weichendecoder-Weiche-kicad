@@ -11,7 +11,7 @@ typedef void (*ChangeSignal)(uint16_t);
 
 class SerialConfiguration {
  public:
-  SerialConfiguration( ChangeWeiche changeWeiche, ChangeSignal changeSignal);
+  SerialConfiguration(ChangeWeiche changeWeiche, ChangeSignal changeSignal);
   void init(CAN_CONFIGURATION &conf, NmraDcc &dcc);
   void printConfiguration();
   void reset_zahl();

@@ -6,9 +6,15 @@
 #define HELP 1
 #define CONF 2
 
+// Wenn mal Speicher gebraucht wird, kann der Hilfetext und die
+// Konfiguration via USB deaktiviert werden.
+// #define DISABLE_PRINT_HELP
+// #define DISABLE_CONFIG
+
 SerialConfiguration::SerialConfiguration(ChangeWeiche _changeWeiche, ChangeSignal _changeSignal) {
   changeWeicheCallback = _changeWeiche;
   changeSignalCallback = _changeSignal;
+  reset_zahl();
 }
 
 void SerialConfiguration::printLineln(byte index, const __FlashStringHelper *ifsh) {
@@ -63,6 +69,7 @@ uint16_t SerialConfiguration::calc_zahl() {
 }
 
 void SerialConfiguration::process() {
+#ifndef DISABLE_CONFIG
   if (Serial.available()) {
     int input = Serial.read();
     switch (char(input)) {
@@ -94,7 +101,8 @@ void SerialConfiguration::process() {
         Serial.println(F(" Abbruch"));
         return;
       case 'h':
-        //                   =======================================
+//                   =======================================
+#ifndef DISABLE_PRINT_HELP
         printLineln(HELP, F("=== Hilfe ============================="));
         printLineln(HELP, F("p           : Ausgabe der Konfiguartion"));
         printLineln(HELP, F("w           : Stelle Weiche"));
@@ -102,6 +110,7 @@ void SerialConfiguration::process() {
         printLineln(HELP, F("i <MODUL_ID>: Neue Modul Id setzen"));
         printLineln(HELP, F("q           : Abbruch der Eingabe"));
         printLineln(HELP, F("h           : Diese Hilfe"));
+#endif
         return;
       case '+':
         if (last_weiche > 0) {
@@ -182,6 +191,7 @@ void SerialConfiguration::process() {
         reset_zahl();
     }
   }
+#endif
 }
 
 void SerialConfiguration::printConfiguration() {
