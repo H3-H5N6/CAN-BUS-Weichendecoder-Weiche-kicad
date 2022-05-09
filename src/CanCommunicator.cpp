@@ -158,11 +158,7 @@ void CanComm::sendDetailWeichenStatus() {
     printDebug(F(" Data: "));
 
     for (byte n = 0; n < 2; n++) {
-      for (byte k = 0; k < 4; k++) {
-        printDebug(data[n][k]);
-        printDebug(F(" "));
-        frame.data16[k] = data[n][k];
-      }
+      memcpy(frame.data16, data[n], sizeof(data[n][0]) * 4);
 
       bool ok = can.tryToSend(frame);
       if (ok) {

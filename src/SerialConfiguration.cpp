@@ -52,9 +52,7 @@ void SerialConfiguration::setAndWriteNewId() {
 
 void SerialConfiguration::reset_zahl() {
   zahl_pos = 0;
-  for (uint8_t i = 0; i < ZAHL_LENGTH; i++) {
-    zahl[i] = 0;
-  }
+  memset(zahl, ZAHL_LENGTH, sizeof(uint8_t));
 }
 
 uint16_t SerialConfiguration::calc_zahl() {
