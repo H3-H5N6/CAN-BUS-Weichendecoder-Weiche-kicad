@@ -218,7 +218,6 @@ boolean Weiche::change(uint16_t address) {
       (status() == WEICHE::POSITION::RUNNING_GERADE && (address != canAddrGerade())) ||
       (status() == WEICHE::POSITION::RUNNING_ABZWEIG && (address != canAddrAbzweig()))) {
     if (this->nextAddress != address) {
-      Serial.println("DEBUG WEICHE Set Nächste Adresse");
       this->nextAddress = address;
     }
     return true;
