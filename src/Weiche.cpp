@@ -193,7 +193,6 @@ boolean Weiche::changeDcc(uint16_t _dccAddr, uint8_t direction) {
 }
 
 uint8_t Weiche::getDebounceMaske(uint16_t dccAddr, uint8_t direction) {
-  return 0b01;
   uint8_t mask = 0;
   if (dccAddress == dccAddr) {
     mask = 0b001;
