@@ -39,8 +39,12 @@ void changeWeiche(uint16_t address);
 void changeSignal(uint16_t address);
 
 OutputControl *control = (OutputControl *)malloc(sizeof(OutputControl) * 10);
-Weiche *weiche = (Weiche *)malloc(sizeof(Weiche) * 5);
-Signal *signal = (Signal *)malloc(sizeof(Signal) * 6);
+// Weiche *weiche = (Weiche *)malloc(sizeof(Weiche) * 5);
+// Signal *signal = (Signal *)malloc(sizeof(Signal) * 6);
+
+Weiche weiche[5];
+Signal signal[6];
+
 SerialConfiguration serialConfiguration = SerialConfiguration(*changeWeiche, *changeSignal);
 CanComm canComm = CanComm(&can_configuration, weiche, signal, *change);
 
@@ -180,14 +184,10 @@ void processSignal() {
 
 void loop() {
   serialConfiguration.process();
-
   canComm.processCanMessage();
-
   processWeiche();
   processSignal();
-
   Dcc.process();
-
   dccWriteFactotyDefaults();
 
   delay(5);
