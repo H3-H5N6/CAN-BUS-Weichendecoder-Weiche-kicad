@@ -1,5 +1,8 @@
 #include <I2C-Signal.h>
 
+I2CSignal::I2CSignal() {
+}
+
 uint8_t I2CSignal::getHP0(SIGNAL::SOCKET socket) {
   switch (socket) {
     case SIGNAL::SOCKET::RJ12:

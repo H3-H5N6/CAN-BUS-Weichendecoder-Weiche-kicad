@@ -9,6 +9,7 @@
 
 class I2CSignal {
  public:
+  I2CSignal();
   // I2CSignal(PCF8574 pcf[MAX_I2C_DEVICES]);
   void setNewState(uint8_t value, uint8_t index);
   boolean writeState();
@@ -22,7 +23,6 @@ class I2CSignal {
   uint32_t i2cstate = 0x00000000;
 
   PCF8574 pcf8574[MAX_I2C_DEVICES] = {PCF8574(0x38), PCF8574(0x3a), PCF8574(0x39), PCF8574(0x3B)};
-  uint8_t i2c_address[MAX_I2C_DEVICES];
 
   // Bit-Maske für jedes Signal
   // 0b11111111111111111111111111100000 - 0xffffffe0,
